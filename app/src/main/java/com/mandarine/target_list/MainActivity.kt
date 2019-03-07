@@ -1,10 +1,13 @@
 package com.mandarine.target_list
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -40,8 +43,7 @@ class MainActivity : AppCompatActivity() {
                             )
                         )
                         .build(),
-                    RC_SIGN_IN
-                )
+                    RC_SIGN_IN)
             }
         }
 
@@ -65,6 +67,19 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         auth.removeAuthStateListener(mAuthStateListener)
+    }
+
+    //https://github.com/firebase/FirebaseUI-Android/blob/master/auth/README.md#response-codes
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_SIGN_IN) {
+            if (resultCode == Activity.RESULT_OK) {
+                Toast.makeText(this, "Signed in!", Toast.LENGTH_SHORT).show()
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                Toast.makeText(this, "Sign in canceled", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        }
     }
 
     private fun updateUI(currentUser: FirebaseUser?) {

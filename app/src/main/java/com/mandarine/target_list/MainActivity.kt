@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.firebase.ui.auth.AuthUI
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,8 +32,16 @@ class MainActivity : AppCompatActivity() {
                     AuthUI.getInstance()
                         .createSignInIntentBuilder()
                         .setIsSmartLockEnabled(false)
+                        .setAvailableProviders(
+                            Arrays.asList(
+                                AuthUI.IdpConfig.GoogleBuilder().build(),
+                                AuthUI.IdpConfig.EmailBuilder().build(),
+                                AuthUI.IdpConfig.AnonymousBuilder().build()
+                            )
+                        )
                         .build(),
-                    RC_SIGN_IN)
+                    RC_SIGN_IN
+                )
             }
         }
 

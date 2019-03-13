@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.firebase.ui.auth.AuthUI
+import kotlinx.android.synthetic.main.content_main.*
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -19,7 +20,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var mAuthStateListener: FirebaseAuth.AuthStateListener
     private val RC_SIGN_IN = 123
-    private val TAG = "some"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateUI(currentUser: FirebaseUser?) {
-
+        titleView?.text = currentUser?.displayName
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

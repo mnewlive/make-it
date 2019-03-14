@@ -6,15 +6,14 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.firebase.ui.auth.AuthUI
-import com.mandarine.target_list.constants.RC_SIGN_IN
 import kotlinx.android.synthetic.main.content_main.*
-import java.util.*
 
-class MainActivity : AppCompatActivity(), MainActivityViewContract {
+class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClickListener {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var mAuthStateListener: FirebaseAuth.AuthStateListener
@@ -25,11 +24,11 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         signIn()
+        setupViews()
+    }
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+    private fun setupViews() {
+        fab.setOnClickListener(this)
     }
 
     override fun onStart() {
@@ -67,6 +66,15 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract {
         finish()
     }
 
+    override fun onClick(v: View?) {
+        presenter.onViewClick(v?.id ?: return)
+    }
+
+    override fun addTarget() {
+        Snackbar.make(findViewById(R.id.fab),"Action button please UP",Snackbar.LENGTH_LONG)
+            .setAction("Action", null).show()
+    }
+
     override fun signOut(): Boolean {
         AuthUI.getInstance().signOut(this)
         return true
@@ -75,24 +83,7 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract {
     private fun signIn() {
         auth = FirebaseAuth.getInstance()
         mAuthStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
-            val user = firebaseAuth.currentUser
-            if (user != null) {
-                // Sign in logic here.
-            } else {
-                startActivityForResult(
-                    AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setIsSmartLockEnabled(false)
-                        .setAvailableProviders(
-                            Arrays.asList(
-                                AuthUI.IdpConfig.GoogleBuilder().build(),
-                                AuthUI.IdpConfig.EmailBuilder().build(),
-                                AuthUI.IdpConfig.AnonymousBuilder().build()
-                            )
-                        )
-                        .build(),
-                    RC_SIGN_IN)
-            }
+            presenter.signIn(activity = this, user = firebaseAuth.currentUser)
         }
     }
 

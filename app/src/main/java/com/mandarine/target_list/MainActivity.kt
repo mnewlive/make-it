@@ -1,25 +1,24 @@
 package com.mandarine.target_list
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.firebase.ui.auth.AuthUI
+import com.mandarine.target_list.constants.RC_SIGN_IN
 import kotlinx.android.synthetic.main.content_main.*
 import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainActivityViewContract {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var mAuthStateListener: FirebaseAuth.AuthStateListener
-    private val RC_SIGN_IN = 123
+    private val presenter = MainActivityPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,17 +69,13 @@ class MainActivity : AppCompatActivity() {
         auth.removeAuthStateListener(mAuthStateListener)
     }
 
-    //https://github.com/firebase/FirebaseUI-Android/blob/master/auth/README.md#response-codes
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RC_SIGN_IN) {
-            if (resultCode == Activity.RESULT_OK) {
-                Toast.makeText(this, "Signed in!", Toast.LENGTH_SHORT).show()
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(this, "Sign in canceled", Toast.LENGTH_SHORT).show()
-                finish()
-            }
-        }
+        presenter.onActivityResult(requestCode, resultCode)
+    }
+
+    override fun cancelSignIn() {
+        finish()
     }
 
     private fun updateUI(currentUser: FirebaseUser?) {

@@ -18,34 +18,13 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var mAuthStateListener: FirebaseAuth.AuthStateListener
-    private val presenter = MainActivityPresenter(this)
+    private val presenter = MainActivityPresenter(contract = this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
-        auth = FirebaseAuth.getInstance()
-        mAuthStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
-            val user = firebaseAuth.currentUser
-            if (user != null) {
-                // Sign in logic here.
-            } else {
-                startActivityForResult(
-                    AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setIsSmartLockEnabled(false)
-                        .setAvailableProviders(
-                            Arrays.asList(
-                                AuthUI.IdpConfig.GoogleBuilder().build(),
-                                AuthUI.IdpConfig.EmailBuilder().build(),
-                                AuthUI.IdpConfig.AnonymousBuilder().build()
-                            )
-                        )
-                        .build(),
-                    RC_SIGN_IN)
-            }
-        }
+        signIn()
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -69,6 +48,16 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract {
         auth.removeAuthStateListener(mAuthStateListener)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        presenter.onOptionsItemSelected(item.itemId)
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         presenter.onActivityResult(requestCode, resultCode)
@@ -78,24 +67,36 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract {
         finish()
     }
 
-    private fun updateUI(currentUser: FirebaseUser?) {
-        titleView?.text = currentUser?.displayName
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
+    override fun signOut(): Boolean {
+        AuthUI.getInstance().signOut(this)
         return true
     }
 
-    //https://github.com/firebase/FirebaseUI-Android/blob/master/auth/README.md#sign-out
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            R.id.sign_out -> {
-                AuthUI.getInstance().signOut(this)
-                return true
+    private fun signIn() {
+        auth = FirebaseAuth.getInstance()
+        mAuthStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
+            val user = firebaseAuth.currentUser
+            if (user != null) {
+                // Sign in logic here.
+            } else {
+                startActivityForResult(
+                    AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setIsSmartLockEnabled(false)
+                        .setAvailableProviders(
+                            Arrays.asList(
+                                AuthUI.IdpConfig.GoogleBuilder().build(),
+                                AuthUI.IdpConfig.EmailBuilder().build(),
+                                AuthUI.IdpConfig.AnonymousBuilder().build()
+                            )
+                        )
+                        .build(),
+                    RC_SIGN_IN)
             }
-            else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun updateUI(currentUser: FirebaseUser?) {
+        titleView?.text = currentUser?.displayName
     }
 }

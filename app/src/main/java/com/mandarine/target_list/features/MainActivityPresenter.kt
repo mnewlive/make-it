@@ -1,9 +1,10 @@
-package com.mandarine.target_list
+package com.mandarine.target_list.features
 
 import android.app.Activity
 import android.util.Log
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseUser
+import com.mandarine.target_list.R
 import com.mandarine.target_list.constants.RC_SIGN_IN
 import java.util.*
 

@@ -1,9 +1,9 @@
-package com.mandarine.target_list
+package com.mandarine.target_list.features
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -11,7 +11,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.firebase.ui.auth.AuthUI
-import kotlinx.android.synthetic.main.content_main.*
+import com.mandarine.target_list.R
+import com.mandarine.target_list.target.TargetAddFragment
 
 class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClickListener {
 
@@ -71,8 +72,11 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClick
     }
 
     override fun addTarget() {
-        Snackbar.make(findViewById(R.id.fab),"Action button please UP",Snackbar.LENGTH_LONG)
-            .setAction("Action", null).show()
+        var fragment: Fragment? = null
+        fragment = TargetAddFragment()
+        val ft = supportFragmentManager.beginTransaction()
+        ft.replace(R.id.mainFrame, fragment)
+        ft.commit()
     }
 
     override fun signOut(): Boolean {
@@ -88,6 +92,6 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClick
     }
 
     private fun updateUI(currentUser: FirebaseUser?) {
-        titleView?.text = currentUser?.displayName
+//        titleView?.text = currentUser?.displayName
     }
 }

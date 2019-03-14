@@ -1,4 +1,4 @@
-package com.mandarine.target_list
+package com.mandarine.target_list.features
 
 interface MainActivityViewContract {
     fun cancelSignIn()

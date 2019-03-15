@@ -1,4 +1,4 @@
-package com.mandarine.target_list.features
+package com.mandarine.target_list.features.root
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,7 +12,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.firebase.ui.auth.AuthUI
 import com.mandarine.target_list.R
-import com.mandarine.target_list.target.TargetAddFragment
+import com.mandarine.target_list.features.targets.list.TargetsFragment
+import com.mandarine.target_list.features.targets.edit.TargetAddFragment
 
 class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClickListener {
 
@@ -74,6 +75,14 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClick
     override fun addTarget() {
         var fragment: Fragment? = null
         fragment = TargetAddFragment()
+        val ft = supportFragmentManager.beginTransaction()
+        ft.replace(R.id.mainFrame, fragment)
+        ft.commit()
+    }
+
+    override fun showListOfTarget() {
+        var fragment: Fragment? = null
+        fragment = TargetsFragment()
         val ft = supportFragmentManager.beginTransaction()
         ft.replace(R.id.mainFrame, fragment)
         ft.commit()

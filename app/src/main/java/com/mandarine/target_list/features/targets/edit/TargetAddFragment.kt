@@ -1,4 +1,4 @@
-package com.mandarine.target_list.target
+package com.mandarine.target_list.features.targets.edit
 
 import android.os.Bundle
 import android.support.design.widget.TextInputEditText
@@ -12,6 +12,7 @@ import android.widget.Button
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.mandarine.target_list.R
+import com.mandarine.target_list.model.Target
 
 class TargetAddFragment : Fragment() {
 

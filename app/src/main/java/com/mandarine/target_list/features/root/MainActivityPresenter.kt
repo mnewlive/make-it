@@ -1,4 +1,4 @@
-package com.mandarine.target_list.features
+package com.mandarine.target_list.features.root
 
 import android.app.Activity
 import android.util.Log
@@ -26,7 +26,10 @@ class MainActivityPresenter(private val contract: MainActivityViewContract?) {
     //https://github.com/firebase/FirebaseUI-Android/blob/master/auth/README.md#sign-out
     fun onOptionsItemSelected(itemId: Int) {
         when (itemId) {
-            R.id.action_settings -> Log.d("some", "clickOnActionSettings")
+            R.id.action_settings -> {
+                Log.d("some", "clickOnActionSettings")
+                contract?.showListOfTarget()
+            }
             R.id.sign_out -> contract?.signOut()
         }
     }

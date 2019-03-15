@@ -6,4 +6,5 @@
     <string name="target_name">Target name</string>
     <string name="description">Description</string>
     <string name="add_target">Add Target</string>
+    <string name="targets_list">Targets List</string>
 </resources>

@@ -34,7 +34,7 @@ class TargetsFragment : Fragment() {
 
     private fun updateListData() {
         databaseReference = FirebaseDatabase.getInstance().getReference("targets")
-        getClassifiedsFromDb()
+        getTargetsFromDb()
     }
 
     private fun setupViews() {
@@ -42,22 +42,19 @@ class TargetsFragment : Fragment() {
         recyclerView?.layoutManager = LinearLayoutManager(activity)
     }
 
-    private fun getClassifiedsFromDb() {
+    private fun getTargetsFromDb() {
         databaseReference?.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                //targetList.clear()
                 for (targetSnapshot in dataSnapshot.children) {
                     val target = targetSnapshot.getValue(Target::class.java)
-                    Log.d("some", "onDataChange target: $target")
                     target?.let { targetList.add(it) }
                 }
                 val recyclerViewAdapter = TargetsItemViewHolder(targetList)
-                Log.d("some", "targetList: $targetList")
                 recyclerView?.adapter = recyclerViewAdapter
             }
 
-            override fun onCancelled(p0: DatabaseError) {
-                Log.d("some", "onCanclelled")
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.d("some", "Error trying to get targets for $databaseError")
             }
         })
     }

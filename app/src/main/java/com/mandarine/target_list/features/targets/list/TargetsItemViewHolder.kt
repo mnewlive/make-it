@@ -16,7 +16,7 @@ class TargetsItemViewHolder(private val adsList: MutableList<Target>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.ad_item_layout, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_targets, parent, false)
         return ViewHolder(view)
     }
 
@@ -34,9 +34,9 @@ class TargetsItemViewHolder(private val adsList: MutableList<Target>) :
         var descriptionView = itemView.findViewById<TextView>(R.id.descriptionView)
 
         init {
-            titleView = itemView.findViewById<TextView>(R.id.titleView)
-            nameView = itemView.findViewById<TextView>(R.id.nameView)
-            descriptionView = itemView.findViewById<TextView>(R.id.descriptionView)
+            titleView = itemView.findViewById(R.id.titleView)
+            nameView = itemView.findViewById(R.id.nameView)
+            descriptionView = itemView.findViewById(R.id.descriptionView)
         }
     }
 }

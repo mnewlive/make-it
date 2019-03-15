@@ -31,10 +31,10 @@ class TargetAddFragment : Fragment() {
     }
 
     private fun setupViews() {
-        nameEditText = view?.findViewById<TextInputEditText>(R.id.nameEditText)
-        descriptionEditText = view?.findViewById<TextInputEditText>(R.id.descriptionEditText)
+        nameEditText = view?.findViewById(R.id.nameEditText)
+        descriptionEditText = view?.findViewById(R.id.descriptionEditText)
 
-        button = view?.findViewById<Button>(R.id.addNote)
+        button = view?.findViewById(R.id.addNote)
         button?.setOnClickListener { checkClick() }
     }
 
@@ -48,6 +48,4 @@ class TargetAddFragment : Fragment() {
             databaseReference?.child(id)?.setValue(target)
         } else Log.d("some", "Enter a name")
     }
-
-
 }

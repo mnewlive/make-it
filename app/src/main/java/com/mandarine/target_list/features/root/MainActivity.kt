@@ -2,7 +2,6 @@ package com.mandarine.target_list.features.root
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -12,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.firebase.ui.auth.AuthUI
 import com.mandarine.target_list.R
+import com.mandarine.target_list.common.replaceFragment
 import com.mandarine.target_list.features.targets.list.TargetsFragment
 import com.mandarine.target_list.features.targets.edit.TargetAddFragment
 
@@ -27,10 +27,6 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClick
         setSupportActionBar(toolbar)
         signIn()
         setupViews()
-    }
-
-    private fun setupViews() {
-        fab.setOnClickListener(this)
     }
 
     override fun onStart() {
@@ -73,24 +69,25 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClick
     }
 
     override fun addTarget() {
-        var fragment: Fragment? = null
-        fragment = TargetAddFragment()
-        val ft = supportFragmentManager.beginTransaction()
-        ft.replace(R.id.mainFrame, fragment)
-        ft.commit()
+        replaceFragment(TargetAddFragment())
+    }
+
+    override fun onPostResume() {
+        super.onPostResume()
+        replaceFragment(TargetsFragment())
     }
 
     override fun showListOfTarget() {
-        var fragment: Fragment? = null
-        fragment = TargetsFragment()
-        val ft = supportFragmentManager.beginTransaction()
-        ft.replace(R.id.mainFrame, fragment)
-        ft.commit()
+        replaceFragment(TargetsFragment())
     }
 
     override fun signOut(): Boolean {
         AuthUI.getInstance().signOut(this)
         return true
+    }
+
+    private fun setupViews() {
+        fab.setOnClickListener(this)
     }
 
     private fun signIn() {

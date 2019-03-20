@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClick
 
     private lateinit var auth: FirebaseAuth
     private lateinit var mAuthStateListener: FirebaseAuth.AuthStateListener
+
     private val presenter = MainActivityPresenter(contract = this)
 
     override fun onCreate(savedInstanceState: Bundle?) {

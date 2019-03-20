@@ -14,13 +14,15 @@ import android.view.LayoutInflater
 import android.view.View
 import com.google.firebase.database.DatabaseReference
 import com.mandarine.target_list.R
+import com.mandarine.target_list.interfaces.ListItemClickListener
 import com.mandarine.target_list.model.Target
 
-class TargetsFragment : Fragment() {
+class TargetsFragment : Fragment(), ListItemClickListener {
 
     private var databaseReference: DatabaseReference? = null
     private var recyclerView: RecyclerView? = null
     private var targetList: ArrayList<Target> = ArrayList()
+    private var adapter = TargetsAdapter(data = targetList, clickListener = this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_target_list, container, false)
@@ -30,6 +32,10 @@ class TargetsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
         updateListData()
+    }
+
+    override fun onListItemClick(itemIndex: Int, itemCode: String) {
+        Log.d("some", "onListItemClick")
     }
 
     private fun updateListData() {
@@ -49,7 +55,7 @@ class TargetsFragment : Fragment() {
                     val target = targetSnapshot.getValue(Target::class.java)
                     target?.let { targetList.add(it) }
                 }
-                val recyclerViewAdapter = TargetsItemViewHolder(targetList)
+                val recyclerViewAdapter = adapter
                 recyclerView?.adapter = recyclerViewAdapter
             }
 

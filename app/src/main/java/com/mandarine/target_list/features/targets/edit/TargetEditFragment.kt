@@ -62,10 +62,13 @@ class TargetEditFragment : Fragment() {
         databaseReference?.child(guid)?.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val data = dataSnapshot.value as HashMap<String, String>
-                val name = data["name"]
-                val description = data["description"]
+                val name = data["name"] ?: ""
+                val description = data["description"] ?: ""
 
-                updateViewsContent(name ?: "", description ?: "")
+                if (name.isEmpty()) Log.d("some", "nameIsEmpty")
+                else {
+                    updateViewsContent(name = name, description = description)
+                }
             }
 
             override fun onCancelled(p0: DatabaseError) {

@@ -15,14 +15,16 @@ import android.view.View
 import com.google.firebase.database.DatabaseReference
 import com.mandarine.target_list.R
 import com.mandarine.target_list.interfaces.ListItemClickListener
+import com.mandarine.target_list.interfaces.SelectTargetViewContract
 import com.mandarine.target_list.model.Target
 
-class TargetsFragment : Fragment(), ListItemClickListener {
+class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContract {
 
     private var databaseReference: DatabaseReference? = null
     private var recyclerView: RecyclerView? = null
     private var targetList: ArrayList<Target> = ArrayList()
     private var adapter = TargetsAdapter(data = targetList, clickListener = this)
+    private val presenter = TargetsPresenter(this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_target_list, container, false)
@@ -35,7 +37,11 @@ class TargetsFragment : Fragment(), ListItemClickListener {
     }
 
     override fun onListItemClick(itemIndex: Int, itemCode: String) {
-        Log.d("some", "onListItemClick")
+        presenter.onListItemClick(adapter.getItem(itemIndex))
+    }
+
+    override fun showTarget(itemCode: String) {
+        Log.d("some", "showTarget : $itemCode")
     }
 
     private fun updateListData() {
@@ -55,8 +61,7 @@ class TargetsFragment : Fragment(), ListItemClickListener {
                     val target = targetSnapshot.getValue(Target::class.java)
                     target?.let { targetList.add(it) }
                 }
-                val recyclerViewAdapter = adapter
-                recyclerView?.adapter = recyclerViewAdapter
+                recyclerView?.adapter = adapter
             }
 
             override fun onCancelled(databaseError: DatabaseError) {

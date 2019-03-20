@@ -25,7 +25,7 @@ class TargetsAdapter(private val data: MutableList<Target>, private val clickLis
         return data.size
     }
 
-    private fun getItem(position: Int) = data[position]
+    fun getItem(position: Int) = data[position]
 
     //TODO: Rename on smth like TargetsItemViewHolder
     inner class ViewHolder(view: View, private val listener: ListItemClickListener?) :

@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import com.google.firebase.database.*
 import com.mandarine.target_list.R
+import com.mandarine.target_list.constants.KEY_TARGET_GUID
 import com.mandarine.target_list.model.Target
 
 class TargetEditFragment : Fragment() {
@@ -20,11 +21,10 @@ class TargetEditFragment : Fragment() {
     private var descriptionEditText: TextInputEditText? = null
     private var button: Button? = null
     private var databaseReference: DatabaseReference? = null
-    private var presenter = TargetEditPresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.getString("guid", "")
+        arguments?.getString(KEY_TARGET_GUID, "")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -35,7 +35,7 @@ class TargetEditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         databaseReference = FirebaseDatabase.getInstance().getReference("targets")
         setupViews()
-        fetchData(arguments?.getString("guid", "") ?: "")
+        fetchData(guid = arguments?.getString(KEY_TARGET_GUID, "") ?: "")
     }
 
     private fun setupViews() {
@@ -65,7 +65,7 @@ class TargetEditFragment : Fragment() {
                 val name = data["name"]
                 val description = data["description"]
 
-                updateViewsContent(name, description)
+                updateViewsContent(name ?: "", description ?: "")
             }
 
             override fun onCancelled(p0: DatabaseError) {
@@ -83,8 +83,7 @@ class TargetEditFragment : Fragment() {
 
         fun newInstance(guid: String): TargetEditFragment =
             TargetEditFragment().apply {
-                arguments = Bundle().apply { putString("guid", guid) }
-                Log.d("some", "argumeeents $arguments")
+                arguments = Bundle().apply { putString(KEY_TARGET_GUID, guid) }
             }
     }
 }

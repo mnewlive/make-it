@@ -13,7 +13,7 @@ import com.firebase.ui.auth.AuthUI
 import com.mandarine.target_list.R
 import com.mandarine.target_list.common.replaceFragment
 import com.mandarine.target_list.features.targets.list.TargetsFragment
-import com.mandarine.target_list.features.targets.edit.TargetAddFragment
+import com.mandarine.target_list.features.targets.edit.TargetEditFragment
 
 class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClickListener {
 
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClick
     }
 
     override fun addTarget() {
-        replaceFragment(TargetAddFragment())
+        replaceFragment(TargetEditFragment())
     }
 
     override fun onPostResume() {

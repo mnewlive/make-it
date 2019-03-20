@@ -14,6 +14,8 @@ import android.view.LayoutInflater
 import android.view.View
 import com.google.firebase.database.DatabaseReference
 import com.mandarine.target_list.R
+import com.mandarine.target_list.common.addFragment
+import com.mandarine.target_list.features.targets.edit.TargetEditFragment
 import com.mandarine.target_list.interfaces.ListItemClickListener
 import com.mandarine.target_list.interfaces.SelectTargetViewContract
 import com.mandarine.target_list.model.Target
@@ -40,8 +42,8 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
         presenter.onListItemClick(adapter.getItem(itemIndex))
     }
 
-    override fun showTarget(itemCode: String) {
-        Log.d("some", "showTarget : $itemCode")
+    override fun showTarget(guid: String) {
+        activity?.addFragment(TargetEditFragment.newInstance(guid))
     }
 
     private fun updateListData() {

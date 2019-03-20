@@ -13,3 +13,10 @@ fun Activity?.replaceFragment(fragment: Fragment): Boolean {
 }
 
 fun android.app.Fragment?.createTagName(): String? = this?.javaClass?.name
+
+fun Activity?.addFragment(fragment: Fragment) {
+    if (this == null) return
+    try {
+        fragmentManager?.beginTransaction()?.replace(R.id.container, fragment, fragment.createTagName())?.addToBackStack(null)?.commit()
+    } catch (ignored: IllegalStateException) {}
+}

@@ -67,7 +67,7 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.d("some", "Error trying to get targets for $databaseError")
+                Log.d("some", "Error trying to get targets for ${databaseError.message}")
             }
         })
     }

@@ -80,7 +80,7 @@ class TargetEditFragment : Fragment() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.d("some", "onCancelled")
+                Log.d("some", databaseError.message)
             }
         })
     }

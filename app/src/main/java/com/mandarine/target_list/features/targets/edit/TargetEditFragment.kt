@@ -43,7 +43,9 @@ class TargetEditFragment : Fragment() {
         descriptionEditText = view?.findViewById(R.id.descriptionEditText)
 
         button = view?.findViewById(R.id.addNote)
-        button?.setOnClickListener { addTarget() }
+        button?.setOnClickListener {
+            if (arguments?.getString(KEY_TARGET_GUID, "").isNullOrEmpty()) addTarget() else updateTarget()
+        }
     }
 
     private fun addTarget() {
@@ -57,6 +59,14 @@ class TargetEditFragment : Fragment() {
         } else Log.d("some", "Enter a name")
     }
 
+    private fun updateTarget() {
+        val name = nameEditText?.text.toString().trim()
+        val description = descriptionEditText?.text.toString().trim()
+
+        val map = mapOf("name" to name, "description" to description)
+        databaseReference?.child(arguments?.getString(KEY_TARGET_GUID, "") ?: "")?.updateChildren(map)
+    }
+
     private fun fetchData(guid: String) {
         // Attach a listener to read the data at the target id
         databaseReference?.child(guid)?.addValueEventListener(object : ValueEventListener {
@@ -66,12 +76,10 @@ class TargetEditFragment : Fragment() {
                 val description = data["description"] ?: ""
 
                 if (name.isEmpty()) Log.d("some", "nameIsEmpty")
-                else {
-                    updateViewsContent(name = name, description = description)
-                }
+                else updateViewsContent(name = name, description = description)
             }
 
-            override fun onCancelled(p0: DatabaseError) {
+            override fun onCancelled(databaseError: DatabaseError) {
                 Log.d("some", "onCancelled")
             }
         })

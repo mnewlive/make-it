@@ -21,11 +21,8 @@ class TargetEditFragment : Fragment() {
     private var descriptionEditText: TextInputEditText? = null
     private var button: Button? = null
     private var databaseReference: DatabaseReference? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.getString(KEY_TARGET_GUID, "")
-    }
+    private val targetGuid: String
+        get() = arguments?.getString(KEY_TARGET_GUID, "") ?: ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_target_add, container, false)
@@ -35,7 +32,7 @@ class TargetEditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         databaseReference = FirebaseDatabase.getInstance().getReference("targets")
         setupViews()
-        fetchData(guid = arguments?.getString(KEY_TARGET_GUID, "") ?: "")
+        fetchData(guid = targetGuid)
     }
 
     private fun setupViews() {
@@ -44,7 +41,7 @@ class TargetEditFragment : Fragment() {
 
         button = view?.findViewById(R.id.addNote)
         button?.setOnClickListener {
-            if (arguments?.getString(KEY_TARGET_GUID, "").isNullOrEmpty()) addTarget() else updateTarget()
+            if (targetGuid.isEmpty()) addTarget() else updateTarget()
         }
     }
 
@@ -64,7 +61,7 @@ class TargetEditFragment : Fragment() {
         val description = descriptionEditText?.text.toString().trim()
 
         val map = mapOf("name" to name, "description" to description)
-        databaseReference?.child(arguments?.getString(KEY_TARGET_GUID, "") ?: "")?.updateChildren(map)
+        databaseReference?.child(targetGuid)?.updateChildren(map)
     }
 
     private fun fetchData(guid: String) {

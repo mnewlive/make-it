@@ -34,11 +34,19 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
         super.onViewCreated(view, savedInstanceState)
         databaseReference = FirebaseDatabase.getInstance().getReference("targets")
         setupViews()
-        fetchData(guid = targetGuid)
+        fetchTarget(guid = targetGuid)
     }
 
     override fun onClick(v: View?) {
         presenter.onViewClick(v?.id ?: return, targetGuid)
+    }
+
+    override fun editTarget(targetGuid: String) {
+        if (targetGuid.isEmpty()) addTarget() else updateTarget()
+    }
+
+    override fun deleteTarget(targetGuid: String) {
+        databaseReference?.child(targetGuid)?.removeValue()
     }
 
     private fun setupViews() {
@@ -49,14 +57,6 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
 
         button?.setOnClickListener(this)
         deleteButton?.setOnClickListener(this)
-    }
-
-    override fun editTarget(targetGuid: String) {
-        if (targetGuid.isEmpty()) addTarget() else updateTarget()
-    }
-
-    override fun deleteTarget(targetGuid: String) {
-        databaseReference?.child(targetGuid)?.removeValue()
     }
 
     private fun addTarget() {
@@ -78,7 +78,7 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
         databaseReference?.child(targetGuid)?.updateChildren(map)
     }
 
-    private fun fetchData(guid: String) {
+    private fun fetchTarget(guid: String) {
         // Attach a listener to read the data at the target id
         databaseReference?.child(guid)?.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {

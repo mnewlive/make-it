@@ -20,6 +20,7 @@ class TargetEditFragment : Fragment() {
     private var nameEditText: TextInputEditText? = null
     private var descriptionEditText: TextInputEditText? = null
     private var button: Button? = null
+    private var deleteButton: Button? = null
     private var databaseReference: DatabaseReference? = null
     private val targetGuid: String
         get() = arguments?.getString(KEY_TARGET_GUID, "") ?: ""
@@ -38,11 +39,17 @@ class TargetEditFragment : Fragment() {
     private fun setupViews() {
         nameEditText = view?.findViewById(R.id.nameEditText)
         descriptionEditText = view?.findViewById(R.id.descriptionEditText)
-
         button = view?.findViewById(R.id.addNote)
+        deleteButton = view?.findViewById(R.id.deleteButton)
+
         button?.setOnClickListener {
             if (targetGuid.isEmpty()) addTarget() else updateTarget()
         }
+        deleteButton?.setOnClickListener { deleteTarget(targetGuid) }
+    }
+
+    private fun deleteTarget(targetGuid: String) {
+        databaseReference?.child(targetGuid)?.removeValue()
     }
 
     private fun addTarget() {

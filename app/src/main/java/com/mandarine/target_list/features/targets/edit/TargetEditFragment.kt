@@ -15,13 +15,14 @@ import com.mandarine.target_list.R
 import com.mandarine.target_list.constants.KEY_TARGET_GUID
 import com.mandarine.target_list.model.Target
 
-class TargetEditFragment : Fragment() {
+class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract {
 
     private var nameEditText: TextInputEditText? = null
     private var descriptionEditText: TextInputEditText? = null
     private var button: Button? = null
     private var deleteButton: Button? = null
     private var databaseReference: DatabaseReference? = null
+    private val presenter = TargetEditPresenter(contract = this)
     private val targetGuid: String
         get() = arguments?.getString(KEY_TARGET_GUID, "") ?: ""
 
@@ -36,19 +37,25 @@ class TargetEditFragment : Fragment() {
         fetchData(guid = targetGuid)
     }
 
+    override fun onClick(v: View?) {
+        presenter.onViewClick(v?.id ?: return, targetGuid)
+    }
+
     private fun setupViews() {
         nameEditText = view?.findViewById(R.id.nameEditText)
         descriptionEditText = view?.findViewById(R.id.descriptionEditText)
         button = view?.findViewById(R.id.addNote)
         deleteButton = view?.findViewById(R.id.deleteButton)
 
-        button?.setOnClickListener {
-            if (targetGuid.isEmpty()) addTarget() else updateTarget()
-        }
-        deleteButton?.setOnClickListener { deleteTarget(targetGuid) }
+        button?.setOnClickListener(this)
+        deleteButton?.setOnClickListener(this)
     }
 
-    private fun deleteTarget(targetGuid: String) {
+    override fun editTarget(targetGuid: String) {
+        if (targetGuid.isEmpty()) addTarget() else updateTarget()
+    }
+
+    override fun deleteTarget(targetGuid: String) {
         databaseReference?.child(targetGuid)?.removeValue()
     }
 

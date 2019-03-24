@@ -42,7 +42,9 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
     }
 
     override fun editTarget(targetGuid: String) {
-        if (targetGuid.isEmpty()) addTarget() else updateTarget()
+        val name = nameEditText?.text.toString().trim()
+        val description = descriptionEditText?.text.toString().trim()
+        if (targetGuid.isEmpty()) addTarget(name, description) else updateTarget(name, description)
     }
 
     override fun deleteTarget(targetGuid: String) {
@@ -59,10 +61,7 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
         deleteButton?.setOnClickListener(this)
     }
 
-    private fun addTarget() {
-        val name = nameEditText?.text.toString().trim()
-        val description = descriptionEditText?.text.toString().trim()
-
+    private fun addTarget(name: String, description: String) {
         if (!TextUtils.isEmpty(name)) {
             val id: String = databaseReference?.push()?.key.toString()
             val target = Target(guid = id, name = name, description = description)
@@ -70,10 +69,7 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
         } else Log.d("some", "Enter a name")
     }
 
-    private fun updateTarget() {
-        val name = nameEditText?.text.toString().trim()
-        val description = descriptionEditText?.text.toString().trim()
-
+    private fun updateTarget(name: String, description: String) {
         val map = mapOf("name" to name, "description" to description)
         databaseReference?.child(targetGuid)?.updateChildren(map)
     }
@@ -82,9 +78,9 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
         // Attach a listener to read the data at the target id
         databaseReference?.child(guid)?.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val data = dataSnapshot.value as HashMap<String, String>
-                val name = data["name"] ?: ""
-                val description = data["description"] ?: ""
+                val data = dataSnapshot.value as? HashMap<String, String>?
+                val name = data?.get("name") ?: ""
+                val description = data?.get("description") ?: ""
 
                 if (name.isEmpty()) Log.d("some", "nameIsEmpty")
                 else updateViewsContent(name = name, description = description)

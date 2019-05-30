@@ -14,6 +14,7 @@ import com.mandarine.target_list.R
 import com.mandarine.target_list.common.replaceFragment
 import com.mandarine.target_list.features.targets.list.TargetsFragment
 import com.mandarine.target_list.features.targets.edit.TargetEditFragment
+import com.mandarine.target_list.interfaces.OnBackPressedListener
 
 class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClickListener {
 
@@ -27,6 +28,13 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClick
         setSupportActionBar(toolbar)
         signIn()
         setupViews()
+    }
+
+    override fun onBackPressed() {
+        val fragment = this.fragmentManager.findFragmentById(R.id.container)
+        (fragment as? OnBackPressedListener)?.onBackPressed()?.not()?.let {
+            super.onBackPressed()
+        }
     }
 
     override fun onStart() {

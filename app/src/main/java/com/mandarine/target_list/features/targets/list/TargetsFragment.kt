@@ -16,11 +16,12 @@ import com.google.firebase.database.DatabaseReference
 import com.mandarine.target_list.R
 import com.mandarine.target_list.common.addFragment
 import com.mandarine.target_list.features.targets.edit.TargetEditFragment
+import com.mandarine.target_list.interfaces.BaseDataSetContract
 import com.mandarine.target_list.interfaces.ListItemClickListener
 import com.mandarine.target_list.interfaces.SelectTargetViewContract
 import com.mandarine.target_list.model.Target
 
-class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContract {
+class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContract, BaseDataSetContract {
 
     private var databaseReference: DatabaseReference? = null
     private var recyclerView: RecyclerView? = null
@@ -44,6 +45,11 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
 
     override fun showTarget(guid: String) {
         activity?.addFragment(TargetEditFragment.newInstance(guid))
+    }
+
+    override fun dataSetChanged() {
+        updateListData()
+        adapter.notifyDataSetChanged()
     }
 
     private fun updateListData() {

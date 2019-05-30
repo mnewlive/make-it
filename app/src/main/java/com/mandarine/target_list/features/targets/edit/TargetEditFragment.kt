@@ -13,9 +13,10 @@ import android.widget.Button
 import com.google.firebase.database.*
 import com.mandarine.target_list.R
 import com.mandarine.target_list.constants.KEY_TARGET_GUID
+import com.mandarine.target_list.interfaces.OnBackPressedListener
 import com.mandarine.target_list.model.Target
 
-class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract {
+class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract, OnBackPressedListener {
 
     private var nameEditText: TextInputEditText? = null
     private var descriptionEditText: TextInputEditText? = null
@@ -49,6 +50,11 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
 
     override fun deleteTarget(targetGuid: String) {
         databaseReference?.child(targetGuid)?.removeValue()
+    }
+
+    override fun onBackPressed(): Boolean {
+        Log.d("some", "onBackPressed")
+        return false
     }
 
     private fun setupViews() {
@@ -98,7 +104,6 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
     }
 
     companion object {
-
         fun newInstance(guid: String): TargetEditFragment =
             TargetEditFragment().apply {
                 arguments = Bundle().apply { putString(KEY_TARGET_GUID, guid) }

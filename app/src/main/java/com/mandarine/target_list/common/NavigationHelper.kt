@@ -5,6 +5,11 @@ import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AppCompatActivity
 import com.mandarine.target_list.R
 
+/**
+ * Replace fragment in container if backStackEntryCount > 0
+ *
+ * @receiver fragment activity
+ */
 fun FragmentActivity?.replaceFragment(fragment: Fragment): Boolean {
     if (this == null) return false
     try {
@@ -18,6 +23,11 @@ fun FragmentActivity?.replaceFragment(fragment: Fragment): Boolean {
     return true
 }
 
+/**
+ * Add fragment in back stack
+ *
+ * @receiver fragment activity
+ */
 fun FragmentActivity?.addFragment(fragment: Fragment) {
     if (this == null) return
     try {

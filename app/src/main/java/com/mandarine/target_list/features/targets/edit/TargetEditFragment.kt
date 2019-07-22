@@ -12,12 +12,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import com.google.firebase.database.*
 import com.mandarine.target_list.R
-import com.mandarine.target_list.common.finishFragment
 import com.mandarine.target_list.constants.KEY_TARGET_GUID
-import com.mandarine.target_list.interfaces.OnBackPressedListener
 import com.mandarine.target_list.model.Target
 
-class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract, OnBackPressedListener {
+class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract {
 
     private var nameEditText: TextInputEditText? = null
     private var descriptionEditText: TextInputEditText? = null
@@ -51,12 +49,6 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract,
 
     override fun deleteTarget(targetGuid: String) {
         databaseReference?.child(targetGuid)?.removeValue()
-    }
-
-    override fun onBackPressed(): Boolean {
-        Log.d("some", "onBackPressed")
-        activity?.finishFragment()
-        return false
     }
 
     private fun setupViews() {

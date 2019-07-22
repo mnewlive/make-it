@@ -2,6 +2,7 @@ package com.mandarine.target_list.common
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
+import android.support.v7.app.AppCompatActivity
 import com.mandarine.target_list.R
 
 fun FragmentActivity?.replaceFragment(fragment: Fragment): Boolean {
@@ -39,6 +40,21 @@ fun FragmentActivity.finishFragment() {
     } catch (ignored: IllegalStateException) {
     } catch (e: Exception) {
     }
+}
+
+/**
+ * Get current fragment in container
+ *
+ * @receiver app compat activity
+ * @return fragment object which is in the container
+ */
+fun AppCompatActivity.currentFragmentInContainer(): Fragment? {
+    try {
+        return supportFragmentManager?.findFragmentById(R.id.container)
+    } catch (ignored: IllegalStateException) {
+    } catch (e: Exception) {
+    }
+    return null
 }
 
 /**

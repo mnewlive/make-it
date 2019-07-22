@@ -1,8 +1,8 @@
 package com.mandarine.target_list.features.targets.edit
 
-import android.app.Fragment
 import android.os.Bundle
 import android.support.design.widget.TextInputEditText
+import android.support.v4.app.Fragment
 import android.text.Editable
 import android.text.TextUtils
 import android.util.Log
@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import com.google.firebase.database.*
 import com.mandarine.target_list.R
+import com.mandarine.target_list.common.finishFragment
 import com.mandarine.target_list.constants.KEY_TARGET_GUID
 import com.mandarine.target_list.interfaces.OnBackPressedListener
 import com.mandarine.target_list.model.Target
@@ -54,6 +55,7 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract,
 
     override fun onBackPressed(): Boolean {
         Log.d("some", "onBackPressed")
+        activity?.finishFragment()
         return false
     }
 

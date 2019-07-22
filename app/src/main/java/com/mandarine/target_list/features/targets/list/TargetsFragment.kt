@@ -1,6 +1,5 @@
 package com.mandarine.target_list.features.targets.list
 
-import android.app.Fragment
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.ValueEventListener
@@ -8,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.google.firebase.database.FirebaseDatabase
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.ViewGroup
 import android.view.LayoutInflater

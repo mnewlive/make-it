@@ -1,8 +1,8 @@
 package com.mandarine.target_list.features.targets.edit
 
-import android.app.Fragment
 import android.os.Bundle
 import android.support.design.widget.TextInputEditText
+import android.support.v4.app.Fragment
 import android.text.Editable
 import android.text.TextUtils
 import android.util.Log
@@ -98,7 +98,6 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
     }
 
     companion object {
-
         fun newInstance(guid: String): TargetEditFragment =
             TargetEditFragment().apply {
                 arguments = Bundle().apply { putString(KEY_TARGET_GUID, guid) }

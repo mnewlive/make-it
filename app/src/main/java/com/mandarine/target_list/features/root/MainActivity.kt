@@ -11,9 +11,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.firebase.ui.auth.AuthUI
 import com.mandarine.target_list.R
+import com.mandarine.target_list.common.currentFragmentInContainer
 import com.mandarine.target_list.common.replaceFragment
 import com.mandarine.target_list.features.targets.list.TargetsFragment
 import com.mandarine.target_list.features.targets.edit.TargetEditFragment
+import com.mandarine.target_list.interfaces.OnBackPressListener
 
 class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClickListener {
 
@@ -27,6 +29,13 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClick
         setSupportActionBar(toolbar)
         signIn()
         setupViews()
+    }
+
+    override fun onBackPressed() {
+        val onBackPressListener = currentFragmentInContainer() as? OnBackPressListener
+        if (onBackPressListener?.onBackPress() != true) {
+            super.onBackPressed()
+        }
     }
 
     override fun onStart() {

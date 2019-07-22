@@ -1,6 +1,5 @@
 package com.mandarine.target_list.features.targets.list
 
-import android.app.Fragment
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.ValueEventListener
@@ -8,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.google.firebase.database.FirebaseDatabase
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.ViewGroup
 import android.view.LayoutInflater
@@ -16,11 +16,12 @@ import com.google.firebase.database.DatabaseReference
 import com.mandarine.target_list.R
 import com.mandarine.target_list.common.addFragment
 import com.mandarine.target_list.features.targets.edit.TargetEditFragment
+import com.mandarine.target_list.interfaces.BaseDataSetContract
 import com.mandarine.target_list.interfaces.ListItemClickListener
 import com.mandarine.target_list.interfaces.SelectTargetViewContract
 import com.mandarine.target_list.model.Target
 
-class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContract {
+class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContract, BaseDataSetContract {
 
     private var databaseReference: DatabaseReference? = null
     private var recyclerView: RecyclerView? = null
@@ -44,6 +45,12 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
 
     override fun showTarget(guid: String) {
         activity?.addFragment(TargetEditFragment.newInstance(guid))
+    }
+
+    //TODO: https://bitbucket.org/morozovvadim91/target-list/issues/1/show-the-current-list-of-targets
+    override fun dataSetChanged() {
+        updateListData()
+        adapter.notifyDataSetChanged()
     }
 
     private fun updateListData() {

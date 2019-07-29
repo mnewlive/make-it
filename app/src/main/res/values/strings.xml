@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">target-list</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">My Targets</string>
+    <string name="signed_out">Sign out</string>
+    <string name="create_target">Create Target</string>
+    <string name="target_name">Target name</string>
+    <string name="description">Description</string>
+    <string name="add_target">Add target</string>
+    <string name="delete_target">Delete target</string>
+    <string name="targets_list">Targets List</string>
 </resources>

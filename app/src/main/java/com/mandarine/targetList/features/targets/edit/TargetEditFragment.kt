@@ -1,4 +1,4 @@
-package com.mandarine.target_list.features.targets.edit
+package com.mandarine.targetList.features.targets.edit
 
 import android.os.Bundle
 import android.support.design.widget.TextInputEditText
@@ -10,10 +10,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import com.google.firebase.database.*
-import com.mandarine.target_list.R
-import com.mandarine.target_list.constants.KEY_TARGET_GUID
-import com.mandarine.target_list.model.Target
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.DatabaseError
+import com.mandarine.targetList.R
+import com.mandarine.targetList.constants.KEY_TARGET_GUID
+import com.mandarine.targetList.model.Target
 
 class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract {
 

@@ -1,4 +1,4 @@
-package com.mandarine.target_list.features.targets.list
+package com.mandarine.targetList.features.targets.list
 
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DataSnapshot
@@ -13,13 +13,13 @@ import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
 import com.google.firebase.database.DatabaseReference
-import com.mandarine.target_list.R
-import com.mandarine.target_list.common.addFragment
-import com.mandarine.target_list.features.targets.edit.TargetEditFragment
-import com.mandarine.target_list.interfaces.BaseDataSetContract
-import com.mandarine.target_list.interfaces.ListItemClickListener
-import com.mandarine.target_list.interfaces.SelectTargetViewContract
-import com.mandarine.target_list.model.Target
+import com.mandarine.targetList.R
+import com.mandarine.targetList.common.addFragment
+import com.mandarine.targetList.features.targets.edit.TargetEditFragment
+import com.mandarine.targetList.interfaces.BaseDataSetContract
+import com.mandarine.targetList.interfaces.ListItemClickListener
+import com.mandarine.targetList.interfaces.SelectTargetViewContract
+import com.mandarine.targetList.model.Target
 
 class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContract, BaseDataSetContract {
 
@@ -47,7 +47,7 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
         activity?.addFragment(TargetEditFragment.newInstance(guid))
     }
 
-    //TODO: https://bitbucket.org/morozovvadim91/target-list/issues/1/show-the-current-list-of-targets
+    // TODO: https://bitbucket.org/morozovvadim91/target-list/issues/1/show-the-current-list-of-targets
     override fun dataSetChanged() {
         updateListData()
         adapter.notifyDataSetChanged()

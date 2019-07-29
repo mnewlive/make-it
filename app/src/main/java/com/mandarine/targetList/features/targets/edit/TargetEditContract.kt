@@ -1,4 +1,4 @@
-package com.mandarine.target_list.features.targets.edit
+package com.mandarine.targetList.features.targets.edit
 
 interface TargetEditContract {
     fun editTarget(targetGuid: String)

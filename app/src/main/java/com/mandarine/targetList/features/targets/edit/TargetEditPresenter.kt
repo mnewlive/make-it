@@ -1,6 +1,6 @@
-package com.mandarine.target_list.features.targets.edit
+package com.mandarine.targetList.features.targets.edit
 
-import com.mandarine.target_list.R
+import com.mandarine.targetList.R
 
 class TargetEditPresenter(private val contract: TargetEditContract) {
 

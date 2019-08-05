@@ -1,10 +1,10 @@
 package com.mandarine.targetList.features.targets.list
 
-import android.widget.TextView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.mandarine.targetList.R
 import com.mandarine.targetList.interfaces.ListItemClickListener
 import com.mandarine.targetList.model.Target

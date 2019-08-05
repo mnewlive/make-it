@@ -11,10 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.DatabaseError
 import com.mandarine.targetList.R
 import com.mandarine.targetList.constants.KEY_TARGET_GUID
 import com.mandarine.targetList.model.Target

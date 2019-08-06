@@ -49,16 +49,6 @@ configurations {
     ktlint
 }
 
-//task ktlint(type: JavaExec, dependsOn: classes) {
-//    main = 'com.pinterest.ktlint.Main'
-//    // adding compiled classes to the classpath so that ktlint would validate project's sources
-//    // using its own ruleset (in other words to dogfood)
-//    classpath = configurations.ktlint + sourceSets.main.output
-//    args '--debug', 'src/**/*.kt'
-//}
-//
-//check.dependsOn ktlint
-
 task ktlint(type: JavaExec, group: "verification") {
     description = "Check Kotlin code style."
     classpath = configurations.ktlint

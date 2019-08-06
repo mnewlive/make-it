@@ -1,1 +1,1 @@
-include ':app', ':custom_ktlint_rules'
+include ':app'

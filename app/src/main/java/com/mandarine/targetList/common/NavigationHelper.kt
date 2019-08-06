@@ -1,9 +1,9 @@
-package com.mandarine.target_list.common
+package com.mandarine.targetList.common
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AppCompatActivity
-import com.mandarine.target_list.R
+import com.mandarine.targetList.R
 
 /**
  * Replace fragment in container if backStackEntryCount > 0

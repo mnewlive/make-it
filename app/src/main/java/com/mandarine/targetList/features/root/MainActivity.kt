@@ -1,4 +1,4 @@
-package com.mandarine.target_list.features.root
+package com.mandarine.targetList.features.root
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,16 +6,16 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import kotlinx.android.synthetic.main.activity_main.*
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.firebase.ui.auth.AuthUI
-import com.mandarine.target_list.R
-import com.mandarine.target_list.common.currentFragmentInContainer
-import com.mandarine.target_list.common.replaceFragment
-import com.mandarine.target_list.features.targets.list.TargetsFragment
-import com.mandarine.target_list.features.targets.edit.TargetEditFragment
-import com.mandarine.target_list.interfaces.OnBackPressListener
+import com.mandarine.targetList.R
+import com.mandarine.targetList.common.currentFragmentInContainer
+import com.mandarine.targetList.common.replaceFragment
+import com.mandarine.targetList.features.targets.edit.TargetEditFragment
+import com.mandarine.targetList.features.targets.list.TargetsFragment
+import com.mandarine.targetList.interfaces.OnBackPressListener
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClickListener {
 

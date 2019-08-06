@@ -1,4 +1,4 @@
-package com.mandarine.target_list.interfaces
+package com.mandarine.targetList.interfaces
 
 interface ListItemClickListener {
     fun onListItemClick(itemIndex: Int, itemCode: String)

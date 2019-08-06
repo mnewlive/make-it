@@ -1,17 +1,17 @@
-package com.mandarine.target_list.features.root
+package com.mandarine.targetList.features.root
 
 import android.app.Activity
 import android.util.Log
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseUser
-import com.mandarine.target_list.R
-import com.mandarine.target_list.constants.RC_SIGN_IN
-import java.util.*
+import com.mandarine.targetList.R
+import com.mandarine.targetList.constants.RC_SIGN_IN
+import java.util.Arrays
 
-//TODO: Test
+// TODO: Test
 class MainActivityPresenter(private val contract: MainActivityViewContract?) {
 
-    //https://github.com/firebase/FirebaseUI-Android/blob/master/auth/README.md#response-codes
+    // https://github.com/firebase/FirebaseUI-Android/blob/master/auth/README.md#response-codes
     fun onActivityResult(requestCode: Int, resultCode: Int) {
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == Activity.RESULT_OK) {
@@ -23,7 +23,7 @@ class MainActivityPresenter(private val contract: MainActivityViewContract?) {
         }
     }
 
-    //https://github.com/firebase/FirebaseUI-Android/blob/master/auth/README.md#sign-out
+    // https://github.com/firebase/FirebaseUI-Android/blob/master/auth/README.md#sign-out
     fun onOptionsItemSelected(itemId: Int) {
         when (itemId) {
             R.id.action_settings -> {

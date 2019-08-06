@@ -1,13 +1,13 @@
-package com.mandarine.target_list.features.targets.list
+package com.mandarine.targetList.features.targets.list
 
-import android.widget.TextView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.mandarine.target_list.R
-import com.mandarine.target_list.interfaces.ListItemClickListener
-import com.mandarine.target_list.model.Target
+import android.widget.TextView
+import com.mandarine.targetList.R
+import com.mandarine.targetList.interfaces.ListItemClickListener
+import com.mandarine.targetList.model.Target
 
 class TargetsAdapter(private val data: MutableList<Target>, private val clickListener: ListItemClickListener) :
     RecyclerView.Adapter<TargetsAdapter.ViewHolder>() {
@@ -27,9 +27,9 @@ class TargetsAdapter(private val data: MutableList<Target>, private val clickLis
 
     fun getItem(position: Int) = data[position]
 
-    //TODO: Rename on smth like TargetsItemViewHolder
+    // TODO: Rename on smth like TargetsItemViewHolder
     inner class ViewHolder(view: View, private val listener: ListItemClickListener?) :
-        RecyclerView.ViewHolder(view), View.OnClickListener{
+        RecyclerView.ViewHolder(view), View.OnClickListener {
 
         private var titleView = itemView.findViewById<TextView>(R.id.titleView)
         private var nameView = itemView.findViewById<TextView>(R.id.nameView)

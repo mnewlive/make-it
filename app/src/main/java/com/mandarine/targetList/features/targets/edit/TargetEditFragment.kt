@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -26,6 +28,7 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
     private var button: Button? = null
     private var deleteButton: Button? = null
     private var databaseReference: DatabaseReference? = null
+    private var firebaseUser: FirebaseUser? = null
     private val presenter = TargetEditPresenter(contract = this)
     private val targetGuid: String
         get() = arguments?.getString(KEY_TARGET_GUID, "") ?: ""
@@ -36,7 +39,8 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        databaseReference = FirebaseDatabase.getInstance().getReference("targets")
+        databaseReference = FirebaseDatabase.getInstance().reference
+        firebaseUser = FirebaseAuth.getInstance().currentUser
         setupViews()
         fetchTarget(guid = targetGuid)
     }
@@ -66,10 +70,11 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
     }
 
     private fun addTarget(name: String, description: String) {
+        val uid = firebaseUser!!.uid
         if (!TextUtils.isEmpty(name)) {
-            val id: String = databaseReference?.push()?.key.toString()
-            val target = Target(guid = id, name = name, description = description)
-            databaseReference?.child(id)?.setValue(target)
+            val target = Target(guid = "some", name = name, description = description)
+            databaseReference?.child("targets")?.child("users")
+                ?.child(uid)?.child("targets")?.push()?.setValue(target)
         } else Log.d("some", "Enter a name")
     }
 

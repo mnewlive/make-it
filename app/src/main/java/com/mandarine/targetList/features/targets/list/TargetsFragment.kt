@@ -48,6 +48,7 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
         activity?.addFragment(TargetEditFragment.newInstance(guid))
     }
 
+    // TODO: https://bitbucket.org/morozovvadim91/target-list/issues/1/show-the-current-list-of-targets
     override fun dataSetChanged() {
         updateListData()
         adapter.notifyDataSetChanged()

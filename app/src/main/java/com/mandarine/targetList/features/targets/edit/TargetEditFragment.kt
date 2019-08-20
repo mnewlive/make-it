@@ -32,6 +32,7 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
     private val presenter = TargetEditPresenter(contract = this)
     private val targetGuid: String
         get() = arguments?.getString(KEY_TARGET_GUID, "") ?: ""
+    private var uid: String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_target_add, container, false)
@@ -41,6 +42,7 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
         super.onViewCreated(view, savedInstanceState)
         databaseReference = FirebaseDatabase.getInstance().reference
         firebaseUser = FirebaseAuth.getInstance().currentUser
+        uid = firebaseUser!!.uid
         setupViews()
         fetchTarget(guid = targetGuid)
     }
@@ -56,7 +58,20 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
     }
 
     override fun deleteTarget(targetGuid: String) {
-        databaseReference?.child(targetGuid)?.removeValue()
+        val targetsRef = databaseReference?.child("targets")?.child("users")?.child(uid.toString())?.child("targets")
+        val query = targetsRef?.orderByChild("guid")?.equalTo(targetGuid)
+        val valueEventListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (targetSnapshot in dataSnapshot.children) {
+                    targetSnapshot.ref.removeValue()
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.d("some", databaseError.message)
+            }
+        }
+        query?.addListenerForSingleValueEvent(valueEventListener)
     }
 
     private fun setupViews() {
@@ -70,35 +85,53 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
     }
 
     private fun addTarget(name: String, description: String) {
-        val uid = firebaseUser!!.uid
         if (!TextUtils.isEmpty(name)) {
-            val target = Target(guid = "some", name = name, description = description)
+            val id: String = databaseReference?.push()?.key.toString()
+            val target = Target(guid = id, name = name, description = description)
             databaseReference?.child("targets")?.child("users")
-                ?.child(uid)?.child("targets")?.push()?.setValue(target)
+                ?.child(uid.toString())?.child("targets")?.push()?.setValue(target)
         } else Log.d("some", "Enter a name")
     }
 
     private fun updateTarget(name: String, description: String) {
-        val map = mapOf("name" to name, "description" to description)
-        databaseReference?.child(targetGuid)?.updateChildren(map)
-    }
-
-    private fun fetchTarget(guid: String) {
-        // Attach a listener to read the data at the target id
-        databaseReference?.child(guid)?.addValueEventListener(object : ValueEventListener {
+        val targetsRef = databaseReference?.child("targets")?.child("users")?.child(uid.toString())?.child("targets")
+        val query = targetsRef?.orderByChild("guid")?.equalTo(targetGuid)
+        val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val data = dataSnapshot.value as? HashMap<String, String>?
-                val name = data?.get("name") ?: ""
-                val description = data?.get("description") ?: ""
-
-                if (name.isEmpty()) Log.d("some", "nameIsEmpty")
-                else updateViewsContent(name = name, description = description)
+                for (targetSnapshot in dataSnapshot.children) {
+                    targetSnapshot.child("name").ref.setValue(name)
+                    targetSnapshot.child("description").ref.setValue(description)
+                }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.d("some", databaseError.message)
             }
-        })
+        }
+        query?.addListenerForSingleValueEvent(valueEventListener)
+    }
+
+    private fun fetchTarget(guid: String) {
+        val targetsRef = databaseReference!!.child("targets").child("users").child(uid.toString()).child("targets")
+        val query = targetsRef.orderByChild("guid").equalTo(guid)
+        val valueEventListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (targetSnapshot in dataSnapshot.children) {
+                    val target = targetSnapshot.getValue(Target::class.java)
+
+                    val name = target?.name ?: ""
+                    val description = target?.description ?: ""
+
+                    if (name.isEmpty()) Log.d("some", "nameIsEmpty")
+                    else updateViewsContent(name = name, description = description)
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.d("some", databaseError.message)
+            }
+        }
+        query.addListenerForSingleValueEvent(valueEventListener)
     }
 
     private fun updateViewsContent(name: String?, description: String?) {

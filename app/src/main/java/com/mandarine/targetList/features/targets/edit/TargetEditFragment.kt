@@ -27,12 +27,15 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
     private var descriptionEditText: TextInputEditText? = null
     private var button: Button? = null
     private var deleteButton: Button? = null
-    private var databaseReference: DatabaseReference? = null
-    private var firebaseUser: FirebaseUser? = null
+
     private val presenter = TargetEditPresenter(contract = this)
     private val targetGuid: String
         get() = arguments?.getString(KEY_TARGET_GUID, "") ?: ""
-    private var uid: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        presenter.setInitialData(targetGuid)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_target_add, container, false)
@@ -40,11 +43,13 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        databaseReference = FirebaseDatabase.getInstance().reference
-        firebaseUser = FirebaseAuth.getInstance().currentUser
-        uid = firebaseUser!!.uid
+        presenter.fetchTarget(guid = targetGuid)
         setupViews()
-        fetchTarget(guid = targetGuid)
+    }
+
+    override fun updateViewsContent(name: String?, description: String?) {
+        nameEditText?.text = Editable.Factory.getInstance().newEditable(name)
+        descriptionEditText?.text = Editable.Factory.getInstance().newEditable(description)
     }
 
     override fun onClick(v: View?) {
@@ -54,24 +59,12 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
     override fun editTarget(targetGuid: String) {
         val name = nameEditText?.text.toString().trim()
         val description = descriptionEditText?.text.toString().trim()
-        if (targetGuid.isEmpty()) addTarget(name, description) else updateTarget(name, description)
+        if (targetGuid.isEmpty()) presenter.addTarget(name, description)
+        else presenter.updateTarget(name, description)
     }
 
     override fun deleteTarget(targetGuid: String) {
-        val targetsRef = databaseReference?.child("targets")?.child("users")?.child(uid.toString())?.child("targets")
-        val query = targetsRef?.orderByChild("guid")?.equalTo(targetGuid)
-        val valueEventListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (targetSnapshot in dataSnapshot.children) {
-                    targetSnapshot.ref.removeValue()
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.d("some", databaseError.message)
-            }
-        }
-        query?.addListenerForSingleValueEvent(valueEventListener)
+        presenter.deleteTarget(targetGuid)
     }
 
     private fun setupViews() {
@@ -82,61 +75,6 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
 
         button?.setOnClickListener(this)
         deleteButton?.setOnClickListener(this)
-    }
-
-    private fun addTarget(name: String, description: String) {
-        if (!TextUtils.isEmpty(name)) {
-            val id: String = databaseReference?.push()?.key.toString()
-            val target = Target(guid = id, name = name, description = description)
-            databaseReference?.child("targets")?.child("users")
-                ?.child(uid.toString())?.child("targets")?.push()?.setValue(target)
-        } else Log.d("some", "Enter a name")
-    }
-
-    private fun updateTarget(name: String, description: String) {
-        val targetsRef = databaseReference?.child("targets")?.child("users")?.child(uid.toString())?.child("targets")
-        val query = targetsRef?.orderByChild("guid")?.equalTo(targetGuid)
-        val valueEventListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (targetSnapshot in dataSnapshot.children) {
-                    targetSnapshot.child("name").ref.setValue(name)
-                    targetSnapshot.child("description").ref.setValue(description)
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.d("some", databaseError.message)
-            }
-        }
-        query?.addListenerForSingleValueEvent(valueEventListener)
-    }
-
-    private fun fetchTarget(guid: String) {
-        val targetsRef = databaseReference!!.child("targets").child("users").child(uid.toString()).child("targets")
-        val query = targetsRef.orderByChild("guid").equalTo(guid)
-        val valueEventListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (targetSnapshot in dataSnapshot.children) {
-                    val target = targetSnapshot.getValue(Target::class.java)
-
-                    val name = target?.name ?: ""
-                    val description = target?.description ?: ""
-
-                    if (name.isEmpty()) Log.d("some", "nameIsEmpty")
-                    else updateViewsContent(name = name, description = description)
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.d("some", databaseError.message)
-            }
-        }
-        query.addListenerForSingleValueEvent(valueEventListener)
-    }
-
-    private fun updateViewsContent(name: String?, description: String?) {
-        nameEditText?.text = Editable.Factory.getInstance().newEditable(name)
-        descriptionEditText?.text = Editable.Factory.getInstance().newEditable(description)
     }
 
     companion object {

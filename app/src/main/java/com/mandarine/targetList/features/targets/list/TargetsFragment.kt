@@ -72,6 +72,7 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
         val targetsRef = databaseReference?.child("targets")?.child("users")?.child(uid)?.child("targets")
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                targetList.clear()
                 for (targetSnapshot in dataSnapshot.children) {
                     val target = targetSnapshot.getValue(Target::class.java)
                     target?.let { targetList.add(it) }

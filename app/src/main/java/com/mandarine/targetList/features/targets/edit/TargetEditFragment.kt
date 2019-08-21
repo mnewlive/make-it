@@ -33,7 +33,7 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.fetchTarget(guid = targetGuid)
+        presenter.fetchTarget()
         setupViews()
     }
 
@@ -53,8 +53,8 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
         else presenter.updateTarget(name, description)
     }
 
-    override fun deleteTarget(targetGuid: String) {
-        presenter.deleteTarget(targetGuid)
+    override fun deleteTarget() {
+        presenter.deleteTarget()
     }
 
     private fun setupViews() {

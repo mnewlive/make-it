@@ -16,7 +16,7 @@ fun FragmentActivity?.replaceFragment(fragment: Fragment): Boolean {
         supportFragmentManager?.beginTransaction()?.replace(
             R.id.container, fragment,
             fragment.createTagName()
-        )?.commit()
+        )?.addToBackStack(fragment.createTagName())?.commit()
     } catch (ignored: IllegalStateException) {
         return false
     }

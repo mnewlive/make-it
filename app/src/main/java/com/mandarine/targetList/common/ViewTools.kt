@@ -11,3 +11,8 @@ import android.view.ViewGroup
  */
 fun ViewGroup.inflateListItemView(resId: Int): View =
     LayoutInflater.from(context).inflate(resId, this, false)
+
+
+fun View.setVisible(show: Boolean = true) {
+    this.visibility = if (show) View.VISIBLE else View.GONE
+}

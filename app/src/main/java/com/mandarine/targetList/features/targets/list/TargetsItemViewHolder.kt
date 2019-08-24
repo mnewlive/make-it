@@ -24,7 +24,7 @@ class TargetsItemViewHolder(
     private var priorityView = itemView.findViewById<View>(R.id.priorityView)
 
     init {
-        titleView.setOnClickListener(this)
+        itemView.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {

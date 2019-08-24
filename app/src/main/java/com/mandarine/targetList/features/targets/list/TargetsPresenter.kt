@@ -18,8 +18,8 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
         databaseReference = FirebaseDatabase.getInstance().reference
     }
 
-    fun onListItemClick(item: Target) {
-        contract.showTarget(item.guid)
+    fun onListItemClick(targetGuid: String) {
+        contract.showTarget(targetGuid)
     }
 
     fun getTargetsFromDb() {

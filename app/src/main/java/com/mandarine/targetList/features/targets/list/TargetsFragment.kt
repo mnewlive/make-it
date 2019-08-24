@@ -14,6 +14,7 @@ import com.mandarine.targetList.features.targets.edit.TargetEditFragment
 import com.mandarine.targetList.interfaces.BaseDataSetContract
 import com.mandarine.targetList.interfaces.ListItemClickListener
 import com.mandarine.targetList.interfaces.SelectTargetViewContract
+import com.mandarine.targetList.model.Target
 
 class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContract, BaseDataSetContract {
 
@@ -33,7 +34,7 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
     }
 
     override fun onListItemClick(itemIndex: Int, itemCode: String) {
-//        presenter.onListItemClick(adapter.getItem(itemIndex))
+        presenter.onListItemClick((adapter.getItem(itemIndex) as Target).guid)
     }
 
     override fun showTarget(guid: String) {

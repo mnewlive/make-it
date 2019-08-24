@@ -6,7 +6,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.mandarine.targetList.R
-import com.mandarine.targetList.inflateListItemView
+import com.mandarine.targetList.common.inflateListItemView
 import com.mandarine.targetList.interfaces.ListItemClickListener
 import com.mandarine.targetList.model.Target
 

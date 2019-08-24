@@ -3,4 +3,10 @@
 
     <dimen name="actionbar_height">@dimen/dimen_52</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="dimen_6">6dp</dimen>
+    <dimen name="dimen_10">10dp</dimen>
+
+    <dimen name="text_16">16sp</dimen>
+    <dimen name="text_20">20sp</dimen>
 </resources>

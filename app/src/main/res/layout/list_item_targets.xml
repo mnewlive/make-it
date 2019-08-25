@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    app:cardCornerRadius="6dp"
-    app:cardElevation="6dp"
+    android:layout_margin="@dimen/dimen_8"
+    android:layout_marginLeft="@dimen/dimen_8"
+    android:layout_marginRight="@dimen/dimen_8"
+    app:cardCornerRadius="@dimen/dimen_6"
+    app:cardElevation="@dimen/dimen_6"
     tools:context=".features.root.MainActivity">
 
     <LinearLayout

@@ -24,6 +24,6 @@
         android:layout_height="match_parent"
         android:visibility="gone"
         app:iconSrc="@drawable/ic_target"
-        app:subTitleText="Quickly add your first target"
-        app:titleText="You don't have targets now" />
+        app:subTitleText="@string/empty_screen_description_targets"
+        app:titleText="@string/empty_screen_title_targets" />
 </androidx.constraintlayout.widget.ConstraintLayout>

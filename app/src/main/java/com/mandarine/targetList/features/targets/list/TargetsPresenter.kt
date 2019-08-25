@@ -22,6 +22,10 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
         contract.showTarget(targetGuid)
     }
 
+    fun shouldShowContent(): Boolean = targetList.isNotEmpty()
+
+    fun shouldShowEpmtyView(): Boolean = !shouldShowContent()
+
     fun getTargetsFromDb() {
         val uid = firebaseUser!!.uid
         val targetsRef = databaseReference?.child("targets")?.child("users")?.child(uid)?.child("targets")

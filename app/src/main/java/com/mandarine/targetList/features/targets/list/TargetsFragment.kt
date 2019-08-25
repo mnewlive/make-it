@@ -10,11 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.mandarine.targetList.R
 import com.mandarine.targetList.common.addFragment
+import com.mandarine.targetList.common.setVisible
 import com.mandarine.targetList.features.targets.edit.TargetEditFragment
 import com.mandarine.targetList.interfaces.BaseDataSetContract
 import com.mandarine.targetList.interfaces.ListItemClickListener
 import com.mandarine.targetList.interfaces.SelectTargetViewContract
 import com.mandarine.targetList.model.Target
+import kotlinx.android.synthetic.main.fragment_target_list.*
 
 class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContract, BaseDataSetContract {
 
@@ -49,6 +51,8 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
     override fun updateViewContent() {
         adapter.data = presenter.targetList
         recyclerView?.adapter = adapter
+        recyclerView?.setVisible(presenter.shouldShowContent())
+        emptyView?.setVisible(presenter.shouldShowEpmtyView())
     }
 
     private fun updateListData() {

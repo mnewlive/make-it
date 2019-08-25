@@ -7,17 +7,21 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.firebase.ui.auth.AuthUI
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.mandarine.targetList.R
+import com.mandarine.targetList.calendar.CalendarFragment
 import com.mandarine.targetList.common.currentFragmentInContainer
 import com.mandarine.targetList.common.replaceFragment
+import com.mandarine.targetList.features.settings.SettingsListFragment
 import com.mandarine.targetList.features.targets.edit.TargetEditFragment
 import com.mandarine.targetList.features.targets.list.TargetsFragment
 import com.mandarine.targetList.interfaces.OnBackPressListener
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClickListener {
+class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClickListener,
+    BottomNavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var mAuthStateListener: FirebaseAuth.AuthStateListener
@@ -90,6 +94,17 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClick
         replaceFragment(TargetsFragment())
     }
 
+    override fun showSettingsList() {
+        replaceFragment(SettingsListFragment())
+    }
+
+    override fun showCalendar() {
+        replaceFragment(CalendarFragment())
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean =
+        presenter.onNavigationItemSelected(item.itemId)
+
     override fun signOut(): Boolean {
         AuthUI.getInstance().signOut(this)
         return true
@@ -97,6 +112,7 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClick
 
     private fun setupViews() {
         fab.setOnClickListener(this)
+        bottomNavigationView?.setOnNavigationItemSelectedListener(this)
     }
 
     private fun signIn() {

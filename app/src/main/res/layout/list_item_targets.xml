@@ -19,7 +19,7 @@
             android:id="@+id/priorityView"
             android:layout_width="@dimen/dimen_6"
             android:layout_height="match_parent"
-            android:background="@android:color/holo_red_dark" />
+            tools:background="@android:color/holo_red_dark" />
 
         <LinearLayout
             android:id="@+id/contentLayout"
@@ -31,7 +31,7 @@
 
             <TextView
                 android:id="@+id/titleView"
-                style="@style/Text20DarkRegular"
+                style="@style/Text20BlackRegular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="Title" />

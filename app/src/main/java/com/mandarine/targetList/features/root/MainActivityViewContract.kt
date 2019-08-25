@@ -5,4 +5,6 @@ interface MainActivityViewContract {
     fun signOut(): Boolean
     fun addTarget()
     fun showListOfTarget()
+    fun showSettingsList()
+    fun showCalendar()
 }

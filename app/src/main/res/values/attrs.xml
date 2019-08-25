@@ -5,4 +5,9 @@
         <attr name="titleText" />
         <attr name="subTitleText" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="ImageTitleView">
+        <attr name="titleText" />
+        <attr name="imageSrc" />
+    </declare-styleable>
 </resources>

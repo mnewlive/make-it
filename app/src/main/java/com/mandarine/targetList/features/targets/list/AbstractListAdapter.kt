@@ -17,6 +17,8 @@ abstract class AbstractListAdapter(initialData: List<Any> = emptyList()) :
 
     fun getItem(position: Int) = _data.getOrNull(position)
 
+    protected fun isLastPosition(position: Int) = position == itemCount - 1
+
     override fun getItemCount(): Int = _data.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

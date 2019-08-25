@@ -14,12 +14,13 @@ import com.mandarine.targetList.features.targets.edit.TargetEditFragment
 import com.mandarine.targetList.interfaces.BaseDataSetContract
 import com.mandarine.targetList.interfaces.ListItemClickListener
 import com.mandarine.targetList.interfaces.SelectTargetViewContract
+import com.mandarine.targetList.model.Target
 
 class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContract, BaseDataSetContract {
 
     private var recyclerView: RecyclerView? = null
     private val presenter = TargetsPresenter(this)
-    private var adapter = TargetsAdapter(data = presenter.targetList, clickListener = this)
+    private var adapter = TargetsAdapter(clickListener = this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_target_list, container, false)
@@ -33,7 +34,7 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
     }
 
     override fun onListItemClick(itemIndex: Int, itemCode: String) {
-        presenter.onListItemClick(adapter.getItem(itemIndex))
+        presenter.onListItemClick((adapter.getItem(itemIndex) as Target).guid)
     }
 
     override fun showTarget(guid: String) {
@@ -46,6 +47,7 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
     }
 
     override fun updateViewContent() {
+        adapter.data = presenter.targetList
         recyclerView?.adapter = adapter
     }
 

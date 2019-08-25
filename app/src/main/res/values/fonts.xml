@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="medium" translatable="false">medium</string>
+    <string name="regular" translatable="false">regular</string>
+    <string name="light" translatable="false">light</string>
+    <string name="bold" translatable="false">bold</string>
+</resources>

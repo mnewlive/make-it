@@ -5,7 +5,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.mandarine.targetList.R
 import com.mandarine.targetList.features.settings.list.ImageTitleViewModel
 
-class SettingsPresenter {
+class SettingsPresenter(private val contract: SettingsContract) {
 
     private var firebaseUser = FirebaseAuth.getInstance().currentUser
 
@@ -21,7 +21,7 @@ class SettingsPresenter {
         when (item?.textId ?: return) {
             R.string.about -> Log.d("some", "about")
             R.string.contact_us -> Log.d("some", "contact us")
-            R.string.log_out -> Log.d("some", "Log out")
+            R.string.log_out -> contract.logOut()
         }
     }
 

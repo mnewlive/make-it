@@ -17,4 +17,7 @@
     <string name="contact_us">Contact us</string>
     <string name="your_profile">Your Profile</string>
     <string name="log_out">Log out</string>
+    <string name="log_out_question">Are you sure you want to log out?</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_ok">OK</string>
 </resources>

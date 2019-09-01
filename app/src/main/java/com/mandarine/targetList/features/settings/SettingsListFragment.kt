@@ -1,5 +1,6 @@
 package com.mandarine.targetList.features.settings
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,11 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.firebase.ui.auth.AuthUI
 import com.mandarine.targetList.R
+import com.mandarine.targetList.common.showLogoutDialog
 import com.mandarine.targetList.features.settings.list.ImageTitleViewModel
 import com.mandarine.targetList.interfaces.ListItemClickListener
 import kotlinx.android.synthetic.main.fragment_settings_list.*
 
-class SettingsListFragment : Fragment(), ListItemClickListener, SettingsContract {
+class SettingsListFragment : Fragment(), ListItemClickListener,
+    SettingsContract, DialogInterface.OnClickListener {
 
     private val adapter = SettingsListAdapter(clickListener = this)
     private val presenter = SettingsPresenter(contract = this)
@@ -31,9 +34,12 @@ class SettingsListFragment : Fragment(), ListItemClickListener, SettingsContract
     }
 
     // https://github.com/firebase/FirebaseUI-Android/blob/master/auth/README.md#sign-out
-    override fun logOut(): Boolean {
+    override fun logOut() {
+        activity?.showLogoutDialog(positiveListener = this)
+    }
+
+    override fun onClick(dialog: DialogInterface?, which: Int) {
         AuthUI.getInstance().signOut(requireContext())
-        return true
     }
 
     override fun onListItemClick(itemIndex: Int, itemCode: String) {

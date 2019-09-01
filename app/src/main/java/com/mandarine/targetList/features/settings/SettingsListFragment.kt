@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mandarine.targetList.R
 import com.mandarine.targetList.features.settings.list.ImageTitleViewModel
 import com.mandarine.targetList.interfaces.ListItemClickListener
-import kotlinx.android.synthetic.main.fragment_target_list.*
+import kotlinx.android.synthetic.main.fragment_settings_list.*
 
 class SettingsListFragment : Fragment(), ListItemClickListener {
 
@@ -26,9 +26,15 @@ class SettingsListFragment : Fragment(), ListItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupViews()
+    }
+
+    private fun setupViews() {
         recyclerView?.layoutManager = LinearLayoutManager(activity)
         adapter.data = presenter.getListItems()
         recyclerView?.adapter = adapter
+        nameView?.text = presenter.displayName()
+        emailView?.text = presenter.displayEmail()
     }
 
     override fun onListItemClick(itemIndex: Int, itemCode: String) {

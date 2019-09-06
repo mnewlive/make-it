@@ -37,4 +37,17 @@
         <item name="android:textSize">@dimen/text_20</item>
         <item name="android:fontFamily">@font/roboto_regular</item>
     </style>
+
+    <!--DIVIDERS-->
+    <style name="inner_full_divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_1</item>
+        <item name="android:background">@color/gray_light</item>
+    </style>
+
+    <style name="full_divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_1</item>
+        <item name="android:background">@color/gray_light</item>
+    </style>
 </resources>

@@ -3,13 +3,10 @@ package com.mandarine.targetList.features.root
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import com.firebase.ui.auth.AuthUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.mandarine.targetList.R
 import com.mandarine.targetList.calendar.CalendarFragment
 import com.mandarine.targetList.common.currentFragmentInContainer
@@ -42,12 +39,6 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClick
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        val currentUser = auth.currentUser
-        updateUI(currentUser)
-    }
-
     override fun onResume() {
         super.onResume()
         auth.addAuthStateListener(mAuthStateListener)
@@ -56,16 +47,6 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClick
     override fun onPause() {
         super.onPause()
         auth.removeAuthStateListener(mAuthStateListener)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        presenter.onOptionsItemSelected(item.itemId)
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -105,11 +86,6 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClick
     override fun onNavigationItemSelected(item: MenuItem): Boolean =
         presenter.onNavigationItemSelected(item.itemId)
 
-    override fun signOut(): Boolean {
-        AuthUI.getInstance().signOut(this)
-        return true
-    }
-
     private fun setupViews() {
         fab.setOnClickListener(this)
         bottomNavigationView?.setOnNavigationItemSelectedListener(this)
@@ -120,9 +96,5 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClick
         mAuthStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             presenter.signIn(activity = this, user = firebaseAuth.currentUser)
         }
-    }
-
-    private fun updateUI(currentUser: FirebaseUser?) {
-//        titleView?.text = currentUser?.displayName
     }
 }

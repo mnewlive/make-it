@@ -23,17 +23,6 @@ class MainActivityPresenter(private val contract: MainActivityViewContract?) {
         }
     }
 
-    // https://github.com/firebase/FirebaseUI-Android/blob/master/auth/README.md#sign-out
-    fun onOptionsItemSelected(itemId: Int) {
-        when (itemId) {
-            R.id.action_settings -> {
-                Log.d("some", "clickOnActionSettings")
-                contract?.showListOfTarget()
-            }
-            R.id.sign_out -> contract?.signOut()
-        }
-    }
-
     fun signIn(activity: MainActivity, user: FirebaseUser?) {
         if (user != null) {
             // Sign in logic here.

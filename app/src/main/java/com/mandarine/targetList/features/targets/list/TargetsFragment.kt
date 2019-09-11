@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.mandarine.targetList.R
 import com.mandarine.targetList.common.addFragment
 import com.mandarine.targetList.common.setVisible
@@ -63,8 +64,16 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
         }
     }
 
+    private val swipeHandler = object : SwipeToDeleteCallback() {
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            Log.d("some", "swiped")
+        }
+    }
+
     private fun setupViews() {
         recyclerView = view?.findViewById(R.id.recyclerView)
         recyclerView?.layoutManager = LinearLayoutManager(activity)
+        ItemTouchHelper(swipeHandler).attachToRecyclerView(recyclerView)
     }
 }

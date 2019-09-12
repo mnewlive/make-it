@@ -53,7 +53,7 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
         adapter.data = presenter.targetList
         recyclerView?.adapter = adapter
         recyclerView?.setVisible(presenter.shouldShowContent())
-        emptyView?.setVisible(presenter.shouldShowEpmtyView())
+        emptyView?.setVisible(presenter.shouldShowEmptyView())
     }
 
     private fun updateListData() {
@@ -67,7 +67,7 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
     private val swipeHandler = object : SwipeToDeleteCallback() {
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            Log.d("some", "swiped")
+            presenter.removeListItem(viewHolder.adapterPosition)
         }
     }
 

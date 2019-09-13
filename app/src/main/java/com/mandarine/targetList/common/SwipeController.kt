@@ -1,4 +1,4 @@
-package com.mandarine.targetList.features.targets.list
+package com.mandarine.targetList.common
 
 import android.content.Context
 import android.graphics.*
@@ -69,7 +69,3 @@ abstract class SwipeToDeleteCallback(context: Context) :
         canvas.drawRect(left, top, right, bottom, clearPaint)
     }
 }
-
-fun Context.getDrawableCompat(id: Int): Drawable = ContextCompat.getDrawable(this, id)
-    ?: ColorDrawable(Color.TRANSPARENT)
-//    ?: error("No resource with id $id found")

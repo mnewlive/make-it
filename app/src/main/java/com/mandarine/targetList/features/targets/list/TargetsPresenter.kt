@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.mandarine.targetList.common.indexIsInBounds
 import com.mandarine.targetList.interfaces.SelectTargetViewContract
 import com.mandarine.targetList.model.Target
 
@@ -77,6 +78,3 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
         query?.addListenerForSingleValueEvent(valueEventListener)
     }
 }
-
-fun List<Target>.indexIsInBounds(index: Int) = index > -1 && index < size
-

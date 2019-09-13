@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.mandarine.targetList.R
+import com.mandarine.targetList.common.SwipeToDeleteCallback
 import com.mandarine.targetList.common.addFragment
 import com.mandarine.targetList.common.setVisible
 import com.mandarine.targetList.features.targets.edit.TargetEditFragment

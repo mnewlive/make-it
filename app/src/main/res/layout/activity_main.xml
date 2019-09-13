@@ -24,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/actionbar_height"
+        android:layout_marginBottom="@dimen/bottom_navigation_height"
         android:background="@color/gray" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

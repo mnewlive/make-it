@@ -1,9 +1,4 @@
 <resources>
-    <dimen name="dimen_52">52dp</dimen>
-
-    <dimen name="actionbar_height">@dimen/dimen_52</dimen>
-    <dimen name="fab_margin">16dp</dimen>
-
     <dimen name="dimen_1">1dp</dimen>
     <dimen name="dimen_2">2dp</dimen>
     <dimen name="dimen_6">6dp</dimen>
@@ -12,11 +7,16 @@
     <dimen name="dimen_16">16dp</dimen>
     <dimen name="dimen_24">24dp</dimen>
     <dimen name="dimen_48">48dp</dimen>
+    <dimen name="dimen_52">52dp</dimen>
+    <dimen name="dimen_56">56dp</dimen>
     <dimen name="dimen_72">72dp</dimen>
     <dimen name="dimen_100">100dp</dimen>
 
     <dimen name="text_16">16sp</dimen>
     <dimen name="text_20">20sp</dimen>
 
+    <dimen name="actionbar_height">@dimen/dimen_52</dimen>
+    <dimen name="bottom_navigation_height">@dimen/dimen_56</dimen>
+    <dimen name="fab_margin">16dp</dimen>
     <dimen name="base_selector_row_height">@dimen/dimen_48</dimen>
 </resources>

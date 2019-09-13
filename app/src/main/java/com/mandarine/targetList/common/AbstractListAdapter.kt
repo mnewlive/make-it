@@ -1,4 +1,4 @@
-package com.mandarine.targetList.features.targets.list
+package com.mandarine.targetList.common
 
 import androidx.recyclerview.widget.RecyclerView
 
@@ -16,6 +16,11 @@ abstract class AbstractListAdapter(initialData: List<Any> = emptyList()) :
         get() = _data.isEmpty()
 
     fun getItem(position: Int) = _data.getOrNull(position)
+
+    fun removeAt(position: Int) {
+        _data.removeAt(position)
+        notifyItemRemoved(_data.size)
+    }
 
     protected fun isLastPosition(position: Int) = position == itemCount - 1
 

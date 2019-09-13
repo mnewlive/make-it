@@ -2,6 +2,7 @@ package com.mandarine.targetList.features.targets.list
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
+import com.mandarine.targetList.common.AbstractListAdapter
 import com.mandarine.targetList.interfaces.ListItemClickListener
 import com.mandarine.targetList.model.Target
 

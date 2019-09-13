@@ -1,5 +1,6 @@
 package com.mandarine.targetList.features.targets.list
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -8,7 +9,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.mandarine.targetList.R
+import com.mandarine.targetList.common.SwipeToDeleteCallback
 import com.mandarine.targetList.common.addFragment
 import com.mandarine.targetList.common.setVisible
 import com.mandarine.targetList.features.targets.edit.TargetEditFragment
@@ -23,6 +26,7 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
     private var recyclerView: RecyclerView? = null
     private val presenter = TargetsPresenter(this)
     private var adapter = TargetsAdapter(clickListener = this)
+    private lateinit var swipeHandler: ItemTouchHelper.Callback
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_target_list, container, false)
@@ -33,6 +37,16 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
         presenter.setInitialData()
         setupViews()
         updateListData()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        swipeHandler = object : SwipeToDeleteCallback(context) {
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                presenter.removeListItem(viewHolder.adapterPosition)
+            }
+        }
     }
 
     override fun onListItemClick(itemIndex: Int, itemCode: String) {
@@ -52,7 +66,7 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
         adapter.data = presenter.targetList
         recyclerView?.adapter = adapter
         recyclerView?.setVisible(presenter.shouldShowContent())
-        emptyView?.setVisible(presenter.shouldShowEpmtyView())
+        emptyView?.setVisible(presenter.shouldShowEmptyView())
     }
 
     private fun updateListData() {
@@ -66,5 +80,6 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
     private fun setupViews() {
         recyclerView = view?.findViewById(R.id.recyclerView)
         recyclerView?.layoutManager = LinearLayoutManager(activity)
+        ItemTouchHelper(swipeHandler).attachToRecyclerView(recyclerView)
     }
 }

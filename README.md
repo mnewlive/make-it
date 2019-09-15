@@ -1,5 +1,5 @@
 # Make it
-Target List is an open source platform for creating goals.
+Make it is an open source platform for creating goals.
 
 ## Setting up the app
 Starting your own **Make it** app is easy and requires little effort, but you need to prepare some files.

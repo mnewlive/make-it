@@ -1,5 +1,6 @@
 package com.mandarine.targetList.features.targets.edit
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import com.google.android.material.textfield.TextInputEditText
 import androidx.fragment.app.Fragment
@@ -10,6 +11,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import com.mandarine.targetList.R
 import com.mandarine.targetList.constants.KEY_TARGET_GUID
+import kotlinx.android.synthetic.main.fragment_target_add.*
+import java.util.*
 
 class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract {
 
@@ -62,6 +65,18 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
         descriptionEditText = view?.findViewById(R.id.descriptionEditText)
         button = view?.findViewById(R.id.addNote)
         deleteButton = view?.findViewById(R.id.deleteButton)
+
+        val c = Calendar.getInstance()
+        val currentYear = c.get(Calendar.YEAR)
+        val currentMonth = c.get(Calendar.MONTH)
+        val currentDay = c.get(Calendar.DAY_OF_MONTH)
+
+        pickDate.setOnClickListener {
+            val datePickDialog = DatePickerDialog(activity, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                currentDateView.setText("" + dayOfMonth +"/"+ (month + 1) +"/"+ year)
+            }, currentYear, currentMonth, currentDay)
+            datePickDialog.show()
+        }
 
         button?.setOnClickListener(this)
         deleteButton?.setOnClickListener(this)

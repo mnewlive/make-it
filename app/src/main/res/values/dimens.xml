@@ -14,6 +14,7 @@
 
     <dimen name="text_16">16sp</dimen>
     <dimen name="text_20">20sp</dimen>
+    <dimen name="text_24">24sp</dimen>
 
     <dimen name="actionbar_height">@dimen/dimen_52</dimen>
     <dimen name="bottom_navigation_height">@dimen/dimen_56</dimen>

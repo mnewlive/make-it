@@ -4,15 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CalendarView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.mandarine.targetList.R
+import kotlinx.android.synthetic.main.fragment_calendar.*
 
 class CalendarFragment : Fragment() {
-
-    private lateinit var calendarView: CalendarView
-    private lateinit var date: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,13 +24,9 @@ class CalendarFragment : Fragment() {
     }
 
     private fun setupViews() {
-        calendarView = view!!.findViewById(R.id.calendarView)
-        date = view!!.findViewById(R.id.dateView)
-
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             // Note that months are indexed from 0. So, 0 means January, 1 means february, 2 means march etc.
-            val msg = "Selected date is " + dayOfMonth + "/" + (month + 1) + "/" + year
-            date.setText(msg)
+            dateView.text = "Selected date is " + dayOfMonth + "/" + (month + 1) + "/" + year
         }
     }
 }

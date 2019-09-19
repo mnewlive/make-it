@@ -8,18 +8,16 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import com.mandarine.targetList.R
 import com.mandarine.targetList.constants.KEY_TARGET_GUID
 import kotlinx.android.synthetic.main.fragment_target_add.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract {
 
     private var nameEditText: TextInputEditText? = null
     private var descriptionEditText: TextInputEditText? = null
-    private var button: Button? = null
-    private var deleteButton: Button? = null
 
     private val presenter = TargetEditPresenter(contract = this)
     private val targetGuid: String
@@ -30,7 +28,11 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
         presenter.setInitialData(targetGuid)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_target_add, container, false)
     }
 
@@ -40,9 +42,10 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
         setupViews()
     }
 
-    override fun updateViewsContent(name: String?, description: String?) {
+    override fun updateViewsContent(name: String?, description: String?, date: String?) {
         nameEditText?.text = Editable.Factory.getInstance().newEditable(name)
         descriptionEditText?.text = Editable.Factory.getInstance().newEditable(description)
+        dateView?.text = Editable.Factory.getInstance().newEditable(date)
     }
 
     override fun onClick(v: View?) {
@@ -52,8 +55,9 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
     override fun editTarget(targetGuid: String) {
         val name = nameEditText?.text.toString().trim()
         val description = descriptionEditText?.text.toString().trim()
-        if (targetGuid.isEmpty()) presenter.addTarget(name, description)
-        else presenter.updateTarget(name, description)
+        val date = dateView?.text.toString().trim()
+        if (targetGuid.isEmpty()) presenter.addTarget(name, description, date)
+        else presenter.updateTarget(name, description, date)
     }
 
     override fun deleteTarget() {
@@ -63,23 +67,32 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
     private fun setupViews() {
         nameEditText = view?.findViewById(R.id.nameEditText)
         descriptionEditText = view?.findViewById(R.id.descriptionEditText)
-        button = view?.findViewById(R.id.addNote)
-        deleteButton = view?.findViewById(R.id.deleteButton)
 
-        val c = Calendar.getInstance()
-        val currentYear = c.get(Calendar.YEAR)
-        val currentMonth = c.get(Calendar.MONTH)
-        val currentDay = c.get(Calendar.DAY_OF_MONTH)
+        val calendar = Calendar.getInstance()
+        val currentYear = calendar.get(Calendar.YEAR)
+        val currentMonth = calendar.get(Calendar.MONTH)
+        val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
 
         pickDate.setOnClickListener {
-            val datePickDialog = DatePickerDialog(activity, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                currentDateView.setText("" + dayOfMonth +"/"+ (month + 1) +"/"+ year)
-            }, currentYear, currentMonth, currentDay)
+            val datePickDialog = DatePickerDialog(
+                activity,
+                DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+                    val dateFormat = SimpleDateFormat("d MMMM yyyy", Locale.US)
+                    calendar.set(year, month, dayOfMonth)
+                    val dateString = dateFormat.format(calendar.time)
+                    dateView.text = dateString
+                },
+                currentYear,
+                currentMonth,
+                currentDay
+            )
             datePickDialog.show()
+
+            datePickDialog.setOnCancelListener { dialog -> dialog.dismiss() }
         }
 
-        button?.setOnClickListener(this)
-        deleteButton?.setOnClickListener(this)
+        addActionView?.setOnClickListener(this)
+        deleteActionView?.setOnClickListener(this)
     }
 
     companion object {

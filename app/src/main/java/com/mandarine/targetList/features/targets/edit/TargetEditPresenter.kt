@@ -29,8 +29,8 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
 
     fun onViewClick(id: Int, targetGuid: String) {
         when (id) {
-            R.id.addNote -> contract.editTarget(targetGuid)
-            R.id.deleteButton -> contract.deleteTarget()
+            R.id.addActionView -> contract.editTarget(targetGuid)
+            R.id.deleteActionView -> contract.deleteTarget()
         }
     }
 
@@ -41,9 +41,10 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
                     val target = targetSnapshot.getValue(Target::class.java)
                     val name = target?.name ?: ""
                     val description = target?.description ?: ""
+                    val date = target?.date
 
                     if (name.isEmpty()) Log.d("some", "nameIsEmpty")
-                    else contract.updateViewsContent(name = name, description = description)
+                    else contract.updateViewsContent(name = name, description = description, date = date)
                 }
             }
 
@@ -54,20 +55,21 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
         query?.addListenerForSingleValueEvent(valueEventListener)
     }
 
-    fun addTarget(name: String, description: String) {
+    fun addTarget(name: String, description: String, date: String) {
         if (!TextUtils.isEmpty(name)) {
             val id: String = databaseReference?.push()?.key.toString()
-            val target = Target(guid = id, name = name, description = description)
+            val target = Target(guid = id, name = name, description = description, date = date)
             targetsRef?.push()?.setValue(target)
         } else Log.d("some", "Enter a name")
     }
 
-    fun updateTarget(name: String, description: String) {
+    fun updateTarget(name: String, description: String, date: String) {
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (targetSnapshot in dataSnapshot.children) {
                     targetSnapshot.child("name").ref.setValue(name)
                     targetSnapshot.child("description").ref.setValue(description)
+                    targetSnapshot.child("date").ref.setValue(date)
                 }
             }
 

@@ -2,7 +2,6 @@ package com.mandarine.targetList.features.targets.edit
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import com.google.android.material.textfield.TextInputEditText
 import androidx.fragment.app.Fragment
 import android.text.Editable
 import android.view.LayoutInflater
@@ -15,9 +14,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract {
-
-    private var nameEditText: TextInputEditText? = null
-    private var descriptionEditText: TextInputEditText? = null
 
     private val presenter = TargetEditPresenter(contract = this)
     private val targetGuid: String
@@ -65,9 +61,12 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
     }
 
     private fun setupViews() {
-        nameEditText = view?.findViewById(R.id.nameEditText)
-        descriptionEditText = view?.findViewById(R.id.descriptionEditText)
+        showDatePickerDialog()
+        addActionView?.setOnClickListener(this)
+        deleteActionView?.setOnClickListener(this)
+    }
 
+    private fun showDatePickerDialog() {
         val calendar = Calendar.getInstance()
         val currentYear = calendar.get(Calendar.YEAR)
         val currentMonth = calendar.get(Calendar.MONTH)
@@ -90,9 +89,6 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
 
             datePickDialog.setOnCancelListener { dialog -> dialog.dismiss() }
         }
-
-        addActionView?.setOnClickListener(this)
-        deleteActionView?.setOnClickListener(this)
     }
 
     companion object {

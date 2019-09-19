@@ -75,6 +75,7 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
         pickDate.setOnClickListener {
             val datePickDialog = DatePickerDialog(
                 activity,
+                R.style.DatePickerDialogTheme,
                 DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
                     val dateFormat = SimpleDateFormat("d MMMM yyyy", Locale.US)
                     calendar.set(year, month, dayOfMonth)

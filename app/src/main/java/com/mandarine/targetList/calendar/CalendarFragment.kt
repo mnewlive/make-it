@@ -25,7 +25,6 @@ class CalendarFragment : Fragment() {
 
     private fun setupViews() {
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            // Note that months are indexed from 0. So, 0 means January, 1 means february, 2 means march etc.
             dateView.text = "Selected date is " + dayOfMonth + "/" + (month + 1) + "/" + year
         }
     }

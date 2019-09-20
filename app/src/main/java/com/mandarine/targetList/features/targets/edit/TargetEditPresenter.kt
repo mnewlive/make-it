@@ -7,6 +7,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.mandarine.targetList.R
 import com.mandarine.targetList.model.Target
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TargetEditPresenter(private val contract: TargetEditContract) {
 
@@ -41,10 +43,13 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
                     val target = targetSnapshot.getValue(Target::class.java)
                     val name = target?.name ?: ""
                     val description = target?.description ?: ""
-                    val date = target?.date
+                    val time = target?.date ?: 0L
+
+                    val date = Date(time)
+                    val format = SimpleDateFormat("d MMMM, yyyy")
 
                     if (name.isEmpty()) Log.d("some", "nameIsEmpty")
-                    else contract.updateViewsContent(name = name, description = description, date = date)
+                    else contract.updateViewsContent(name = name, description = description, date = format.format(date))
                 }
             }
 
@@ -55,7 +60,7 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
         query?.addListenerForSingleValueEvent(valueEventListener)
     }
 
-    fun addTarget(name: String, description: String, date: String) {
+    fun addTarget(name: String, description: String, date: Long) {
         if (!TextUtils.isEmpty(name)) {
             val id: String = databaseReference?.push()?.key.toString()
             val target = Target(guid = id, name = name, description = description, date = date)
@@ -63,7 +68,7 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
         } else Log.d("some", "Enter a name")
     }
 
-    fun updateTarget(name: String, description: String, date: String) {
+    fun updateTarget(name: String, description: String, date: Long) {
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (targetSnapshot in dataSnapshot.children) {

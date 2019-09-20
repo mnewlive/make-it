@@ -12,6 +12,7 @@ import com.mandarine.targetList.constants.KEY_TARGET_GUID
 import kotlinx.android.synthetic.main.fragment_target_add.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.ZoneId
+import org.threeten.bp.ZoneOffset
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.FormatStyle
 
@@ -20,6 +21,7 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
     private val presenter = TargetEditPresenter(contract = this)
     private val targetGuid: String
         get() = arguments?.getString(KEY_TARGET_GUID, "") ?: ""
+    var parsedDate: LocalDate? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +55,7 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
     override fun editTarget(targetGuid: String) {
         val name = nameEditText?.text.toString().trim()
         val description = descriptionEditText?.text.toString().trim()
-        val date = dateView?.text.toString().trim()
+        val date = parsedDate?.atStartOfDay()?.toInstant(ZoneOffset.UTC)?.toEpochMilli() ?: 0L
         if (targetGuid.isEmpty()) presenter.addTarget(name, description, date)
         else presenter.updateTarget(name, description, date)
     }
@@ -84,6 +86,7 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
                     val selectedDate = LocalDate.of(year, month + 1, dayOfMonth)
                     val dateString = selectedDate.format(dateFormatter)
                     dateView.text = dateString
+                    parsedDate = LocalDate.parse(dateString, dateFormatter)
                 },
                 currentYear,
                 currentMonth - 1,

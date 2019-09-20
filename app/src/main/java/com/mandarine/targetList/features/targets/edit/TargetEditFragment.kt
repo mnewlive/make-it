@@ -10,8 +10,10 @@ import android.view.ViewGroup
 import com.mandarine.targetList.R
 import com.mandarine.targetList.constants.KEY_TARGET_GUID
 import kotlinx.android.synthetic.main.fragment_target_add.*
-import java.text.SimpleDateFormat
-import java.util.*
+import org.threeten.bp.LocalDate
+import org.threeten.bp.ZoneId
+import org.threeten.bp.format.DateTimeFormatter
+import org.threeten.bp.format.FormatStyle
 
 class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract {
 
@@ -67,23 +69,24 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
     }
 
     private fun showDatePickerDialog() {
-        val calendar = Calendar.getInstance()
-        val currentYear = calendar.get(Calendar.YEAR)
-        val currentMonth = calendar.get(Calendar.MONTH)
-        val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
+        val date = LocalDate.now(ZoneId.systemDefault())
+        val currentYear = date.year
+        val currentMonth = date.monthValue
+        val currentDay = date.dayOfMonth
+
+        val dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
 
         pickDate.setOnClickListener {
             val datePickDialog = DatePickerDialog(
                 activity,
                 R.style.DatePickerDialogTheme,
                 DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-                    val dateFormat = SimpleDateFormat("d MMMM yyyy", Locale.US)
-                    calendar.set(year, month, dayOfMonth)
-                    val dateString = dateFormat.format(calendar.time)
+                    val selectedDate = LocalDate.of(year, month + 1, dayOfMonth)
+                    val dateString = selectedDate.format(dateFormatter)
                     dateView.text = dateString
                 },
                 currentYear,
-                currentMonth,
+                currentMonth - 1,
                 currentDay
             )
             datePickDialog.show()

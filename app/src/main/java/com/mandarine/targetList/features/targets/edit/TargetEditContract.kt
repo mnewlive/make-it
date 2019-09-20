@@ -4,4 +4,5 @@ interface TargetEditContract {
     fun editTarget(targetGuid: String)
     fun deleteTarget()
     fun updateViewsContent(name: String?, description: String?, date: String?)
+    fun closeView()
 }

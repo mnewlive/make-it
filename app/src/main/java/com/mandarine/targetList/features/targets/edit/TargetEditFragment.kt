@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.mandarine.targetList.R
+import com.mandarine.targetList.common.finishFragment
+import com.mandarine.targetList.common.setVisible
 import com.mandarine.targetList.constants.KEY_TARGET_GUID
 import kotlinx.android.synthetic.main.fragment_target_add.*
 import org.threeten.bp.LocalDate
@@ -36,10 +38,22 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
         return inflater.inflate(R.layout.fragment_target_add, container, false)
     }
 
+
+    private fun updateActionViews() {
+        if(targetGuid.isEmpty()) {
+            addActionView?.text = getString(R.string.add_goal)
+            deleteActionView?.setVisible(show = false)
+        } else {
+            addActionView?.text = getString(R.string.edit_goal)
+            deleteActionView?.setVisible(show = true)
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.fetchTarget()
         setupViews()
+        updateActionViews()
     }
 
     override fun updateViewsContent(name: String?, description: String?, date: String?) {
@@ -62,6 +76,10 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
 
     override fun deleteTarget() {
         presenter.deleteTarget()
+    }
+
+    override fun closeView() {
+        activity?.finishFragment()
     }
 
     private fun setupViews() {

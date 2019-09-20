@@ -6,6 +6,7 @@
     <string name="target_name">Name</string>
     <string name="description">Description</string>
     <string name="add_goal">Add Goal</string>
+    <string name="edit_goal">Edit Goal</string>
     <string name="delete_target">Delete</string>
     <string name="targets_list">Targets List</string>
     <string name="empty_screen_description_targets">Quickly add your first target</string>

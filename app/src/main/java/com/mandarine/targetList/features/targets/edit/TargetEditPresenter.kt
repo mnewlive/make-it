@@ -65,6 +65,7 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
             val id: String = databaseReference?.push()?.key.toString()
             val target = Target(guid = id, name = name, description = description, date = date)
             targetsRef?.push()?.setValue(target)
+            contract.closeView()
         } else Log.d("some", "Enter a name")
     }
 
@@ -83,6 +84,7 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
             }
         }
         query?.addListenerForSingleValueEvent(valueEventListener)
+        contract.closeView()
     }
 
     fun deleteTarget() {
@@ -98,5 +100,7 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
             }
         }
         query?.addListenerForSingleValueEvent(valueEventListener)
+//        TODO: Close view and update targets list
+//        contract.closeView()
     }
 }

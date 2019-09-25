@@ -14,9 +14,10 @@ import com.google.firebase.database.ValueEventListener
 import com.mandarine.targetList.R
 import kotlinx.android.synthetic.main.fragment_calendar.*
 
+//TODO: https://github.com/mnewlive/make-it/issues/9
 class CalendarFragment : Fragment() {
 
-    val selectedDate = "24 October 2019"
+    val selectedDate: Long = 0L
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,8 +53,8 @@ class CalendarFragment : Fragment() {
         query.addListenerForSingleValueEvent(valueEventListener)
 
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
-//            dateView.text = "Selected date is " + dayOfMonth + "/" + (month + 1) + "/" + year
-            dateView.text = name
+            dateView.text = "Selected date is " + dayOfMonth + "/" + (month + 1) + "/" + year
+//            dateView.text = name
         }
     }
 }

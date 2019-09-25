@@ -12,15 +12,8 @@ abstract class AbstractListAdapter(initialData: List<Any> = emptyList()) :
             _data = value.toMutableList()
             notifyDataSetChanged()
         }
-    val isEmpty: Boolean
-        get() = _data.isEmpty()
 
     fun getItem(position: Int) = _data.getOrNull(position)
-
-    fun removeAt(position: Int) {
-        _data.removeAt(position)
-        notifyItemRemoved(_data.size)
-    }
 
     protected fun isLastPosition(position: Int) = position == itemCount - 1
 

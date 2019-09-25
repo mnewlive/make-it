@@ -6,9 +6,28 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/dateView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_48"
         android:text="@string/calendar"
-        android:textColor="@android:color/black" />
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/text_24" />
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_24"
+        android:background="@android:color/white" />
+
+    <Button
+        android:id="@+id/saveView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dimen_24"
+        android:text="Save Date" />
+
 </LinearLayout>

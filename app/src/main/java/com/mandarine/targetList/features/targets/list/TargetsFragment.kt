@@ -21,14 +21,19 @@ import com.mandarine.targetList.interfaces.SelectTargetViewContract
 import com.mandarine.targetList.model.Target
 import kotlinx.android.synthetic.main.fragment_target_list.*
 
-class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContract, BaseDataSetContract {
+class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContract,
+    BaseDataSetContract {
 
     private var recyclerView: RecyclerView? = null
     private val presenter = TargetsPresenter(this)
     private var adapter = TargetsAdapter(clickListener = this)
     private lateinit var swipeHandler: ItemTouchHelper.Callback
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_target_list, container, false)
     }
 

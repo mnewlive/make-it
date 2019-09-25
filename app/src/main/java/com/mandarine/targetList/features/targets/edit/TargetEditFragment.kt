@@ -23,7 +23,7 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
     private val presenter = TargetEditPresenter(contract = this)
     private val targetGuid: String
         get() = arguments?.getString(KEY_TARGET_GUID, "") ?: ""
-    var parsedDate: LocalDate? = null
+    private var parsedDate: LocalDate? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +40,7 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
 
 
     private fun updateActionViews() {
-        if(targetGuid.isEmpty()) {
+        if (targetGuid.isEmpty()) {
             addActionView?.text = getString(R.string.add_goal)
             deleteActionView?.setVisible(show = false)
         } else {

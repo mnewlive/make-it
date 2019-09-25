@@ -16,6 +16,8 @@ import kotlinx.android.synthetic.main.fragment_calendar.*
 
 class CalendarFragment : Fragment() {
 
+    val selectedDate = "24 October 2019"
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,16 +37,16 @@ class CalendarFragment : Fragment() {
         val rootRef = FirebaseDatabase.getInstance().reference
         val targetsRef = rootRef.child("targets").child("users").child(uid).child("targets")
         val query = targetsRef.orderByChild("date")
+//        val query = targetsRef.orderByChild("date").equalTo(selectedDate)
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (ds in dataSnapshot.children) {
                     name = ds.child("name").getValue(String::class.java)
-                    Log.d("some", name)
                 }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.d("some", databaseError.getMessage()) //Don't ignore errors!
+                Log.d("some", databaseError.message) //Don't ignore errors!
             }
         }
         query.addListenerForSingleValueEvent(valueEventListener)
@@ -52,7 +54,6 @@ class CalendarFragment : Fragment() {
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
 //            dateView.text = "Selected date is " + dayOfMonth + "/" + (month + 1) + "/" + year
             dateView.text = name
-            Log.d("some", name)
         }
     }
 }

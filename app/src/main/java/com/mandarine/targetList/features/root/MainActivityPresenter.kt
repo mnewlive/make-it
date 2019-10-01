@@ -44,10 +44,6 @@ class MainActivityPresenter(private val contract: MainActivityViewContract?) {
         }
     }
 
-    fun onViewClick(viewId: Int) {
-        if (viewId == R.id.fab) contract?.addTarget()
-    }
-
     fun onNavigationItemSelected(itemId: Int): Boolean {
         when (itemId) {
             R.id.menu_targets -> contract?.showListOfTarget()

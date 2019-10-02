@@ -3,17 +3,17 @@ package com.mandarine.targetList.features.root
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import android.view.MenuItem
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.mandarine.targetList.R
 
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), MainActivityViewContract,
-    BottomNavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), MainActivityViewContract {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var mAuthStateListener: FirebaseAuth.AuthStateListener
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract,
         val navController = host.navController
 
         appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupViews()
+        setupBottomNavMenu(navController)
     }
 
     override fun onResume() {
@@ -56,11 +56,9 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract,
         finish()
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean =
-        presenter.onNavigationItemSelected(item.itemId)
-
-    private fun setupViews() {
-        bottomNavigationView?.setOnNavigationItemSelectedListener(this)
+    private fun setupBottomNavMenu(navController: NavController) {
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
+        bottomNavigationView?.setupWithNavController(navController)
     }
 
     private fun signIn() {

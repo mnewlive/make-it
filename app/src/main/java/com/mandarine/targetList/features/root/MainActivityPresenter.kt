@@ -4,7 +4,6 @@ import android.app.Activity
 import android.util.Log
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseUser
-import com.mandarine.targetList.R
 import com.mandarine.targetList.constants.RC_SIGN_IN
 import java.util.Arrays
 
@@ -42,15 +41,5 @@ class MainActivityPresenter(private val contract: MainActivityViewContract?) {
                 RC_SIGN_IN
             )
         }
-    }
-
-    fun onNavigationItemSelected(itemId: Int): Boolean {
-        when (itemId) {
-            R.id.menu_targets -> contract?.showListOfTarget()
-            R.id.menu_calendar -> contract?.showCalendar()
-            R.id.menu_settings -> contract?.showSettingsList()
-            else -> return false
-        }
-        return true
     }
 }

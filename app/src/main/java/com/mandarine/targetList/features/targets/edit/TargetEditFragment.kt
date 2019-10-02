@@ -78,6 +78,7 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
         presenter.deleteTarget()
     }
 
+//  TODO: https://github.com/mnewlive/make-it/issues/8 Update TargetsFragment when u add/updated goal
     override fun closeView() {
         findNavController().navigate(R.id.show_list)
     }

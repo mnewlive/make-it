@@ -27,13 +27,6 @@ class TargetsItemViewHolder(
         itemView.setOnClickListener { reactOnClick() }
     }
 
-    fun reactOnClick() {
-        if (adapterPosition > RecyclerView.NO_POSITION) listener?.onListItemClick(
-            adapterPosition,
-            ""
-        )
-    }
-
     fun bind(item: Target) {
         titleView.text = item.name
         descriptionView.text = item.description
@@ -42,6 +35,13 @@ class TargetsItemViewHolder(
                 itemView.context,
                 R.color.colorPrimary
             )
+        )
+    }
+
+    private fun reactOnClick() {
+        if (adapterPosition > RecyclerView.NO_POSITION) listener?.onListItemClick(
+            adapterPosition,
+            ""
         )
     }
 }

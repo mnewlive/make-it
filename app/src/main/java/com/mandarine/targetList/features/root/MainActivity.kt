@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract,
 
     private lateinit var appBarConfiguration : AppBarConfiguration
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -57,28 +56,10 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract,
         finish()
     }
 
-    override fun onPostResume() {
-        super.onPostResume()
-//        replaceFragment(TargetsFragment())
-    }
-
-    override fun showListOfTarget() {
-//        replaceFragment(TargetsFragment())
-    }
-
-    override fun showSettingsList() {
-//        replaceFragment(SettingsListFragment())
-    }
-
-    override fun showCalendar() {
-//        replaceFragment(CalendarFragment())
-    }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean =
         presenter.onNavigationItemSelected(item.itemId)
 
     private fun setupViews() {
-//        fab.setOnClickListener(this)
         bottomNavigationView?.setOnNavigationItemSelectedListener(this)
     }
 

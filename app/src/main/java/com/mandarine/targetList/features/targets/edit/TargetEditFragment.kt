@@ -39,7 +39,6 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
         return inflater.inflate(R.layout.fragment_target_add, container, false)
     }
 
-
     private fun updateActionViews() {
         if (targetGuid.isEmpty()) {
             addActionView?.text = getString(R.string.add_goal)
@@ -64,20 +63,14 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
     }
 
     override fun onClick(v: View?) {
-        Log.d("some", "onClick")
-        Log.d("some", "targetGuid: $targetGuid")
         presenter.onViewClick(v?.id ?: return, targetGuid)
     }
 
     override fun editTarget(targetGuid: String) {
-        Log.d("some", "editTarget")
-
         val name = nameEditText?.text.toString().trim()
         val description = descriptionEditText?.text.toString().trim()
         val date = parsedDate?.atStartOfDay()?.toInstant(ZoneOffset.UTC)?.toEpochMilli() ?: 0L
-        if (targetGuid.isEmpty()) {
-            presenter.addTarget(name, description, date)
-        }
+        if (targetGuid.isEmpty()) presenter.addTarget(name, description, date)
         else presenter.updateTarget(name, description, date)
     }
 
@@ -86,15 +79,7 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
     }
 
     override fun closeView() {
-        Log.d("some", "here")
-        Log.d("some", "${findNavController() ==null}")
-
-        addActionView?.setOnClickListener {
-            findNavController().navigate(R.id.show_list)
-        }
-        deleteActionView?.setOnClickListener {
-            findNavController().navigate(R.id.show_list)
-        }
+        findNavController().navigate(R.id.show_list)
     }
 
     private fun setupViews() {

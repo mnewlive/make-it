@@ -25,10 +25,6 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
             .child("users").child(uid.toString()).child("targets")
     }
 
-    fun onListItemClick(targetGuid: String) {
-        contract.showTarget(targetGuid)
-    }
-
     fun shouldShowContent(): Boolean = targetList.isNotEmpty()
 
     fun shouldShowEmptyView(): Boolean = !shouldShowContent()

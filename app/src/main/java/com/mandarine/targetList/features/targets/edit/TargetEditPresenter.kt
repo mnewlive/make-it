@@ -69,7 +69,7 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
             val id: String = databaseReference?.push()?.key.toString()
             val target = Target(guid = id, name = name, description = description, date = date)
             targetsRef?.push()?.setValue(target)
-        contract.closeView()
+            contract.closeView()
         } else Log.d("some", "Enter a name")
     }
 

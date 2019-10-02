@@ -17,17 +17,17 @@ class TargetsItemViewHolder(
     parent.inflateListItemView(
         R.layout.list_item_targets
     )
-), View.OnClickListener {
+) {
 
     private var titleView = itemView.findViewById<TextView>(R.id.titleView)
     private var descriptionView = itemView.findViewById<TextView>(R.id.descriptionView)
     private var priorityView = itemView.findViewById<View>(R.id.priorityView)
 
     init {
-        itemView.setOnClickListener(this)
+        itemView.setOnClickListener { reactOnClick() }
     }
 
-    override fun onClick(v: View?) {
+    fun reactOnClick() {
         if (adapterPosition > RecyclerView.NO_POSITION) listener?.onListItemClick(
             adapterPosition,
             ""

@@ -80,6 +80,7 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
                     targetSnapshot.child("name").ref.setValue(name)
                     targetSnapshot.child("description").ref.setValue(description)
                     targetSnapshot.child("date").ref.setValue(date)
+                    contract.closeView()
                 }
             }
 
@@ -88,7 +89,6 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
             }
         }
         query?.addListenerForSingleValueEvent(valueEventListener)
-        contract.closeView()
     }
 
     fun deleteTarget() {
@@ -96,6 +96,7 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (targetSnapshot in dataSnapshot.children) {
                     targetSnapshot.ref.removeValue()
+                    contract.closeView()
                 }
             }
 
@@ -104,6 +105,5 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
             }
         }
         query?.addListenerForSingleValueEvent(valueEventListener)
-        contract.closeView()
     }
 }

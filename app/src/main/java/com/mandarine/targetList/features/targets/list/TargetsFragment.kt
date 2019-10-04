@@ -14,14 +14,12 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import com.mandarine.targetList.R
 import com.mandarine.targetList.common.SwipeToDeleteCallback
 import com.mandarine.targetList.common.setVisible
-import com.mandarine.targetList.interfaces.BaseDataSetContract
 import com.mandarine.targetList.interfaces.ListItemClickListener
 import com.mandarine.targetList.interfaces.SelectTargetViewContract
 import com.mandarine.targetList.model.Target
 import kotlinx.android.synthetic.main.fragment_target_list.*
 
-class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContract,
-    BaseDataSetContract {
+class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContract {
 
     private var recyclerView: RecyclerView? = null
     private val presenter = TargetsPresenter(this)
@@ -57,11 +55,6 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
         val bundle = Bundle()
         bundle.putString("guid", (adapter.getItem(itemIndex) as Target).guid)
         findNavController().navigate(R.id.target_edit, bundle)
-    }
-
-    override fun dataSetChanged() {
-        updateListData()
-        adapter.notifyDataSetChanged()
     }
 
     override fun updateViewContent() {

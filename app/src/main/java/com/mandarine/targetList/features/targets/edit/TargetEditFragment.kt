@@ -4,7 +4,6 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.text.Editable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -78,7 +77,6 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
         presenter.deleteTarget()
     }
 
-//  TODO: https://github.com/mnewlive/make-it/issues/8 Update TargetsFragment when u add/updated goal
     override fun closeView() {
         findNavController().navigate(R.id.show_list)
     }

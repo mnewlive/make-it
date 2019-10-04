@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import com.mandarine.targetList.R
 import com.mandarine.targetList.common.SwipeToDeleteCallback
 import com.mandarine.targetList.common.setVisible
+import com.mandarine.targetList.constants.KEY_TARGET_GUID
 import com.mandarine.targetList.interfaces.ListItemClickListener
 import com.mandarine.targetList.interfaces.SelectTargetViewContract
 import com.mandarine.targetList.model.Target
@@ -53,7 +54,7 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
 
     override fun onListItemClick(itemIndex: Int, itemCode: String) {
         val bundle = Bundle()
-        bundle.putString("guid", (adapter.getItem(itemIndex) as Target).guid)
+        bundle.putString(KEY_TARGET_GUID, (adapter.getItem(itemIndex) as Target).guid)
         findNavController().navigate(R.id.target_edit, bundle)
     }
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/primary">
+        <item
+            android:id="@id/target_list"
+            android:icon="@drawable/ic_target"
+            android:title="@string/targets" />
+        <item
+            android:id="@id/calendar_fragment"
+            android:icon="@drawable/ic_calendar"
+            android:title="@string/calendar" />
+        <item
+            android:id="@id/settings_list_fragment"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/settings" />
+    </group>
+</menu>

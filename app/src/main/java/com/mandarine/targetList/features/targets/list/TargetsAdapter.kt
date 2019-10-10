@@ -6,11 +6,11 @@ import com.mandarine.targetList.common.AbstractListAdapter
 import com.mandarine.targetList.interfaces.ListItemClickListener
 import com.mandarine.targetList.model.Target
 
-class TargetsAdapter(private val clickListener: ListItemClickListener?) : AbstractListAdapter() {
+class TargetsAdapter(private val clickListener: ListItemClickListener?) : AbstractListAdapter<Target>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
         TargetsItemViewHolder(parent, clickListener)
 
-    override fun onBindHolder(holder: RecyclerView.ViewHolder, position: Int, item: Any) =
-        (holder as TargetsItemViewHolder).bind(item as Target)
+    override fun onBindHolder(holder: RecyclerView.ViewHolder, position: Int, item: Target) =
+        (holder as TargetsItemViewHolder).bind(item)
 }

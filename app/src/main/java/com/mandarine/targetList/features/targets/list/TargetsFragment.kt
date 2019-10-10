@@ -16,7 +16,6 @@ import com.mandarine.targetList.common.SwipeToDeleteCallback
 import com.mandarine.targetList.common.setVisible
 import com.mandarine.targetList.interfaces.ListItemClickListener
 import com.mandarine.targetList.interfaces.SelectTargetViewContract
-import com.mandarine.targetList.model.Target
 import kotlinx.android.synthetic.main.fragment_target_list.*
 
 class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContract {
@@ -52,7 +51,7 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
     }
 
     override fun onListItemClick(itemIndex: Int, itemCode: String) {
-        findNavController().navigate(TargetsFragmentDirections.nextAction((adapter.getItem(itemIndex) as Target).guid))
+        findNavController().navigate(TargetsFragmentDirections.nextAction(adapter.getItem(itemIndex)?.guid ?: ""))
     }
 
     override fun updateViewContent() {

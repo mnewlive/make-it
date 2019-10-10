@@ -9,7 +9,7 @@ class SettingsPresenter(private val contract: SettingsContract) {
 
     private var firebaseUser = FirebaseAuth.getInstance().currentUser
 
-    fun getListItems(): List<Any> {
+    fun getListItems(): List<ImageTitleViewModel> {
         return listOf(
             ImageTitleViewModel(R.drawable.ic_about, R.string.about),
             ImageTitleViewModel(R.drawable.ic_contact_us, R.string.contact_us),

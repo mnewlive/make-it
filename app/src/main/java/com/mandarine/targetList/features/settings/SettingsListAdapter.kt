@@ -7,11 +7,11 @@ import com.mandarine.targetList.common.AbstractListAdapter
 import com.mandarine.targetList.interfaces.ListItemClickListener
 
 class SettingsListAdapter(private val clickListener: ListItemClickListener?) :
-    AbstractListAdapter() {
+    AbstractListAdapter<ImageTitleViewModel>() {
 
-    override fun onBindHolder(holder: RecyclerView.ViewHolder, position: Int, item: Any) =
+    override fun onBindHolder(holder: RecyclerView.ViewHolder, position: Int, item: ImageTitleViewModel) =
         (holder as ImageTitleViewHolder).bind(
-            (item as ImageTitleViewModel),
+            item,
             isEndSeparatorPartial(position)
         )
 

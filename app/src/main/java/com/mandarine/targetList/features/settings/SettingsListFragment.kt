@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.firebase.ui.auth.AuthUI
 import com.mandarine.targetList.R
 import com.mandarine.targetList.common.showLogoutDialog
-import com.mandarine.targetList.features.settings.list.ImageTitleViewModel
 import com.mandarine.targetList.interfaces.ListItemClickListener
 import kotlinx.android.synthetic.main.fragment_settings_list.*
 
@@ -43,7 +42,7 @@ class SettingsListFragment : Fragment(), ListItemClickListener,
     }
 
     override fun onListItemClick(itemIndex: Int, itemCode: String) {
-        presenter.onListItemClick(adapter.getItem(itemIndex) as? ImageTitleViewModel)
+        presenter.onListItemClick(adapter.getItem(itemIndex))
     }
 
     private fun setupViews() {

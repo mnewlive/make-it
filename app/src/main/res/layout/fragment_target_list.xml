@@ -14,6 +14,17 @@
         android:visibility="gone"
         tools:listitem="@layout/list_item_targets" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/dimen_72"
+        android:tint="@android:color/white"
+        app:srcCompat="@drawable/ic_fab_action" />
+
     <com.mandarine.targetList.widget.EmptyView
         android:id="@+id/emptyView"
         android:layout_width="match_parent"

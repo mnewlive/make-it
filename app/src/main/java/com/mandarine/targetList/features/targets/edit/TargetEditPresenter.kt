@@ -69,7 +69,7 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
             val id: String = databaseReference?.push()?.key.toString()
             val target = Target(guid = id, name = name, description = description, date = date)
             targetsRef?.push()?.setValue(target)
-//        contract.closeView() TODO: https://github.com/mnewlive/make-it/issues/8
+            contract.closeView()
         } else Log.d("some", "Enter a name")
     }
 
@@ -80,6 +80,7 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
                     targetSnapshot.child("name").ref.setValue(name)
                     targetSnapshot.child("description").ref.setValue(description)
                     targetSnapshot.child("date").ref.setValue(date)
+                    contract.closeView()
                 }
             }
 
@@ -88,7 +89,6 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
             }
         }
         query?.addListenerForSingleValueEvent(valueEventListener)
-//        contract.closeView() TODO: https://github.com/mnewlive/make-it/issues/8
     }
 
     fun deleteTarget() {
@@ -96,6 +96,7 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (targetSnapshot in dataSnapshot.children) {
                     targetSnapshot.ref.removeValue()
+                    contract.closeView()
                 }
             }
 
@@ -104,6 +105,5 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
             }
         }
         query?.addListenerForSingleValueEvent(valueEventListener)
-//        contract.closeView() TODO: https://github.com/mnewlive/make-it/issues/8
     }
 }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/target_list">
+
+    <fragment
+        android:id="@+id/target_list"
+        android:name="com.mandarine.targetList.features.targets.list.TargetsFragment"
+        android:label="@string/targets"
+        tools:layout="@layout/fragment_target_list">
+
+        <action
+            android:id="@+id/next_action"
+            app:destination="@+id/target_edit">
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/target_edit"
+        android:name="com.mandarine.targetList.features.targets.edit.TargetEditFragment"
+        android:label="@string/edit_goal"
+        tools:layout="@layout/fragment_target_add">
+
+        <action
+            android:id="@+id/show_list"
+            app:destination="@+id/target_list" />
+
+        <argument
+            android:name="guid"
+            app:argType="string"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/settings_list_fragment"
+        android:name="com.mandarine.targetList.features.settings.SettingsListFragment"
+        android:label="@string/settings"
+        tools:layout="@layout/fragment_settings_list" />
+
+    <fragment
+        android:id="@+id/calendar_fragment"
+        android:name="com.mandarine.targetList.calendar.CalendarFragment"
+        android:label="@string/calendar"
+        tools:layout="@layout/fragment_calendar" />
+</navigation>

@@ -3,26 +3,27 @@ package com.mandarine.targetList.features.root
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import android.view.MenuItem
-import android.view.View
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.mandarine.targetList.R
-import com.mandarine.targetList.calendar.CalendarFragment
-import com.mandarine.targetList.common.currentFragmentInContainer
-import com.mandarine.targetList.common.replaceFragment
-import com.mandarine.targetList.features.settings.SettingsListFragment
-import com.mandarine.targetList.features.targets.edit.TargetEditFragment
-import com.mandarine.targetList.features.targets.list.TargetsFragment
-import com.mandarine.targetList.interfaces.OnBackPressListener
+
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClickListener,
-    BottomNavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), MainActivityViewContract {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var mAuthStateListener: FirebaseAuth.AuthStateListener
     private val presenter = MainActivityPresenter(contract = this)
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,11 +33,8 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClick
         setupViews()
     }
 
-    override fun onBackPressed() {
-        val onBackPressListener = currentFragmentInContainer() as? OnBackPressListener
-        if (onBackPressListener?.onBackPress() != true) {
-            super.onBackPressed()
-        }
+    override fun onSupportNavigateUp(): Boolean {
+        return findNavController(R.id.nav_host_fragment).navigateUp(appBarConfiguration)
     }
 
     override fun onResume() {
@@ -58,37 +56,38 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract, View.OnClick
         finish()
     }
 
-    override fun onClick(v: View?) {
-        presenter.onViewClick(v?.id ?: return)
-    }
-
-    override fun addTarget() {
-        replaceFragment(TargetEditFragment())
-    }
-
-    override fun onPostResume() {
-        super.onPostResume()
-        replaceFragment(TargetsFragment())
-    }
-
-    override fun showListOfTarget() {
-        replaceFragment(TargetsFragment())
-    }
-
-    override fun showSettingsList() {
-        replaceFragment(SettingsListFragment())
-    }
-
-    override fun showCalendar() {
-        replaceFragment(CalendarFragment())
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean =
-        presenter.onNavigationItemSelected(item.itemId)
-
     private fun setupViews() {
-        fab.setOnClickListener(this)
-        bottomNavigationView?.setOnNavigationItemSelectedListener(this)
+        val host: NavHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment? ?: return
+
+        val navController = host.navController
+        appBarConfiguration = AppBarConfiguration(navController.graph)
+
+        val drawerLayout: DrawerLayout? = findViewById(R.id.drawer_layout)
+        appBarConfiguration = AppBarConfiguration(
+            setOf(R.id.target_list, R.id.settings_list_fragment, R.id.calendar_fragment),
+            drawerLayout
+        )
+        setupActionBar(navController, appBarConfiguration)
+        setupNavigationMenu(navController)
+        setupBottomNavMenu(navController)
+    }
+
+    private fun setupNavigationMenu(navController: NavController) {
+        val sideNavView = findViewById<NavigationView>(R.id.nav_view)
+        sideNavView?.setupWithNavController(navController)
+    }
+
+    private fun setupActionBar(
+        navController: NavController,
+        appBarConfig: AppBarConfiguration
+    ) {
+        setupActionBarWithNavController(navController, appBarConfig)
+    }
+
+    private fun setupBottomNavMenu(navController: NavController) {
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
+        bottomNavigationView?.setupWithNavController(navController)
     }
 
     private fun signIn() {

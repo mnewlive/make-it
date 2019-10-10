@@ -17,21 +17,14 @@ class TargetsItemViewHolder(
     parent.inflateListItemView(
         R.layout.list_item_targets
     )
-), View.OnClickListener {
+) {
 
     private var titleView = itemView.findViewById<TextView>(R.id.titleView)
     private var descriptionView = itemView.findViewById<TextView>(R.id.descriptionView)
     private var priorityView = itemView.findViewById<View>(R.id.priorityView)
 
     init {
-        itemView.setOnClickListener(this)
-    }
-
-    override fun onClick(v: View?) {
-        if (adapterPosition > RecyclerView.NO_POSITION) listener?.onListItemClick(
-            adapterPosition,
-            ""
-        )
+        itemView.setOnClickListener { reactOnClick() }
     }
 
     fun bind(item: Target) {
@@ -42,6 +35,13 @@ class TargetsItemViewHolder(
                 itemView.context,
                 R.color.colorPrimary
             )
+        )
+    }
+
+    private fun reactOnClick() {
+        if (adapterPosition > RecyclerView.NO_POSITION) listener?.onListItemClick(
+            adapterPosition,
+            ""
         )
     }
 }

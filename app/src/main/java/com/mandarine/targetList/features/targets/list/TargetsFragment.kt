@@ -9,20 +9,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.mandarine.targetList.R
 import com.mandarine.targetList.common.SwipeToDeleteCallback
-import com.mandarine.targetList.common.addFragment
 import com.mandarine.targetList.common.setVisible
-import com.mandarine.targetList.features.targets.edit.TargetEditFragment
-import com.mandarine.targetList.interfaces.BaseDataSetContract
 import com.mandarine.targetList.interfaces.ListItemClickListener
 import com.mandarine.targetList.interfaces.SelectTargetViewContract
 import com.mandarine.targetList.model.Target
 import kotlinx.android.synthetic.main.fragment_target_list.*
 
-class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContract,
-    BaseDataSetContract {
+class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContract {
 
     private var recyclerView: RecyclerView? = null
     private val presenter = TargetsPresenter(this)
@@ -55,16 +52,7 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
     }
 
     override fun onListItemClick(itemIndex: Int, itemCode: String) {
-        presenter.onListItemClick((adapter.getItem(itemIndex) as Target).guid)
-    }
-
-    override fun showTarget(guid: String) {
-        activity?.addFragment(TargetEditFragment.newInstance(guid))
-    }
-
-    override fun dataSetChanged() {
-        updateListData()
-        adapter.notifyDataSetChanged()
+        findNavController().navigate(TargetsFragmentDirections.nextAction((adapter.getItem(itemIndex) as Target).guid))
     }
 
     override fun updateViewContent() {
@@ -83,6 +71,9 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
     }
 
     private fun setupViews() {
+        fab?.setOnClickListener {
+            findNavController().navigate(TargetsFragmentDirections.nextAction(""))
+        }
         recyclerView = view?.findViewById(R.id.recyclerView)
         recyclerView?.layoutManager = LinearLayoutManager(activity)
         ItemTouchHelper(swipeHandler).attachToRecyclerView(recyclerView)

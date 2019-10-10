@@ -1,0 +1,16 @@
+1. ThreeTenABP
+https://github.com/JakeWharton/ThreeTenABP
+
+Copyright (C) 2015 Jake Wharton
+
+2. FirebaseUI-Android
+https://github.com/firebase/FirebaseUI-Android
+
+3. Android Compat Support Library
+https://www.apache.org/licenses/LICENSE-2.0.txt
+
+4. Android Constraint Layout Library
+https://www.apache.org/licenses/LICENSE-2.0.txt
+
+5. Android Material Components
+https://github.com/material-components/material-components-android

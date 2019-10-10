@@ -2,11 +2,11 @@ package com.mandarine.targetList.common
 
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class AbstractListAdapter(initialData: List<Any> = emptyList()) :
+abstract class AbstractListAdapter <T>(initialData: List<T> = emptyList())  :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var _data: MutableList<Any> = initialData.toMutableList()
-    var data: List<Any>
+    private var _data: MutableList<T> = initialData.toMutableList()
+    var data: List<T>
         get() = _data
         set(value) {
             _data = value.toMutableList()
@@ -23,5 +23,5 @@ abstract class AbstractListAdapter(initialData: List<Any> = emptyList()) :
         onBindHolder(holder, position, _data[position])
     }
 
-    abstract fun onBindHolder(holder: RecyclerView.ViewHolder, position: Int, item: Any)
+    abstract fun onBindHolder(holder: RecyclerView.ViewHolder, position: Int, item: T)
 }

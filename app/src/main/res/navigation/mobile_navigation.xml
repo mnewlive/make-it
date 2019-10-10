@@ -13,12 +13,8 @@
 
         <action
             android:id="@+id/next_action"
-            app:destination="@+id/target_edit" />
-
-        <argument
-            android:name="guid"
-            android:defaultValue="guid"
-            app:argType="string" />
+            app:destination="@+id/target_edit">
+        </action>
     </fragment>
 
     <fragment
@@ -30,6 +26,10 @@
         <action
             android:id="@+id/show_list"
             app:destination="@+id/target_list" />
+
+        <argument
+            android:name="guid"
+            app:argType="string"/>
     </fragment>
 
     <fragment

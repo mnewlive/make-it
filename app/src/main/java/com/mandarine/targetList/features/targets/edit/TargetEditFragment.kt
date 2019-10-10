@@ -8,9 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.mandarine.targetList.R
 import com.mandarine.targetList.common.setVisible
-import com.mandarine.targetList.constants.KEY_TARGET_GUID
 import kotlinx.android.synthetic.main.fragment_target_add.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.ZoneId
@@ -21,8 +21,9 @@ import org.threeten.bp.format.FormatStyle
 class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract {
 
     private val presenter = TargetEditPresenter(contract = this)
+    private val safeArgs: TargetEditFragmentArgs by navArgs()
     private val targetGuid: String
-        get() = arguments?.getString(KEY_TARGET_GUID, "") ?: ""
+        get() = safeArgs.guid
     private var parsedDate: LocalDate? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

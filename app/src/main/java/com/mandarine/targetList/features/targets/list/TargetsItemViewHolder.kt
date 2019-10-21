@@ -9,6 +9,7 @@ import com.mandarine.targetList.R
 import com.mandarine.targetList.common.inflateListItemView
 import com.mandarine.targetList.interfaces.ListItemClickListener
 import com.mandarine.targetList.model.Target
+import java.text.SimpleDateFormat
 
 class TargetsItemViewHolder(
     parent: ViewGroup,
@@ -22,6 +23,7 @@ class TargetsItemViewHolder(
     private var titleView = itemView.findViewById<TextView>(R.id.titleView)
     private var descriptionView = itemView.findViewById<TextView>(R.id.descriptionView)
     private var priorityView = itemView.findViewById<View>(R.id.priorityView)
+    private var dateView = itemView.findViewById<TextView>(R.id.dateView)
 
     init {
         itemView.setOnClickListener { reactOnClick() }
@@ -36,6 +38,9 @@ class TargetsItemViewHolder(
                 R.color.colorPrimary
             )
         )
+        val selectedDate = item.date
+        val dateString = SimpleDateFormat("d MMMM, yyyy").format(selectedDate)
+        dateView.text = dateString
     }
 
     private fun reactOnClick() {

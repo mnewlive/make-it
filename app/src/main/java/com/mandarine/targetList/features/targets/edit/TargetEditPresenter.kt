@@ -67,12 +67,17 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
     }
 
     fun addTarget(name: String, description: String, date: Long, priority: Int) {
-        if (!TextUtils.isEmpty(name)) {
-            val id: String = databaseReference?.push()?.key.toString()
-            val target = Target(guid = id, name = name, description = description, date = date, priority = priority)
-            targetsRef?.push()?.setValue(target)
-            contract.closeView()
-        } else Log.d("some", "Enter a name")
+        when {
+            name.isEmpty() -> Log.d("some", "Enter the name")
+            date == 0L -> Log.d("some", "Enter the date")
+            else -> {
+                val id: String = databaseReference?.push()?.key.toString()
+                val target = Target(guid = id, name = name, description = description, date = date, priority = priority)
+                targetsRef?.push()?.setValue(target)
+                contract.closeView()
+                Log.d("some", "Enter a name")
+            }
+        }
     }
 
     fun updateTarget(name: String, description: String, date: Long, priority: Int) {

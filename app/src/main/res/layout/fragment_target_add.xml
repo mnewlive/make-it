@@ -72,7 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginRight="@dimen/dimen_10"
-        android:text="Set deadline"
+        android:text="Deadline"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descriptionView" />
 

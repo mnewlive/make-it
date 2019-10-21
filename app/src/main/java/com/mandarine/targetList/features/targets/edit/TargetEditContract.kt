@@ -5,4 +5,5 @@ interface TargetEditContract {
     fun deleteTarget()
     fun updateViewsContent(name: String?, description: String?, date: String?, priorityPosition: Int)
     fun closeView()
+    fun showWarningDialog()
 }

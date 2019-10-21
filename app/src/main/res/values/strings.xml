@@ -21,4 +21,6 @@
     <string name="log_out_question">Are you sure you want to log out?</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_ok">OK</string>
+    <string name="warning">Warning</string>
+    <string name="warning_enter_name">Please, enter a name</string>
 </resources>

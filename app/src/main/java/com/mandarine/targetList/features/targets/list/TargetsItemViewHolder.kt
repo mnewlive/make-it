@@ -35,12 +35,20 @@ class TargetsItemViewHolder(
         priorityView.setBackgroundColor(
             ContextCompat.getColor(
                 itemView.context,
-                R.color.colorPrimary
+                setColorForPriority(item.priority)
             )
         )
         val selectedDate = item.date
         val dateString = SimpleDateFormat("d MMMM, yyyy").format(selectedDate)
         dateView.text = dateString
+    }
+
+    private fun setColorForPriority(priorityPosition: Int): Int {
+        return when (priorityPosition) {
+            0 -> R.color.colorAccent
+            1 -> R.color.yellow
+            else -> R.color.colorPrimary
+        }
     }
 
     private fun reactOnClick() {

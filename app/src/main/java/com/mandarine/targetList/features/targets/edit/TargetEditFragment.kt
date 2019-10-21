@@ -7,6 +7,8 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mandarine.targetList.R
@@ -25,6 +27,7 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
     private val targetGuid: String
         get() = safeArgs.guid
     private var parsedDate: LocalDate? = null
+    private var spinnerPosition = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,10 +59,16 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
         updateActionViews()
     }
 
-    override fun updateViewsContent(name: String?, description: String?, date: String?) {
+    override fun updateViewsContent(
+        name: String?,
+        description: String?,
+        date: String?,
+        priorityPosition: Int
+    ) {
         nameEditText?.text = Editable.Factory.getInstance().newEditable(name)
         descriptionEditText?.text = Editable.Factory.getInstance().newEditable(description)
         dateView?.text = Editable.Factory.getInstance().newEditable(date)
+        spinner.setSelection(priorityPosition)
     }
 
     override fun onClick(v: View?) {
@@ -70,8 +79,9 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
         val name = nameEditText?.text.toString().trim()
         val description = descriptionEditText?.text.toString().trim()
         val date = parsedDate?.atStartOfDay()?.toInstant(ZoneOffset.UTC)?.toEpochMilli() ?: 0L
-        if (targetGuid.isEmpty()) presenter.addTarget(name, description, date)
-        else presenter.updateTarget(name, description, date)
+        val priority = spinnerPosition
+        if (targetGuid.isEmpty()) presenter.addTarget(name, description, date, priority)
+        else presenter.updateTarget(name, description, date, priority)
     }
 
     override fun deleteTarget() {
@@ -84,8 +94,34 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
 
     private fun setupViews() {
         showDatePickerDialog()
+        setupPriority()
         addActionView?.setOnClickListener(this)
         deleteActionView?.setOnClickListener(this)
+    }
+
+    private fun setupPriority() {
+        val priorityList = arrayOf("High", "Medium", "Low")
+        val adapter = ArrayAdapter(
+            activity,
+            android.R.layout.simple_spinner_item,
+            priorityList
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
+        spinner.adapter = adapter
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                spinnerPosition = position
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+
     }
 
     private fun showDatePickerDialog() {

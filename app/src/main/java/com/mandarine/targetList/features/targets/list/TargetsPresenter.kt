@@ -20,9 +20,9 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
     fun setInitialData() {
         firebaseUser = FirebaseAuth.getInstance().currentUser
         databaseReference = FirebaseDatabase.getInstance().reference
-        uid = firebaseUser!!.uid
-        targetsRef = databaseReference!!.child("targets")
-            .child("users").child(uid.toString()).child("targets")
+        uid = firebaseUser?.uid
+        targetsRef = databaseReference?.child("targets")?.
+            child("users")?.child(uid.toString())?.child("targets")
     }
 
     fun shouldShowContent(): Boolean = targetList.isNotEmpty()
@@ -30,9 +30,6 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
     fun shouldShowEmptyView(): Boolean = !shouldShowContent()
 
     fun getTargetsFromDb() {
-        val uid = firebaseUser!!.uid
-        val targetsRef = databaseReference?.child("targets")?.child("users")
-            ?.child(uid)?.child("targets")
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 targetList.clear()

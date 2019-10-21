@@ -23,9 +23,9 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
         this.targetGuid = targetGuid
         databaseReference = FirebaseDatabase.getInstance().reference
         firebaseUser = FirebaseAuth.getInstance().currentUser
-        uid = firebaseUser!!.uid
-        targetsRef = databaseReference!!.child("targets")
-            .child("users").child(uid.toString()).child("targets")
+        uid = firebaseUser?.uid
+        targetsRef = databaseReference?.child("targets")?.
+            child("users")?.child(uid.toString())?.child("targets")
         query = targetsRef?.orderByChild("guid")?.equalTo(targetGuid)
     }
 

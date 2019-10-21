@@ -44,6 +44,7 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
                     val name = target?.name ?: ""
                     val description = target?.description ?: ""
                     val time = target?.date ?: 0L
+                    val priority = target?.priority ?: 0
 
                     val date = Date(time)
                     val format = SimpleDateFormat("d MMMM, yyyy")
@@ -52,7 +53,8 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
                     else contract.updateViewsContent(
                         name = name,
                         description = description,
-                        date = format.format(date)
+                        date = format.format(date),
+                        priorityPosition = priority
                     )
                 }
             }
@@ -64,22 +66,23 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
         query?.addListenerForSingleValueEvent(valueEventListener)
     }
 
-    fun addTarget(name: String, description: String, date: Long) {
+    fun addTarget(name: String, description: String, date: Long, priority: Int) {
         if (!TextUtils.isEmpty(name)) {
             val id: String = databaseReference?.push()?.key.toString()
-            val target = Target(guid = id, name = name, description = description, date = date)
+            val target = Target(guid = id, name = name, description = description, date = date, priority = priority)
             targetsRef?.push()?.setValue(target)
             contract.closeView()
         } else Log.d("some", "Enter a name")
     }
 
-    fun updateTarget(name: String, description: String, date: Long) {
+    fun updateTarget(name: String, description: String, date: Long, priority: Int) {
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (targetSnapshot in dataSnapshot.children) {
                     targetSnapshot.child("name").ref.setValue(name)
                     targetSnapshot.child("description").ref.setValue(description)
                     targetSnapshot.child("date").ref.setValue(date)
+                    targetSnapshot.child("priority").ref.setValue(priority)
                     contract.closeView()
                 }
             }

@@ -1,6 +1,7 @@
 package com.mandarine.targetList.common
 
 import android.app.AlertDialog
+import android.content.ClipDescription
 import android.content.DialogInterface
 import androidx.fragment.app.FragmentActivity
 import com.mandarine.targetList.R
@@ -17,11 +18,11 @@ fun FragmentActivity.showLogoutDialog(positiveListener: DialogInterface.OnClickL
     }
 }
 
-fun FragmentActivity.showWarningDialog(title: String) {
+fun FragmentActivity.showWarningDialog(description: String) {
     try {
         AlertDialog.Builder(this)
-            .setTitle(title)
-            .setMessage(getString(R.string.warning_enter_name))
+            .setTitle(getString(R.string.warning))
+            .setMessage(description)
             .show()
     } catch (e: Exception) {
     }

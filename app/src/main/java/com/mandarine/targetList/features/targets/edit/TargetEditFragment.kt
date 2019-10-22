@@ -93,9 +93,8 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
         findNavController().navigate(R.id.show_list)
     }
 
-    //TODO: String res replace on logic in presenter, where u can choose message/title
     override fun showWarningDialog() {
-        activity?.showWarningDialog(getString(R.string.warning))
+        activity?.showWarningDialog(description = getString(R.string.warning_description))
     }
 
     private fun setupViews() {

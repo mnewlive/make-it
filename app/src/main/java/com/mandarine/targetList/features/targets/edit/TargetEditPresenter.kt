@@ -74,7 +74,6 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
                 val target = Target(guid = id, name = name, description = description, date = date, priority = priority)
                 targetsRef?.push()?.setValue(target)
                 contract.closeView()
-                Log.d("some", "Enter a name")
             }
         }
     }

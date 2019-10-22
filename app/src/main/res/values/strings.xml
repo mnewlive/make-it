@@ -22,5 +22,5 @@
     <string name="action_cancel">Cancel</string>
     <string name="action_ok">OK</string>
     <string name="warning">Warning</string>
-    <string name="warning_enter_name">Please, enter a name</string>
+    <string name="warning_description">Please fill all required fields</string>
 </resources>

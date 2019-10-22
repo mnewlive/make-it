@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mandarine.targetList.R
 import com.mandarine.targetList.common.setVisible
+import com.mandarine.targetList.common.showWarningDialog
 import kotlinx.android.synthetic.main.fragment_target_add.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.ZoneId
@@ -90,6 +91,10 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
 
     override fun closeView() {
         findNavController().navigate(R.id.show_list)
+    }
+
+    override fun showWarningDialog() {
+        activity?.showWarningDialog(description = getString(R.string.warning_description))
     }
 
     private fun setupViews() {

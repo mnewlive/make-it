@@ -16,3 +16,13 @@ fun FragmentActivity.showLogoutDialog(positiveListener: DialogInterface.OnClickL
     } catch (e: Exception) {
     }
 }
+
+fun FragmentActivity.showWarningDialog(description: String) {
+    try {
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.warning))
+            .setMessage(description)
+            .show()
+    } catch (e: Exception) {
+    }
+}

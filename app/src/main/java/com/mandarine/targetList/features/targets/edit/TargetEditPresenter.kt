@@ -1,6 +1,5 @@
 package com.mandarine.targetList.features.targets.edit
 
-import android.text.TextUtils
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -67,12 +66,16 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
     }
 
     fun addTarget(name: String, description: String, date: Long, priority: Int) {
-        if (!TextUtils.isEmpty(name)) {
-            val id: String = databaseReference?.push()?.key.toString()
-            val target = Target(guid = id, name = name, description = description, date = date, priority = priority)
-            targetsRef?.push()?.setValue(target)
-            contract.closeView()
-        } else Log.d("some", "Enter a name")
+        when {
+            name.isEmpty() -> contract.showWarningDialog()
+            date == 0L -> contract.showWarningDialog()
+            else -> {
+                val id: String = databaseReference?.push()?.key.toString()
+                val target = Target(guid = id, name = name, description = description, date = date, priority = priority)
+                targetsRef?.push()?.setValue(target)
+                contract.closeView()
+            }
+        }
     }
 
     fun updateTarget(name: String, description: String, date: Long, priority: Int) {

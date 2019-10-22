@@ -1,7 +1,6 @@
 package com.mandarine.targetList.common
 
 import android.app.AlertDialog
-import android.content.ClipDescription
 import android.content.DialogInterface
 import androidx.fragment.app.FragmentActivity
 import com.mandarine.targetList.R

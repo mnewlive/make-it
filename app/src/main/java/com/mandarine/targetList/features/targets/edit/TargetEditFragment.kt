@@ -45,9 +45,11 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
 
     private fun updateActionViews() {
         if (targetGuid.isEmpty()) {
+            titleView?.text = getString(R.string.add_goal)
             addActionView?.text = getString(R.string.add_goal)
             deleteActionView?.setVisible(show = false)
         } else {
+            titleView?.text = getString(R.string.edit_goal)
             addActionView?.text = getString(R.string.edit_goal)
             deleteActionView?.setVisible(show = true)
         }
@@ -126,7 +128,6 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
-
     }
 
     private fun showDatePickerDialog() {

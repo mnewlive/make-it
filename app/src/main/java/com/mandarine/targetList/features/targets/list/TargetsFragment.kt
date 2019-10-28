@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
+import com.google.firebase.auth.FirebaseAuth
 import com.mandarine.targetList.R
 import com.mandarine.targetList.common.SwipeToDeleteCallback
 import com.mandarine.targetList.common.setVisible
@@ -25,12 +26,43 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
     private var adapter = TargetsAdapter(clickListener = this)
     private lateinit var swipeHandler: ItemTouchHelper.Callback
 
+//    private lateinit var auth: FirebaseAuth
+//    private lateinit var mAuthStateListener: FirebaseAuth.AuthStateListener
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_target_list, container, false)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        presenter.signWithFirebase(activity)
+        presenter.getTargetsFromDb()
+        Log.d("some", "onCreate")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("some", "onStart")
+        updateListData()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.onResume()
+//        auth.addAuthStateListener(mAuthStateListener)
+        updateListData()
+        Log.d("some", "onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        presenter.onPause()
+//        auth.removeAuthStateListener(mAuthStateListener)
+        Log.d("some", "onPause")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,7 +94,9 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
     }
 
     private fun updateListData() {
+//        if (presenter.firebaseUser == null) {
         if (presenter.firebaseUser == null) {
+
             Log.d("some", "loadLogInView")
         } else {
             presenter.getTargetsFromDb()

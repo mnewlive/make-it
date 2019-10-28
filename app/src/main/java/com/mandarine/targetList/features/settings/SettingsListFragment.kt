@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.firebase.ui.auth.AuthUI
 import com.mandarine.targetList.R
@@ -39,6 +40,7 @@ class SettingsListFragment : Fragment(), ListItemClickListener,
 
     override fun onClick(dialog: DialogInterface?, which: Int) {
         AuthUI.getInstance().signOut(requireContext())
+        findNavController().navigate(R.id.action_settings_list_fragment_to_target_list)
     }
 
     override fun onListItemClick(itemIndex: Int, itemCode: String) {

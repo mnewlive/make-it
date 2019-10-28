@@ -21,25 +21,4 @@ class MainActivityPresenter(private val contract: MainActivityViewContract?) {
             }
         }
     }
-
-    fun signIn(activity: MainActivity, user: FirebaseUser?) {
-        if (user != null) {
-            // Sign in logic here.
-        } else {
-            activity.startActivityForResult(
-                AuthUI.getInstance()
-                    .createSignInIntentBuilder()
-                    .setIsSmartLockEnabled(false)
-                    .setAvailableProviders(
-                        Arrays.asList(
-                            AuthUI.IdpConfig.GoogleBuilder().build(),
-                            AuthUI.IdpConfig.EmailBuilder().build(),
-                            AuthUI.IdpConfig.AnonymousBuilder().build()
-                        )
-                    )
-                    .build(),
-                RC_SIGN_IN
-            )
-        }
-    }
 }

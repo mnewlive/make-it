@@ -13,15 +13,12 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.auth.FirebaseAuth
 import com.mandarine.targetList.R
 
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), MainActivityViewContract {
 
-    private lateinit var auth: FirebaseAuth
-    private lateinit var mAuthStateListener: FirebaseAuth.AuthStateListener
     private val presenter = MainActivityPresenter(contract = this)
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -29,22 +26,11 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        signIn()
         setupViews()
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return findNavController(R.id.nav_host_fragment).navigateUp(appBarConfiguration)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        auth.addAuthStateListener(mAuthStateListener)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        auth.removeAuthStateListener(mAuthStateListener)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -88,12 +74,5 @@ class MainActivity : AppCompatActivity(), MainActivityViewContract {
     private fun setupBottomNavMenu(navController: NavController) {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
         bottomNavigationView?.setupWithNavController(navController)
-    }
-
-    private fun signIn() {
-        auth = FirebaseAuth.getInstance()
-        mAuthStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
-            presenter.signIn(activity = this, user = firebaseAuth.currentUser)
-        }
     }
 }

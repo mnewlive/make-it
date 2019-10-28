@@ -1,12 +1,18 @@
 package com.mandarine.targetList.features.targets.list
 
 import android.util.Log
+import androidx.fragment.app.FragmentActivity
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.mandarine.targetList.common.indexIsInBounds
+import com.mandarine.targetList.constants.RC_SIGN_IN
+import com.mandarine.targetList.features.root.MainActivity
 import com.mandarine.targetList.interfaces.SelectTargetViewContract
 import com.mandarine.targetList.model.Target
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TargetsPresenter(private val contract: SelectTargetViewContract) {
 
@@ -17,12 +23,15 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
     private var targetsRef: DatabaseReference? = null
     private var uid: String? = null
 
+    private lateinit var auth: FirebaseAuth
+    private lateinit var mAuthStateListener: FirebaseAuth.AuthStateListener
+
     fun setInitialData() {
         firebaseUser = FirebaseAuth.getInstance().currentUser
         databaseReference = FirebaseDatabase.getInstance().reference
         uid = firebaseUser?.uid
-        targetsRef = databaseReference?.child("targets")?.
-            child("users")?.child(uid.toString())?.child("targets")
+        targetsRef = databaseReference?.child("targets")?.child("users")?.child(uid.toString())
+            ?.child("targets")
     }
 
     fun shouldShowContent(): Boolean = targetList.isNotEmpty()
@@ -30,6 +39,7 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
     fun shouldShowEmptyView(): Boolean = !shouldShowContent()
 
     fun getTargetsFromDb() {
+        Log.d("some", "getTargetsFromDb")
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 targetList.clear()
@@ -69,5 +79,43 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
             }
         }
         query?.addListenerForSingleValueEvent(valueEventListener)
+    }
+
+    fun signWithFirebase(activity: FragmentActivity?) {
+        auth = FirebaseAuth.getInstance()
+        mAuthStateListener = FirebaseAuth.AuthStateListener {
+            signIn(activity, firebaseUser)
+        }
+    }
+
+    fun signIn(activity: FragmentActivity?, user: FirebaseUser?) {
+        if (firebaseUser != null) {
+            // Sign in logic here.
+            Log.d("some", "firebaseUser not null!")
+
+        } else {
+            activity?.startActivityForResult(
+                AuthUI.getInstance()
+                    .createSignInIntentBuilder()
+                    .setIsSmartLockEnabled(false)
+                    .setAvailableProviders(
+                        Arrays.asList(
+                            AuthUI.IdpConfig.GoogleBuilder().build(),
+                            AuthUI.IdpConfig.EmailBuilder().build(),
+                            AuthUI.IdpConfig.AnonymousBuilder().build()
+                        )
+                    )
+                    .build(),
+                RC_SIGN_IN
+            )
+        }
+    }
+
+    fun onResume() {
+        auth.addAuthStateListener(mAuthStateListener)
+    }
+
+    fun onPause() {
+        auth.removeAuthStateListener(mAuthStateListener)
     }
 }

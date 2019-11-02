@@ -6,9 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.mandarine.targetList.R
@@ -24,6 +22,11 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
     private val presenter = TargetsPresenter(this)
     private var adapter = TargetsAdapter(clickListener = this)
     private lateinit var swipeHandler: ItemTouchHelper.Callback
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,6 +62,18 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
         recyclerView?.adapter = adapter
         recyclerView?.setVisible(presenter.shouldShowContent())
         emptyView?.setVisible(presenter.shouldShowEmptyView())
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.filter, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.sort_by_priority -> presenter.getTargetsByPriority()
+        }
+        return true
     }
 
     private fun updateListData() {

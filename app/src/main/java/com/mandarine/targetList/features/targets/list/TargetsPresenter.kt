@@ -21,8 +21,8 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
         firebaseUser = FirebaseAuth.getInstance().currentUser
         databaseReference = FirebaseDatabase.getInstance().reference
         uid = firebaseUser?.uid
-        targetsRef = databaseReference?.child("targets")?.
-            child("users")?.child(uid.toString())?.child("targets")
+        targetsRef = databaseReference?.child("targets")?.child("users")?.child(uid.toString())
+            ?.child("targets")
     }
 
     fun shouldShowContent(): Boolean = targetList.isNotEmpty()
@@ -35,8 +35,29 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
                 targetList.clear()
                 for (targetSnapshot in dataSnapshot.children) {
                     val target = targetSnapshot.getValue(Target::class.java)
+                    if(target != null) {
+                        targetList.add(target)
+                    }
+                }
+                contract.updateViewContent()
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.d("some", "Error trying to get targets for ${databaseError.message}")
+            }
+        }
+        targetsRef?.addListenerForSingleValueEvent(valueEventListener)
+    }
+
+    fun getTargetsByPriority() {
+        val valueEventListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                targetList.clear()
+                for (targetSnapshot in dataSnapshot.children) {
+                    val target = targetSnapshot.getValue(Target::class.java)
                     target?.let { targetList.add(it) }
                 }
+                targetList.sortByDescending { it.priority }
                 contract.updateViewContent()
             }
 

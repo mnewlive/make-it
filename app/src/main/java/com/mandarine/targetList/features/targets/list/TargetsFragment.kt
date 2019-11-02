@@ -72,6 +72,7 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.sort_by_priority -> {
+                presenter.getTargetsByPriority()
                 Log.d("some", "click on sort")
             }
         }

@@ -34,12 +34,9 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 targetList.clear()
-                for (targetSnapshot in dataSnapshot.children) {
-                    val target = targetSnapshot.getValue(Target::class.java)
-                    if (target != null) {
-                        targetList.add(target)
-                    }
-                }
+                dataSnapshot.children
+                    .mapNotNull { it.getValue(Target::class.java) }
+                    .toCollection(targetList)
                 contract.updateViewContent()
             }
 
@@ -54,11 +51,11 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 targetList.clear()
-                for (targetSnapshot in dataSnapshot.children) {
-                    val target = targetSnapshot.getValue(Target::class.java)
-                    target?.let { targetList.add(it) }
-                }
-                targetList.sortByDescending { it.priority }
+                dataSnapshot.children
+                    .mapNotNull { it.getValue(Target::class.java) }
+                    .sortedByDescending { it.priority }
+                    .toCollection(targetList)
+                    .reverse()
                 contract.updateViewContent()
             }
 

@@ -21,7 +21,8 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
         firebaseUser = FirebaseAuth.getInstance().currentUser
         databaseReference = FirebaseDatabase.getInstance().reference
         uid = firebaseUser?.uid
-        targetsRef = databaseReference?.child("targets")?.child("users")?.child(uid.toString())
+        targetsRef = databaseReference?.child("targets")
+            ?.child("users")?.child(uid.toString())
             ?.child("targets")
     }
 
@@ -35,7 +36,7 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
                 targetList.clear()
                 for (targetSnapshot in dataSnapshot.children) {
                     val target = targetSnapshot.getValue(Target::class.java)
-                    if(target != null) {
+                    if (target != null) {
                         targetList.add(target)
                     }
                 }

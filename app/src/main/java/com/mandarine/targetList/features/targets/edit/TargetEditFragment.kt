@@ -43,16 +43,6 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
         return inflater.inflate(R.layout.fragment_target_add, container, false)
     }
 
-    private fun updateActionViews() {
-        if (targetGuid.isEmpty()) {
-            addActionView?.text = getString(R.string.add_goal)
-            deleteActionView?.setVisible(show = false)
-        } else {
-            addActionView?.text = getString(R.string.edit_goal)
-            deleteActionView?.setVisible(show = true)
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.fetchTarget()
@@ -102,6 +92,18 @@ class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract 
         setupPriority()
         addActionView?.setOnClickListener(this)
         deleteActionView?.setOnClickListener(this)
+    }
+
+    private fun updateActionViews() {
+        if (targetGuid.isEmpty()) {
+            titleView?.text = getString(R.string.add_goal)
+            addActionView?.text = getString(R.string.add_goal)
+            deleteActionView?.setVisible(show = false)
+        } else {
+            titleView?.text = getString(R.string.edit_goal)
+            addActionView?.text = getString(R.string.edit_goal)
+            deleteActionView?.setVisible(show = true)
+        }
     }
 
     private fun setupPriority() {

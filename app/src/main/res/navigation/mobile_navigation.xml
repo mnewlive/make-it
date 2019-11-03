@@ -13,8 +13,7 @@
 
         <action
             android:id="@+id/next_action"
-            app:destination="@+id/target_edit">
-        </action>
+            app:destination="@+id/target_edit" />
     </fragment>
 
     <fragment
@@ -29,7 +28,7 @@
 
         <argument
             android:name="guid"
-            app:argType="string"/>
+            app:argType="string" />
     </fragment>
 
     <fragment

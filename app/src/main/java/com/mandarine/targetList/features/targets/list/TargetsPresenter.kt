@@ -53,9 +53,26 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
                 targetList.clear()
                 dataSnapshot.children
                     .mapNotNull { it.getValue(Target::class.java) }
-                    .sortedByDescending { it.priority }
+                    .sortedBy { it.priority }
                     .toCollection(targetList)
-                    .reverse()
+                contract.updateViewContent()
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.d("some", "Error trying to get targets for ${databaseError.message}")
+            }
+        }
+        targetsRef?.addListenerForSingleValueEvent(valueEventListener)
+    }
+
+    fun getTargetsByDeadline() {
+        val valueEventListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                targetList.clear()
+                dataSnapshot.children
+                    .mapNotNull { it.getValue(Target::class.java) }
+                    .sortedBy { it.date }
+                    .toCollection(targetList)
                 contract.updateViewContent()
             }
 

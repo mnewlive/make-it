@@ -23,4 +23,6 @@
     <string name="action_ok">OK</string>
     <string name="warning">Warning</string>
     <string name="warning_description">Please fill all required fields</string>
+    <string name="sort_by_deadline">Sort by deadline</string>
+    <string name="sort_by_priority">Sort by priority</string>
 </resources>

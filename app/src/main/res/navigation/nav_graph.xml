@@ -9,6 +9,10 @@
         android:id="@+id/mainFragment"
         android:name="com.mandarine.targetList.features.root.MainFragment"
         android:label="MainFragment">
+
+        <action
+            android:id="@+id/show_goals"
+            app:destination="@id/target_list"/>
     </fragment>
 
     <fragment

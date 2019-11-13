@@ -8,13 +8,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
+import androidx.navigation.fragment.findNavController
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.mandarine.targetList.R
 import kotlinx.android.synthetic.main.fragment_main.*
+import java.util.*
 
 class MainFragment : Fragment(), View.OnClickListener {
+
+    private lateinit var auth: FirebaseAuth
+    private lateinit var mAuthStateListener: FirebaseAuth.AuthStateListener
+
 
     companion object {
         const val TAG = "MainFragment"
@@ -31,8 +39,36 @@ class MainFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("some", "onViewCreated")
+        signIn()
         setupViews()
     }
+
+    override fun onResume() {
+        super.onResume()
+        auth.addAuthStateListener(mAuthStateListener)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        auth.removeAuthStateListener(mAuthStateListener)
+    }
+
+    private fun signIn() {
+        auth = FirebaseAuth.getInstance()
+        mAuthStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
+//            presenter.signIn(activity = this, user = firebaseAuth.currentUser)
+            activity?.let { signInApp(it, firebaseAuth.currentUser) }
+        }
+    }
+
+    fun signInApp(activity: FragmentActivity, user: FirebaseUser?) {
+        if (user != null) {
+            Log.d("some", "user not null")
+            findNavController().navigate(R.id.show_goals)
+        } else {
+            Log.d("some", "null")
+        }
+}
 
     private fun setupViews() {
         auth_button.setOnClickListener(this)

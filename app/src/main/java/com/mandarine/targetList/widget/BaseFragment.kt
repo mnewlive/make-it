@@ -26,6 +26,7 @@ abstract class BaseFragment : Fragment(), NetworkStateChangeListener {
         connectivityReceiver.networkStateListener = null
     }
 
+    //TODO: Show snackbar https://github.com/mnewlive/make-it/issues/27
     override fun onNetworkConnectionChanged(isConnected: Boolean) {
         if (isConnected) Log.d("some", "isConnected")
         else Log.d("some", "is not connected")

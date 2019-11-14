@@ -8,21 +8,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.findNavController
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.mandarine.targetList.R
-import kotlinx.android.synthetic.main.fragment_main.*
-import java.util.*
 
-class MainFragment : Fragment(), View.OnClickListener {
+class MainFragment : Fragment() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var mAuthStateListener: FirebaseAuth.AuthStateListener
-
 
     companion object {
         const val TAG = "MainFragment"
@@ -38,9 +33,8 @@ class MainFragment : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("some", "onViewCreated")
         signIn()
-        setupViews()
+        launchSignInFlow()
     }
 
     override fun onResume() {
@@ -56,26 +50,13 @@ class MainFragment : Fragment(), View.OnClickListener {
     private fun signIn() {
         auth = FirebaseAuth.getInstance()
         mAuthStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
-//            presenter.signIn(activity = this, user = firebaseAuth.currentUser)
-            activity?.let { signInApp(it, firebaseAuth.currentUser) }
+            if (firebaseAuth.currentUser != null) {
+                Log.d("some", "user not null")
+                findNavController().navigate(R.id.show_goals)
+            } else {
+                Log.d("some", "null")
+            }
         }
-    }
-
-    fun signInApp(activity: FragmentActivity, user: FirebaseUser?) {
-        if (user != null) {
-            Log.d("some", "user not null")
-            findNavController().navigate(R.id.show_goals)
-        } else {
-            Log.d("some", "null")
-        }
-}
-
-    private fun setupViews() {
-        auth_button.setOnClickListener(this)
-    }
-
-    override fun onClick(v: View?) {
-        if (v?.id == R.id.auth_button) launchSignInFlow()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -99,8 +80,8 @@ class MainFragment : Fragment(), View.OnClickListener {
         // If users choose to register with their email,
         // they will need to create a password as well
         val providers = arrayListOf(
-            AuthUI.IdpConfig.EmailBuilder().build(), AuthUI.IdpConfig.GoogleBuilder().build()
-            //
+            AuthUI.IdpConfig.EmailBuilder().build(),
+            AuthUI.IdpConfig.GoogleBuilder().build()
         )
 
         // Create and launch sign-in intent.
@@ -111,7 +92,7 @@ class MainFragment : Fragment(), View.OnClickListener {
                 .createSignInIntentBuilder()
                 .setAvailableProviders(providers)
                 .build(),
-             MainFragment.SIGN_IN_RESULT_CODE
+             SIGN_IN_RESULT_CODE
         )
     }
 }

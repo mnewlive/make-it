@@ -2,14 +2,4 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mandarine.targetList.features.root.MainFragment">
-
-    <Button
-        android:id="@+id/auth_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Click"
-        android:background="@color/red"
-        android:layout_gravity="center"/>
-
-</FrameLayout>
+    tools:context="com.mandarine.targetList.features.root.MainFragment" />

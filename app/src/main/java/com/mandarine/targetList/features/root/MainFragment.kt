@@ -20,7 +20,6 @@ class MainFragment : Fragment() {
     private lateinit var mAuthStateListener: FirebaseAuth.AuthStateListener
 
     companion object {
-        const val TAG = "MainFragment"
         const val SIGN_IN_RESULT_CODE = 1001
     }
 
@@ -51,7 +50,6 @@ class MainFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         mAuthStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             if (firebaseAuth.currentUser != null) {
-                Log.d("some", "user not null")
                 findNavController().navigate(R.id.show_goals)
             } else {
                 Log.d("some", "null")
@@ -65,12 +63,12 @@ class MainFragment : Fragment() {
             val response = IdpResponse.fromResultIntent(data)
             if (resultCode == Activity.RESULT_OK) {
                 // User successfully signed in
-                Log.i(TAG, "Successfully signed in user ${FirebaseAuth.getInstance().currentUser?.displayName}!")
+                Log.d("some", "Successfully signed in user ${FirebaseAuth.getInstance().currentUser?.displayName}!")
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
                 // response.getError().getErrorCode() and handle the error.
-                Log.i(TAG, "Sign in unsuccessful ${response?.error?.errorCode}")
+                Log.d("some", "Sign in unsuccessful ${response?.error?.errorCode}")
             }
         }
     }

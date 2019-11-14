@@ -5,15 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.firebase.ui.auth.AuthUI
 import com.mandarine.targetList.R
-import com.mandarine.targetList.common.showLogoutDialog
+import com.mandarine.targetList.common.dialogs.showLogoutDialog
 import com.mandarine.targetList.interfaces.ListItemClickListener
+import com.mandarine.targetList.widget.BaseFragment
 import kotlinx.android.synthetic.main.fragment_settings_list.*
 
-class SettingsListFragment : Fragment(), ListItemClickListener,
+class SettingsListFragment : BaseFragment(), ListItemClickListener,
     SettingsContract, DialogInterface.OnClickListener {
 
     private val adapter = SettingsListAdapter(clickListener = this)

@@ -1,4 +1,4 @@
-package com.mandarine.targetList.common
+package com.mandarine.targetList.common.tools
 
 import android.content.Context
 import android.graphics.Color

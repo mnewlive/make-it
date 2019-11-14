@@ -1,11 +1,11 @@
-package com.mandarine.targetList.widget
+package com.mandarine.targetList.common.views
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import com.mandarine.targetList.R
-import com.mandarine.targetList.common.setVisible
+import com.mandarine.targetList.common.tools.setVisible
 import kotlinx.android.synthetic.main.view_empty.view.*
 
 class EmptyView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {

@@ -2,7 +2,6 @@ package com.mandarine.targetList.features.targets.list
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
@@ -11,12 +10,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.mandarine.targetList.R
 import com.mandarine.targetList.common.SwipeToDeleteCallback
-import com.mandarine.targetList.common.setVisible
+import com.mandarine.targetList.common.tools.setVisible
 import com.mandarine.targetList.interfaces.ListItemClickListener
 import com.mandarine.targetList.interfaces.SelectTargetViewContract
+import com.mandarine.targetList.widget.BaseFragment
 import kotlinx.android.synthetic.main.fragment_target_list.*
 
-class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContract {
+class TargetsFragment : BaseFragment(), ListItemClickListener, SelectTargetViewContract {
 
     private var recyclerView: RecyclerView? = null
     private val presenter = TargetsPresenter(this)
@@ -54,7 +54,11 @@ class TargetsFragment : Fragment(), ListItemClickListener, SelectTargetViewContr
     }
 
     override fun onListItemClick(itemIndex: Int, itemCode: String) {
-        findNavController().navigate(TargetsFragmentDirections.nextAction(adapter.getItem(itemIndex)?.guid ?: ""))
+        findNavController().navigate(
+            TargetsFragmentDirections.nextAction(
+                adapter.getItem(itemIndex)?.guid ?: ""
+            )
+        )
     }
 
     override fun updateViewContent() {

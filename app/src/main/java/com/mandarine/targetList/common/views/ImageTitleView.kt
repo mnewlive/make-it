@@ -1,4 +1,4 @@
-package com.mandarine.targetList.common
+package com.mandarine.targetList.common.views
 
 import android.content.Context
 import android.util.AttributeSet

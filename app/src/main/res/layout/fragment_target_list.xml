@@ -21,7 +21,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginBottom="@dimen/dimen_72"
+        android:layout_marginBottom="@dimen/dimen_12"
         android:tint="@android:color/white"
         app:srcCompat="@drawable/ic_fab_action" />
 

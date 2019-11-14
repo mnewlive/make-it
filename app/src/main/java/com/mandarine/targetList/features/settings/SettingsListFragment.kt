@@ -32,13 +32,13 @@ class SettingsListFragment : Fragment(), ListItemClickListener,
         setupViews()
     }
 
-    // https://github.com/firebase/FirebaseUI-Android/blob/master/auth/README.md#sign-out
     override fun logOut() {
         activity?.showLogoutDialog(positiveListener = this)
     }
 
     override fun onClick(dialog: DialogInterface?, which: Int) {
         AuthUI.getInstance().signOut(requireContext())
+        activity?.finish() //TODO: https://github.com/mnewlive/make-it/issues/30
     }
 
     override fun onListItemClick(itemIndex: Int, itemCode: String) {

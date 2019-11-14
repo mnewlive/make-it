@@ -2,7 +2,6 @@ package com.mandarine.targetList.features.targets.edit
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +11,9 @@ import android.widget.ArrayAdapter
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mandarine.targetList.R
-import com.mandarine.targetList.common.setVisible
-import com.mandarine.targetList.common.showWarningDialog
+import com.mandarine.targetList.common.tools.setVisible
+import com.mandarine.targetList.common.dialogs.showWarningDialog
+import com.mandarine.targetList.widget.BaseFragment
 import kotlinx.android.synthetic.main.fragment_target_add.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.ZoneId
@@ -21,7 +21,7 @@ import org.threeten.bp.ZoneOffset
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.FormatStyle
 
-class TargetEditFragment : Fragment(), View.OnClickListener, TargetEditContract {
+class TargetEditFragment : BaseFragment(), View.OnClickListener, TargetEditContract {
 
     private val presenter = TargetEditPresenter(contract = this)
     private val safeArgs: TargetEditFragmentArgs by navArgs()

@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.mandarine.targetList.R
-import com.mandarine.targetList.common.ImageTitleView
-import com.mandarine.targetList.common.inflateListItemView
-import com.mandarine.targetList.common.setVisible
+import com.mandarine.targetList.common.views.ImageTitleView
+import com.mandarine.targetList.common.tools.inflateListItemView
+import com.mandarine.targetList.common.tools.setVisible
 import com.mandarine.targetList.features.settings.list.ImageTitleViewModel
 import com.mandarine.targetList.interfaces.ListItemClickListener
 

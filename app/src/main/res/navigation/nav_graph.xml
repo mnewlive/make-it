@@ -49,7 +49,7 @@
 
     <fragment
         android:id="@+id/calendar_fragment"
-        android:name="com.mandarine.targetList.calendar.CalendarFragment"
+        android:name="com.mandarine.targetList.features.calendar.CalendarFragment"
         android:label="@string/calendar"
         tools:layout="@layout/fragment_calendar" />
 </navigation>

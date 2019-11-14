@@ -91,7 +91,7 @@ class MainFragment : Fragment() {
                 .setIsSmartLockEnabled(false)
                 .setAvailableProviders(providers)
                 .build(),
-             SIGN_IN_RESULT_CODE
+            SIGN_IN_RESULT_CODE
         )
     }
 }

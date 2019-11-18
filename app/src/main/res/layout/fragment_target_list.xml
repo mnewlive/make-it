@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray_extra_light">
@@ -9,7 +10,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:scrollbars="vertical"
         android:visibility="gone"
         tools:listitem="@layout/list_item_targets" />
@@ -18,11 +19,13 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="@dimen/dimen_12"
         android:tint="@android:color/white"
+        app:elevation="@dimen/dimen_4"
         app:srcCompat="@drawable/ic_fab_action" />
 
     <com.mandarine.targetList.common.views.EmptyView
@@ -33,4 +36,4 @@
         app:iconSrc="@drawable/ic_target"
         app:subTitleText="@string/empty_screen_description_targets"
         app:titleText="@string/empty_screen_title_targets" />
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

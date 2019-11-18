@@ -2,7 +2,6 @@ package com.mandarine.targetList.widget
 
 import android.content.IntentFilter
 import android.net.ConnectivityManager
-import android.util.Log
 import androidx.fragment.app.Fragment
 import com.mandarine.targetList.common.network.ConnectivityReceiver
 import com.mandarine.targetList.common.network.NetworkStateChangeListener
@@ -26,9 +25,5 @@ abstract class BaseFragment : Fragment(), NetworkStateChangeListener {
         connectivityReceiver.networkStateListener = null
     }
 
-    //TODO: Show snackbar https://github.com/mnewlive/make-it/issues/27
-    override fun onNetworkConnectionChanged(isConnected: Boolean) {
-        if (isConnected) Log.d("some", "isConnected")
-        else Log.d("some", "is not connected")
-    }
+    override fun onNetworkConnectionChanged(isConnected: Boolean) {} //Use the method where you want to determine your Internet connection
 }

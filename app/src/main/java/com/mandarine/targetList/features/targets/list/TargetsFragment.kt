@@ -8,8 +8,10 @@ import android.util.Log
 import android.view.*
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
+import com.google.android.material.snackbar.Snackbar
 import com.mandarine.targetList.R
 import com.mandarine.targetList.common.SwipeToDeleteCallback
+import com.mandarine.targetList.common.buildSnackbar
 import com.mandarine.targetList.common.tools.setVisible
 import com.mandarine.targetList.interfaces.ListItemClickListener
 import com.mandarine.targetList.interfaces.SelectTargetViewContract
@@ -22,6 +24,7 @@ class TargetsFragment : BaseFragment(), ListItemClickListener, SelectTargetViewC
     private val presenter = TargetsPresenter(this)
     private var adapter = TargetsAdapter(clickListener = this)
     private lateinit var swipeHandler: ItemTouchHelper.Callback
+    private var snackbar: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +82,18 @@ class TargetsFragment : BaseFragment(), ListItemClickListener, SelectTargetViewC
             R.id.sort_by_deadline -> presenter.getTargetsByDeadline()
         }
         return true
+    }
+
+    override fun onNetworkConnectionChanged(isConnected: Boolean) {
+        if (isConnected) {
+            snackbar?.dismiss()
+        } else {
+            snackbar = activity?.snackBarCoordinator?.buildSnackbar(
+                message = getString(R.string.warning_no_internet_connections),
+                backgroundResId = android.R.color.holo_orange_dark
+            )
+            snackbar?.show()
+        }
     }
 
     private fun updateListData() {

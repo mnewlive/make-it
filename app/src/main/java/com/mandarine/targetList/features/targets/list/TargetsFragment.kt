@@ -88,7 +88,7 @@ class TargetsFragment : BaseFragment(), ListItemClickListener, SelectTargetViewC
         if (isConnected) {
             snackbar?.dismiss()
         } else {
-            snackbar = activity?.snackBarCoordinator?.buildSnackbar(
+            snackbar = activity?.coordinatorLayout?.buildSnackbar(
                 message = getString(R.string.warning_no_internet_connections),
                 backgroundResId = android.R.color.holo_orange_dark
             )

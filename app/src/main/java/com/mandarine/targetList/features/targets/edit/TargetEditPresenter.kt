@@ -56,7 +56,7 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
                     else contract.updateViewsContent(
                         name = name,
                         description = description,
-                        date = format.format(date),
+                        deadline = format.format(date),
                         priorityPosition = priority
                     )
                 }

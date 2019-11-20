@@ -37,8 +37,8 @@ class CalendarFragment : BaseFragment() {
         val uid = FirebaseAuth.getInstance().currentUser!!.uid
         val rootRef = FirebaseDatabase.getInstance().reference
         val targetsRef = rootRef.child("targets").child("users").child(uid).child("targets")
-        val query = targetsRef.orderByChild("date")
-//        val query = targetsRef.orderByChild("date").equalTo(selectedDate)
+        val query = targetsRef.orderByChild("deadline")
+//        val query = targetsRef.orderByChild("deadline").equalTo(selectedDate)
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (ds in dataSnapshot.children) {
@@ -53,7 +53,7 @@ class CalendarFragment : BaseFragment() {
         query.addListenerForSingleValueEvent(valueEventListener)
 
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            dateView.text = "Selected date is " + dayOfMonth + "/" + (month + 1) + "/" + year
+            dateView.text = "Selected deadline is " + dayOfMonth + "/" + (month + 1) + "/" + year
 //            dateView.text = name
         }
     }

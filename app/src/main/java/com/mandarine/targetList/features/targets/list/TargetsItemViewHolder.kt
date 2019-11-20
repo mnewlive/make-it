@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mandarine.targetList.R
 import com.mandarine.targetList.common.tools.inflateListItemView
 import com.mandarine.targetList.interfaces.ListItemClickListener
-import com.mandarine.targetList.model.Target
+import com.mandarine.targetList.model.Goal
 import java.text.SimpleDateFormat
 
 class TargetsItemViewHolder(
@@ -29,7 +29,7 @@ class TargetsItemViewHolder(
         itemView.setOnClickListener { reactOnClick() }
     }
 
-    fun bind(item: Target) {
+    fun bind(item: Goal) {
         titleView.text = item.name
         descriptionView.text = item.description
         priorityView.setBackgroundColor(
@@ -38,7 +38,7 @@ class TargetsItemViewHolder(
                 setColorForPriority(item.priority)
             )
         )
-        val selectedDate = item.date
+        val selectedDate = item.deadline
         val dateString = SimpleDateFormat("d MMMM, yyyy").format(selectedDate)
         dateView.text = dateString
     }

@@ -6,12 +6,12 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.mandarine.targetList.common.tools.indexIsInBounds
 import com.mandarine.targetList.interfaces.SelectTargetViewContract
-import com.mandarine.targetList.model.Target
+import com.mandarine.targetList.model.Goal
 
 class TargetsPresenter(private val contract: SelectTargetViewContract) {
 
     var firebaseUser: FirebaseUser? = null
-    var targetList: ArrayList<Target> = ArrayList()
+    var targetList: ArrayList<Goal> = ArrayList()
     private var databaseReference: DatabaseReference? = null
     private var query: Query? = null
     private var targetsRef: DatabaseReference? = null
@@ -35,7 +35,7 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 targetList.clear()
                 dataSnapshot.children
-                    .mapNotNull { it.getValue(Target::class.java) }
+                    .mapNotNull { it.getValue(Goal::class.java) }
                     .toCollection(targetList)
                 contract.updateViewContent()
             }
@@ -52,7 +52,7 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 targetList.clear()
                 dataSnapshot.children
-                    .mapNotNull { it.getValue(Target::class.java) }
+                    .mapNotNull { it.getValue(Goal::class.java) }
                     .sortedBy { it.priority }
                     .toCollection(targetList)
                 contract.updateViewContent()
@@ -70,8 +70,8 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 targetList.clear()
                 dataSnapshot.children
-                    .mapNotNull { it.getValue(Target::class.java) }
-                    .sortedBy { it.date }
+                    .mapNotNull { it.getValue(Goal::class.java) }
+                    .sortedBy { it.deadline }
                     .toCollection(targetList)
                 contract.updateViewContent()
             }

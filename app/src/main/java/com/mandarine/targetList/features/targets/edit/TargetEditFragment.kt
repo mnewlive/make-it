@@ -69,10 +69,21 @@ class TargetEditFragment : BaseFragment(), View.OnClickListener, TargetEditContr
     override fun editTarget(targetGuid: String) {
         val name = nameEditText?.text.toString().trim()
         val description = descriptionEditText?.text.toString().trim()
-        val date = parsedDate?.atStartOfDay()?.toInstant(ZoneOffset.UTC)?.toEpochMilli() ?: 0L
+        val deadline = parsedDate?.atStartOfDay()?.toInstant(ZoneOffset.UTC)?.toEpochMilli()
+            ?: presenter.savedDeadline
         val priority = spinnerPosition
-        if (targetGuid.isEmpty()) presenter.addTarget(name, description, date, priority)
-        else presenter.updateTarget(name, description, date, priority)
+        if (targetGuid.isEmpty()) presenter.addTarget(
+            name = name,
+            description = description,
+            date = deadline,
+            priority = priority
+        )
+        else presenter.updateTarget(
+            name = name,
+            description = description,
+            date = deadline,
+            priority = priority
+        )
     }
 
     override fun deleteTarget() {
@@ -107,7 +118,11 @@ class TargetEditFragment : BaseFragment(), View.OnClickListener, TargetEditContr
     }
 
     private fun setupPriority() {
-        val priorityList = arrayOf("High", "Medium", "Low")
+        val priorityList = arrayOf(
+            getString(R.string.priority_high),
+            getString(R.string.priority_medium),
+            getString(R.string.priority_low)
+        )
         val adapter = ArrayAdapter(
             activity,
             android.R.layout.simple_spinner_item,
@@ -128,7 +143,6 @@ class TargetEditFragment : BaseFragment(), View.OnClickListener, TargetEditContr
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
-
     }
 
     private fun showDatePickerDialog() {

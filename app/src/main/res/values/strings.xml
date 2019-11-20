@@ -27,4 +27,8 @@
     <string name="sort_by_priority">Sort by priority</string>
 
     <string name="warning_no_internet_connections">No internet connection</string>
+
+    <string name="priority_high">High</string>
+    <string name="priority_medium">Medium</string>
+    <string name="priority_low">Low</string>
 </resources>

@@ -17,14 +17,16 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
     private var targetGuid: String? = null
     private var targetsRef: DatabaseReference? = null
     private var query: Query? = null
+    var savedDeadline: Long = 0L
 
     fun setInitialData(targetGuid: String) {
         this.targetGuid = targetGuid
         databaseReference = FirebaseDatabase.getInstance().reference
         firebaseUser = FirebaseAuth.getInstance().currentUser
         uid = firebaseUser?.uid
-        targetsRef = databaseReference?.child("targets")?.
-            child("users")?.child(uid.toString())?.child("targets")
+        targetsRef = databaseReference?.child("targets")?.child("users")
+            ?.child(uid.toString())
+            ?.child("targets")
         query = targetsRef?.orderByChild("guid")?.equalTo(targetGuid)
     }
 
@@ -42,10 +44,12 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
                     val target = targetSnapshot.getValue(Target::class.java)
                     val name = target?.name ?: ""
                     val description = target?.description ?: ""
-                    val time = target?.date ?: 0L
+                    val deadline = target?.date ?: 0L
                     val priority = target?.priority ?: 0
 
-                    val date = Date(time)
+                    savedDeadline = deadline
+
+                    val date = Date(deadline)
                     val format = SimpleDateFormat("d MMMM, yyyy")
 
                     if (name.isEmpty()) Log.d("some", "nameIsEmpty")
@@ -71,7 +75,13 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
             date == 0L -> contract.showWarningDialog()
             else -> {
                 val id: String = databaseReference?.push()?.key.toString()
-                val target = Target(guid = id, name = name, description = description, date = date, priority = priority)
+                val target = Target(
+                    guid = id,
+                    name = name,
+                    description = description,
+                    date = date,
+                    priority = priority
+                )
                 targetsRef?.push()?.setValue(target)
                 contract.closeView()
             }

@@ -5,7 +5,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.mandarine.targetList.R
-import com.mandarine.targetList.model.Target
+import com.mandarine.targetList.model.Goal
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -41,10 +41,10 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (targetSnapshot in dataSnapshot.children) {
-                    val target = targetSnapshot.getValue(Target::class.java)
+                    val target = targetSnapshot.getValue(Goal::class.java)
                     val name = target?.name ?: ""
                     val description = target?.description ?: ""
-                    val deadline = target?.date ?: 0L
+                    val deadline = target?.deadline ?: 0L
                     val priority = target?.priority ?: 0
 
                     savedDeadline = deadline
@@ -56,7 +56,7 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
                     else contract.updateViewsContent(
                         name = name,
                         description = description,
-                        date = format.format(date),
+                        deadline = format.format(date),
                         priorityPosition = priority
                     )
                 }
@@ -75,11 +75,11 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
             date == 0L -> contract.showWarningDialog()
             else -> {
                 val id: String = databaseReference?.push()?.key.toString()
-                val target = Target(
+                val target = Goal(
                     guid = id,
                     name = name,
                     description = description,
-                    date = date,
+                    deadline = date,
                     priority = priority
                 )
                 targetsRef?.push()?.setValue(target)
@@ -94,7 +94,7 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
                 for (targetSnapshot in dataSnapshot.children) {
                     targetSnapshot.child("name").ref.setValue(name)
                     targetSnapshot.child("description").ref.setValue(description)
-                    targetSnapshot.child("date").ref.setValue(date)
+                    targetSnapshot.child("deadline").ref.setValue(date)
                     targetSnapshot.child("priority").ref.setValue(priority)
                     contract.closeView()
                 }

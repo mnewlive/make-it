@@ -20,7 +20,7 @@ class SettingsPresenter(private val contract: SettingsContract) {
     fun onListItemClick(item: ImageTitleViewModel?) {
         when (item?.textId ?: return) {
             R.string.about -> Log.d("some", "about")
-            R.string.contact_us -> Log.d("some", "contact us")
+            R.string.contact_us -> contract.showEmailApp()
             R.string.log_out -> contract.logOut()
         }
     }

@@ -22,4 +22,5 @@
     <dimen name="bottom_navigation_height">@dimen/dimen_56</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="base_selector_row_height">@dimen/dimen_48</dimen>
+    <dimen name="logo_image_size">144dp</dimen>
 </resources>

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.firebase.ui.auth.AuthUI
 import com.mandarine.targetList.R
@@ -38,8 +39,11 @@ class SettingsListFragment : BaseFragment(), ListItemClickListener,
     }
 
     override fun onClick(dialog: DialogInterface?, which: Int) {
-        AuthUI.getInstance().signOut(requireContext())
-        activity?.finish() //TODO: https://github.com/mnewlive/make-it/issues/30
+        activity?.let {
+            AuthUI.getInstance().signOut(it).addOnCompleteListener {
+                findNavController().navigate(R.id.sign_in)
+            }
+        }
     }
 
     override fun onListItemClick(itemIndex: Int, itemCode: String) {

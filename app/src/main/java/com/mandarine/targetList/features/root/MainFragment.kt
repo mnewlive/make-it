@@ -74,6 +74,8 @@ class MainFragment : Fragment() {
                 .createSignInIntentBuilder()
                 .setIsSmartLockEnabled(false)
                 .setAvailableProviders(providers)
+                .setLogo(R.drawable.ic_logo)
+                .setTheme(R.style.AppTheme_NoActionBar)
                 .build(),
             SIGN_IN_RESULT_CODE
         )

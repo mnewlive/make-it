@@ -45,7 +45,12 @@
         android:id="@+id/settings_list_fragment"
         android:name="com.mandarine.targetList.features.settings.SettingsListFragment"
         android:label="@string/settings"
-        tools:layout="@layout/fragment_settings_list" />
+        tools:layout="@layout/fragment_settings_list">
+
+        <action
+            android:id="@+id/sign_in"
+            app:destination="@id/mainFragment"/>
+    </fragment>
 
     <fragment
         android:id="@+id/calendar_fragment"

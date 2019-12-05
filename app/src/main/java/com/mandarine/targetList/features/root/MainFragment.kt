@@ -29,7 +29,6 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         signIn()
-        launchSignInFlow()
     }
 
     override fun onResume() {
@@ -60,7 +59,7 @@ class MainFragment : Fragment() {
             if (firebaseAuth.currentUser != null) {
                 findNavController().navigate(R.id.show_goals)
             } else {
-                Log.d("some", "null")
+                launchSignInFlow()
             }
         }
     }

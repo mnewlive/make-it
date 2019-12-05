@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.firebase.ui.auth.AuthUI
 import com.mandarine.targetList.R
 import com.mandarine.targetList.common.dialogs.showLogoutDialog
+import com.mandarine.targetList.common.runEmailApp
 import com.mandarine.targetList.interfaces.ListItemClickListener
 import com.mandarine.targetList.widget.BaseFragment
 import kotlinx.android.synthetic.main.fragment_settings_list.*
@@ -47,6 +48,10 @@ class SettingsListFragment : BaseFragment(), ListItemClickListener,
 
     override fun onListItemClick(itemIndex: Int, itemCode: String) {
         presenter.onListItemClick(adapter.getItem(itemIndex))
+    }
+
+    override fun showEmailApp() {
+        activity?.runEmailApp()
     }
 
     private fun setupViews() {

@@ -7,13 +7,17 @@
     <dimen name="dimen_10">10dp</dimen>
     <dimen name="dimen_12">12dp</dimen>
     <dimen name="dimen_16">16dp</dimen>
+    <dimen name="dimen_20">20dp</dimen>
     <dimen name="dimen_24">24dp</dimen>
     <dimen name="dimen_48">48dp</dimen>
     <dimen name="dimen_52">52dp</dimen>
+    <dimen name="dimen_54">54dp</dimen>
     <dimen name="dimen_56">56dp</dimen>
     <dimen name="dimen_72">72dp</dimen>
     <dimen name="dimen_100">100dp</dimen>
 
+    <dimen name="text_10">10sp</dimen>
+    <dimen name="text_12">12sp</dimen>
     <dimen name="text_16">16sp</dimen>
     <dimen name="text_20">20sp</dimen>
     <dimen name="text_24">24sp</dimen>

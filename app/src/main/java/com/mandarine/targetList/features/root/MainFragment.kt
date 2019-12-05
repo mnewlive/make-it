@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.firebase.ui.auth.AuthMethodPickerLayout
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
@@ -69,13 +70,23 @@ class MainFragment : Fragment() {
             AuthUI.IdpConfig.EmailBuilder().build(),
             AuthUI.IdpConfig.GoogleBuilder().build()
         )
+        val authLayout = AuthMethodPickerLayout.Builder(R.layout.page_sign_in)
+            .setGoogleButtonId(R.id.googleButtonView)
+            .setEmailButtonId(R.id.emailButtonView)
+            .setTosAndPrivacyPolicyId(R.id.privacyView)
+            .build()
+
         startActivityForResult(
             AuthUI.getInstance()
                 .createSignInIntentBuilder()
+                .setAuthMethodPickerLayout(authLayout)
                 .setIsSmartLockEnabled(false)
                 .setAvailableProviders(providers)
-                .setLogo(R.drawable.ic_logo)
                 .setTheme(R.style.AppTheme_NoActionBar)
+                .setTosAndPrivacyPolicyUrls(
+                    "https://github.com/mnewlive/make-it",
+                    "https://github.com/mnewlive/make-it"
+                )
                 .build(),
             SIGN_IN_RESULT_CODE
         )

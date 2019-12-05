@@ -10,4 +10,12 @@
         <attr name="titleText" />
         <attr name="imageSrc" />
     </declare-styleable>
+
+    <declare-styleable name="SignInButtonView">
+        <attr name="android:textSize" />
+        <attr name="android:textColor" />
+        <attr name="android:text" />
+        <attr name="allCaps" />
+        <attr name="imageSrc" />
+    </declare-styleable>
 </resources>

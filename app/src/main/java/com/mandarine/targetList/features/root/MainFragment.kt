@@ -42,17 +42,6 @@ class MainFragment : Fragment() {
         auth.removeAuthStateListener(mAuthStateListener)
     }
 
-    private fun signIn() {
-        auth = FirebaseAuth.getInstance()
-        mAuthStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
-            if (firebaseAuth.currentUser != null) {
-                findNavController().navigate(R.id.show_goals)
-            } else {
-                Log.d("some", "null")
-            }
-        }
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == SIGN_IN_RESULT_CODE) {
@@ -61,6 +50,17 @@ class MainFragment : Fragment() {
                 Log.d("some", "Successfully signed in user ${FirebaseAuth.getInstance().currentUser?.displayName}")
             } else {
                 Log.d("some", "Sign in unsuccessful ${response?.error?.errorCode}")
+            }
+        }
+    }
+
+    private fun signIn() {
+        auth = FirebaseAuth.getInstance()
+        mAuthStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
+            if (firebaseAuth.currentUser != null) {
+                findNavController().navigate(R.id.show_goals)
+            } else {
+                Log.d("some", "null")
             }
         }
     }
@@ -75,6 +75,8 @@ class MainFragment : Fragment() {
                 .createSignInIntentBuilder()
                 .setIsSmartLockEnabled(false)
                 .setAvailableProviders(providers)
+                .setLogo(R.drawable.ic_logo)
+                .setTheme(R.style.AppTheme_NoActionBar)
                 .build(),
             SIGN_IN_RESULT_CODE
         )

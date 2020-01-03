@@ -1,15 +1,12 @@
 package com.mandarine.targetList.features.targets.list
 
-import android.content.Context
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.*
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ItemTouchHelper
 import com.mandarine.targetList.R
-import com.mandarine.targetList.common.SwipeToDeleteCallback
 import com.mandarine.targetList.common.tools.setVisible
 import com.mandarine.targetList.interfaces.ListItemClickListener
 import com.mandarine.targetList.interfaces.SelectTargetViewContract
@@ -21,7 +18,6 @@ class TargetsFragment : BaseFragment(), ListItemClickListener, SelectTargetViewC
     private var recyclerView: RecyclerView? = null
     private val presenter = TargetsPresenter(this)
     private var adapter = TargetsAdapter(clickListener = this)
-    private lateinit var swipeHandler: ItemTouchHelper.Callback
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,16 +37,6 @@ class TargetsFragment : BaseFragment(), ListItemClickListener, SelectTargetViewC
         presenter.setInitialData()
         setupViews()
         updateListData()
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        swipeHandler = object : SwipeToDeleteCallback(context) {
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                presenter.removeListItem(viewHolder.adapterPosition)
-            }
-        }
     }
 
     //TODO: When press on item and after press on system back, all elements are deleted from recyclerView
@@ -93,6 +79,5 @@ class TargetsFragment : BaseFragment(), ListItemClickListener, SelectTargetViewC
     private fun setupViews() {
         recyclerView = view?.findViewById(R.id.recyclerView)
         recyclerView?.layoutManager = LinearLayoutManager(activity)
-        ItemTouchHelper(swipeHandler).attachToRecyclerView(recyclerView)
     }
 }

@@ -39,13 +39,12 @@ class TargetsFragment : BaseFragment(), ListItemClickListener, SelectTargetViewC
         updateListData()
     }
 
-    //TODO: When press on item and after press on system back, all elements are deleted from recyclerView
     override fun onListItemClick(itemIndex: Int, itemCode: String) {
-//        findNavController().navigate(
-//            TargetsFragmentDirections.nextAction(
-//                adapter.getItem(itemIndex)?.guid ?: ""
-//            )
-//        )
+        findNavController().navigate(
+            TargetsFragmentDirections.nextAction(
+                adapter.getItem(itemIndex)?.guid ?: ""
+            )
+        )
     }
 
     override fun updateViewContent() {

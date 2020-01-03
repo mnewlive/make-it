@@ -44,7 +44,7 @@
 
         <action
             android:id="@+id/show_list"
-            app:destination="@+id/target_list" />
+            app:destination="@+id/tabs_fragment" />
 
         <argument
             android:name="guid"

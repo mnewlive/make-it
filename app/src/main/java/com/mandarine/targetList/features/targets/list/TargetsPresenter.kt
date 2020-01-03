@@ -4,7 +4,6 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-import com.mandarine.targetList.common.tools.indexIsInBounds
 import com.mandarine.targetList.interfaces.SelectTargetViewContract
 import com.mandarine.targetList.model.Goal
 
@@ -13,7 +12,6 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
     var firebaseUser: FirebaseUser? = null
     var targetList: ArrayList<Goal> = ArrayList()
     private var databaseReference: DatabaseReference? = null
-    private var query: Query? = null
     private var targetsRef: DatabaseReference? = null
     private var uid: String? = null
 
@@ -81,29 +79,5 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
             }
         }
         targetsRef?.addListenerForSingleValueEvent(valueEventListener)
-    }
-
-    fun removeListItem(position: Int) {
-        if (targetList.indexIsInBounds(position)) {
-            deleteTarget(targetList[position].guid)
-            targetList.removeAt(position)
-            contract.updateViewContent()
-        }
-    }
-
-    private fun deleteTarget(guid: String) {
-        query = targetsRef?.orderByChild("guid")?.equalTo(guid)
-        val valueEventListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (targetSnapshot in dataSnapshot.children) {
-                    targetSnapshot.ref.removeValue()
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.d("some", databaseError.message)
-            }
-        }
-        query?.addListenerForSingleValueEvent(valueEventListener)
     }
 }

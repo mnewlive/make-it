@@ -18,7 +18,12 @@
     <fragment
         android:id="@+id/tabs_fragment"
         android:name="com.mandarine.targetList.features.TabsFragment"
-        android:label="TabsFragment"/>
+        android:label="TabsFragment">
+
+        <action
+            android:id="@+id/next_action"
+            app:destination="@+id/target_edit" />
+    </fragment>
 
     <fragment
         android:id="@+id/target_list"

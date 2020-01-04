@@ -76,6 +76,9 @@ class TargetsFragment : BaseFragment(), ListItemClickListener, SelectTargetViewC
     }
 
     private fun setupViews() {
+        fab?.setOnClickListener {
+            findNavController().navigate(TargetsFragmentDirections.nextAction(""))
+        }
         recyclerView = view?.findViewById(R.id.recyclerView)
         recyclerView?.layoutManager = LinearLayoutManager(activity)
     }

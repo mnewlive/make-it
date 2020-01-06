@@ -4,19 +4,26 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import com.mandarine.targetList.R
-import kotlinx.android.synthetic.main.rv_layout.view.*
+import com.mandarine.targetList.common.tools.setVisible
+import kotlinx.android.synthetic.main.recycler_view_layout.view.*
 
 class ContentPagerAdapter(
     val context: Context,
     private val targetsAdapter: TargetsAdapter
-): PagerAdapter() {
+) : PagerAdapter() {
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val view = LayoutInflater.from(context).inflate(R.layout.rv_layout, container, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.recycler_view_layout, container, false)
+        view.recyclerView.layoutManager = LinearLayoutManager(container.context)
         if (position == 0) {
             view.recyclerView.adapter = targetsAdapter
+
+            //TODO: use logic from TargetsPresenter (shouldShowEmptyView())
+            view.recyclerView.setVisible(targetsAdapter.data.isNotEmpty())
+            view.emptyView.setVisible(targetsAdapter.data.isEmpty())
         }
         container.addView(view)
         return view

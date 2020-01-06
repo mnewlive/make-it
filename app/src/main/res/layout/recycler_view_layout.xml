@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray_extra_light"
     android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -10,7 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
-        android:background="@color/colorPrimary"
+        android:visibility="gone"
         tools:listitem="@layout/list_item_targets" />
+
+    <com.mandarine.targetList.common.views.EmptyView
+        android:id="@+id/emptyView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:iconSrc="@drawable/ic_target"
+        app:subTitleText="@string/empty_screen_description_targets"
+        app:titleText="@string/empty_screen_title_targets" />
 </LinearLayout>
 

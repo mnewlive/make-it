@@ -40,4 +40,6 @@ class ContentPagerAdapter(
     override fun getPageTitle(position: Int): CharSequence? {
         return if (position == 0) "Targets" else "Complete Tasks"
     }
+
+    override fun getItemPosition(item: Any) = POSITION_NONE
 }

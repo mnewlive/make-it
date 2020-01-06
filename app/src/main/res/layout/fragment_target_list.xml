@@ -5,7 +5,8 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_extra_light">
+    android:background="@color/gray_extra_light"
+    android:layout_marginBottom="@dimen/bottom_navigation_height">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

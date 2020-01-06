@@ -7,13 +7,31 @@
     android:layout_height="match_parent"
     android:background="@color/gray_extra_light">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical"
-        android:visibility="gone"
-        tools:listitem="@layout/list_item_targets" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabMode="fixed" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/contentViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+    </LinearLayout>
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/recyclerView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:scrollbars="vertical"-->
+<!--        android:visibility="gone"-->
+<!--        tools:listitem="@layout/list_item_targets" />-->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -28,12 +46,12 @@
         app:elevation="@dimen/dimen_4"
         app:srcCompat="@drawable/ic_fab_action" />
 
-    <com.mandarine.targetList.common.views.EmptyView
-        android:id="@+id/emptyView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        app:iconSrc="@drawable/ic_target"
-        app:subTitleText="@string/empty_screen_description_targets"
-        app:titleText="@string/empty_screen_title_targets" />
+<!--    <com.mandarine.targetList.common.views.EmptyView-->
+<!--        android:id="@+id/emptyView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:visibility="gone"-->
+<!--        app:iconSrc="@drawable/ic_target"-->
+<!--        app:subTitleText="@string/empty_screen_description_targets"-->
+<!--        app:titleText="@string/empty_screen_title_targets" />-->
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

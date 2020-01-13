@@ -1,6 +1,7 @@
 package com.mandarine.targetList.features.root
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
@@ -62,6 +63,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupBottomNavMenu(navController: NavController) {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.target_edit -> bottomNavigationView?.visibility = View.GONE
+                else -> bottomNavigationView?.visibility = View.VISIBLE
+            }
+        }
         bottomNavigationView?.setupWithNavController(navController)
     }
 }

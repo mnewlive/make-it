@@ -13,8 +13,9 @@ import kotlinx.android.synthetic.main.fragment_target_list.*
 class TargetsFragment : BaseFragment(), ListItemClickListener, SelectTargetViewContract {
 
     private val presenter = TargetsPresenter(this)
-    private var adapter = TargetsAdapter(clickListener = this)
-    private var contentAdapter: ContentPagerAdapter? = null
+    private var targetsAdapter = TargetsAdapter(clickListener = this)
+    private var completedTargetsAdapter = TargetsAdapter(clickListener = this)
+    private var contentPagerAdapter: ContentPagerAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,15 +40,16 @@ class TargetsFragment : BaseFragment(), ListItemClickListener, SelectTargetViewC
     override fun onListItemClick(itemIndex: Int, itemCode: String) {
         findNavController().navigate(
             TargetsFragmentDirections.nextAction(
-                adapter.getItem(itemIndex)?.guid ?: ""
+                targetsAdapter.getItem(itemIndex)?.guid ?: ""
             )
         )
     }
 
     override fun updateViewContent() {
-        adapter.data = presenter.targetList
-        contentAdapter = activity?.let { ContentPagerAdapter(it, adapter) }
-        contentViewPager.adapter = contentAdapter
+        targetsAdapter.data = presenter.targetList
+        completedTargetsAdapter.data = presenter.completedTargets
+        contentPagerAdapter = activity?.let { ContentPagerAdapter(it, targetsAdapter, completedTargetsAdapter) }
+        contentViewPager.adapter = contentPagerAdapter
         tabLayout.setupWithViewPager(contentViewPager)
     }
 

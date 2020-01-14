@@ -12,7 +12,8 @@ import kotlinx.android.synthetic.main.recycler_view_layout.view.*
 
 class ContentPagerAdapter(
     val context: Context,
-    private val targetsAdapter: TargetsAdapter
+    private val targetsAdapter: TargetsAdapter,
+    private val completedTargetsAdapter: TargetsAdapter
 ) : PagerAdapter() {
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
@@ -20,10 +21,14 @@ class ContentPagerAdapter(
         view.recyclerView.layoutManager = LinearLayoutManager(container.context)
         if (position == 0) {
             view.recyclerView.adapter = targetsAdapter
-
-            //TODO: use logic from TargetsPresenter (shouldShowEmptyView())
-            view.recyclerView.setVisible(targetsAdapter.data.isNotEmpty())
-            view.emptyView.setVisible(targetsAdapter.data.isEmpty())
+            view.recyclerView.setVisible(!targetsAdapter.isEmpty())
+            view.emptyView.setVisible(targetsAdapter.isEmpty())
+        }
+        else if (position == 1) {
+            view.recyclerView.adapter = completedTargetsAdapter
+            view.recyclerView.setVisible(!completedTargetsAdapter.isEmpty())
+            view.emptyView.setTitleText(R.string.empty_screen_title_completed_targets)
+            view.emptyView.setVisible(completedTargetsAdapter.isEmpty())
         }
         container.addView(view)
         return view

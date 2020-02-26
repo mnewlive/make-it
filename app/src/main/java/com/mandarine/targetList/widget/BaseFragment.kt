@@ -5,10 +5,13 @@ import android.net.ConnectivityManager
 import androidx.fragment.app.Fragment
 import com.mandarine.targetList.common.network.ConnectivityReceiver
 import com.mandarine.targetList.common.network.NetworkStateChangeListener
+import com.mandarine.targetList.interfaces.ActivityComponentsContract
 
 abstract class BaseFragment : Fragment(), NetworkStateChangeListener {
 
     private val connectivityReceiver = ConnectivityReceiver()
+    val activityComponents: ActivityComponentsContract?
+        get() = activity as? ActivityComponentsContract
 
     override fun onResume() {
         super.onResume()

@@ -99,7 +99,7 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
                     targetSnapshot.child("description").ref.setValue(description)
                     targetSnapshot.child("deadline").ref.setValue(date)
                     targetSnapshot.child("priority").ref.setValue(priority)
-                    targetSnapshot.child("complete").ref.setValue(isComplete)
+                    targetSnapshot.child("isComplete").ref.setValue(isComplete)
                     contract.closeView()
                 }
             }

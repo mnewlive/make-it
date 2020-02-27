@@ -1,4 +1,4 @@
-package com.mandarine.targetList.features.root
+package com.mandarine.targetList
 
 import android.os.Bundle
 import android.view.View
@@ -13,10 +13,10 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
-import com.mandarine.targetList.R
+import com.mandarine.targetList.interfaces.ActivityComponentsContract
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ActivityComponentsContract {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -70,5 +70,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
         bottomNavigationView?.setupWithNavController(navController)
+    }
+
+    override fun updateAppbarTitle(title: String) {
+        supportActionBar?.title = title
     }
 }

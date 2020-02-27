@@ -11,7 +11,6 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
 
     var firebaseUser: FirebaseUser? = null
     var targetList: ArrayList<Goal> = ArrayList()
-    var completedTargets: ArrayList<Goal> = ArrayList() //TODO: https://github.com/mnewlive/make-it/issues/52
     private var databaseReference: DatabaseReference? = null
     private var targetsRef: DatabaseReference? = null
     private var uid: String? = null
@@ -77,4 +76,8 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
         }
         targetsRef?.addListenerForSingleValueEvent(valueEventListener)
     }
+
+    fun collectCompletedGoals() = targetList.filter { it.isComplete }
+
+    fun collectCurrentGoals() = targetList.filter { !it.isComplete }
 }

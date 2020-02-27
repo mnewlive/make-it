@@ -46,8 +46,8 @@ class TargetsFragment : BaseFragment(), ListItemClickListener, SelectTargetViewC
     }
 
     override fun updateViewContent() {
-        targetsAdapter.data = presenter.targetList
-        completedTargetsAdapter.data = presenter.completedTargets
+        targetsAdapter.data = presenter.collectCurrentGoals()
+        completedTargetsAdapter.data = presenter.collectCompletedGoals()
         contentPagerAdapter = activity?.let { ContentPagerAdapter(it, targetsAdapter, completedTargetsAdapter) }
         contentViewPager.adapter = contentPagerAdapter
         tabLayout.setupWithViewPager(contentViewPager)

@@ -38,11 +38,7 @@ class TargetsFragment : BaseFragment(), ListItemClickListener, SelectTargetViewC
     }
 
     override fun onListItemClick(itemIndex: Int, itemCode: String) {
-        findNavController().navigate(
-            TargetsFragmentDirections.nextAction(
-                targetsAdapter.getItem(itemIndex)?.guid ?: ""
-            )
-        )
+        findNavController().navigate(TargetsFragmentDirections.nextAction(itemCode))
     }
 
     override fun updateViewContent() {

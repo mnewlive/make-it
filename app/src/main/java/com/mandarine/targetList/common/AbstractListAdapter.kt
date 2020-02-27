@@ -15,6 +15,8 @@ abstract class AbstractListAdapter <T>(initialData: List<T> = emptyList())  :
 
     fun getItem(position: Int) = _data.getOrNull(position)
 
+    fun isEmpty() = data.isEmpty()
+
     protected fun isLastPosition(position: Int) = position == itemCount - 1
 
     override fun getItemCount(): Int = _data.size

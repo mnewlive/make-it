@@ -24,10 +24,6 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
             ?.child("targets")
     }
 
-    fun shouldShowContent(): Boolean = targetList.isNotEmpty()
-
-    fun shouldShowEmptyView(): Boolean = !shouldShowContent()
-
     fun getTargetsFromDb() {
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -80,4 +76,8 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
         }
         targetsRef?.addListenerForSingleValueEvent(valueEventListener)
     }
+
+    fun collectCompletedGoals() = targetList.filter { it.isComplete }
+
+    fun collectCurrentGoals() = targetList.filter { !it.isComplete }
 }

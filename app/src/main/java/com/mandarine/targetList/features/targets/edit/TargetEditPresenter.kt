@@ -126,4 +126,6 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
         }
         query?.addListenerForSingleValueEvent(valueEventListener)
     }
+
+    fun getTitleResId(): Int = if (targetGuid.isNullOrEmpty()) R.string.add_goal else R.string.edit_goal
 }

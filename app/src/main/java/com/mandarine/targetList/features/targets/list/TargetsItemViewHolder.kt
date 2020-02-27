@@ -24,6 +24,7 @@ class TargetsItemViewHolder(
     private var descriptionView = itemView.findViewById<TextView>(R.id.descriptionView)
     private var priorityView = itemView.findViewById<View>(R.id.priorityView)
     private var dateView = itemView.findViewById<TextView>(R.id.dateView)
+    private var guid = ""
 
     init {
         itemView.setOnClickListener { reactOnClick() }
@@ -41,6 +42,7 @@ class TargetsItemViewHolder(
         val selectedDate = item.deadline
         val dateString = SimpleDateFormat("d MMMM, yyyy").format(selectedDate)
         dateView.text = dateString
+        guid = item.guid
     }
 
     private fun setColorForPriority(priorityPosition: Int): Int {
@@ -53,8 +55,8 @@ class TargetsItemViewHolder(
 
     private fun reactOnClick() {
         if (adapterPosition > RecyclerView.NO_POSITION) listener?.onListItemClick(
-            adapterPosition,
-            ""
+            itemIndex = adapterPosition,
+            itemCode = guid
         )
     }
 }

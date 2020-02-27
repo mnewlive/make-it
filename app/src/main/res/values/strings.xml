@@ -9,8 +9,10 @@
     <string name="edit_goal">Edit Goal</string>
     <string name="delete_target">Delete</string>
     <string name="targets_list">Targets List</string>
-    <string name="empty_screen_description_targets">Quickly add your first target</string>
     <string name="empty_screen_title_targets">You don t have targets now</string>
+    <string name="empty_screen_title_completed_targets">You don t have completed
+        targets now</string>
+    <string name="empty_screen_description_targets">Quickly add your first target</string>
     <string name="calendar">Calendar</string>
     <string name="settings">Settings</string>
 

@@ -1,13 +1,10 @@
 package com.mandarine.targetList.features.targets.list
 
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.*
 import androidx.navigation.fragment.findNavController
 import com.mandarine.targetList.R
-import com.mandarine.targetList.common.tools.setVisible
 import com.mandarine.targetList.interfaces.ListItemClickListener
 import com.mandarine.targetList.interfaces.SelectTargetViewContract
 import com.mandarine.targetList.widget.BaseFragment
@@ -15,9 +12,10 @@ import kotlinx.android.synthetic.main.fragment_target_list.*
 
 class TargetsFragment : BaseFragment(), ListItemClickListener, SelectTargetViewContract {
 
-    private var recyclerView: RecyclerView? = null
     private val presenter = TargetsPresenter(this)
-    private var adapter = TargetsAdapter(clickListener = this)
+    private var targetsAdapter = TargetsAdapter(clickListener = this)
+    private var completedTargetsAdapter = TargetsAdapter(clickListener = this)
+    private var contentPagerAdapter: ContentPagerAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,18 +38,15 @@ class TargetsFragment : BaseFragment(), ListItemClickListener, SelectTargetViewC
     }
 
     override fun onListItemClick(itemIndex: Int, itemCode: String) {
-        findNavController().navigate(
-            TargetsFragmentDirections.nextAction(
-                adapter.getItem(itemIndex)?.guid ?: ""
-            )
-        )
+        findNavController().navigate(TargetsFragmentDirections.nextAction(itemCode))
     }
 
     override fun updateViewContent() {
-        adapter.data = presenter.targetList
-        recyclerView?.adapter = adapter
-        recyclerView?.setVisible(presenter.shouldShowContent())
-        emptyView?.setVisible(presenter.shouldShowEmptyView())
+        targetsAdapter.data = presenter.collectCurrentGoals()
+        completedTargetsAdapter.data = presenter.collectCompletedGoals()
+        contentPagerAdapter = activity?.let { ContentPagerAdapter(it, targetsAdapter, completedTargetsAdapter) }
+        contentViewPager.adapter = contentPagerAdapter
+        tabLayout.setupWithViewPager(contentViewPager)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -79,7 +74,5 @@ class TargetsFragment : BaseFragment(), ListItemClickListener, SelectTargetViewC
         fab?.setOnClickListener {
             findNavController().navigate(TargetsFragmentDirections.nextAction(""))
         }
-        recyclerView = view?.findViewById(R.id.recyclerView)
-        recyclerView?.layoutManager = LinearLayoutManager(activity)
     }
 }

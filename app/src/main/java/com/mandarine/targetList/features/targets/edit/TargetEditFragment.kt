@@ -13,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import com.mandarine.targetList.R
 import com.mandarine.targetList.common.tools.setVisible
 import com.mandarine.targetList.common.dialogs.showWarningDialog
+import com.mandarine.targetList.interfaces.ActivityComponentsContract
 import com.mandarine.targetList.widget.BaseFragment
 import kotlinx.android.synthetic.main.fragment_target_add.*
 import org.threeten.bp.LocalDate
@@ -21,7 +22,7 @@ import org.threeten.bp.ZoneOffset
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.FormatStyle
 
-class TargetEditFragment : BaseFragment(), View.OnClickListener, TargetEditContract {
+class TargetEditFragment : BaseFragment(), View.OnClickListener, TargetEditContract{
 
     private val presenter = TargetEditPresenter(contract = this)
     private val safeArgs: TargetEditFragmentArgs by navArgs()
@@ -40,6 +41,7 @@ class TargetEditFragment : BaseFragment(), View.OnClickListener, TargetEditContr
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        activityComponents?.updateAppbarTitle(getString(presenter.getTitleResId()))
         return inflater.inflate(R.layout.fragment_target_add, container, false)
     }
 

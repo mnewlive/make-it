@@ -53,13 +53,15 @@ class TargetEditFragment : BaseFragment(), View.OnClickListener, TargetEditContr
     override fun updateViewsContent(
         name: String?,
         description: String?,
-        date: String?,
-        priorityPosition: Int
+        deadline: String?,
+        priorityPosition: Int,
+        isComplete: Boolean
     ) {
         nameEditText?.text = Editable.Factory.getInstance().newEditable(name)
         descriptionEditText?.text = Editable.Factory.getInstance().newEditable(description)
-        dateView?.text = Editable.Factory.getInstance().newEditable(date)
+        dateView?.text = Editable.Factory.getInstance().newEditable(deadline)
         spinner.setSelection(priorityPosition)
+        checkBoxView.isChecked = isComplete
     }
 
     override fun onClick(v: View?) {
@@ -72,17 +74,20 @@ class TargetEditFragment : BaseFragment(), View.OnClickListener, TargetEditContr
         val deadline = parsedDate?.atStartOfDay()?.toInstant(ZoneOffset.UTC)?.toEpochMilli()
             ?: presenter.savedDeadline
         val priority = spinnerPosition
+        val isComplete = checkBoxView.isChecked
         if (targetGuid.isEmpty()) presenter.addTarget(
             name = name,
             description = description,
             date = deadline,
-            priority = priority
+            priority = priority,
+            isComplete = isComplete
         )
         else presenter.updateTarget(
             name = name,
             description = description,
             date = deadline,
-            priority = priority
+            priority = priority,
+            isComplete = isComplete
         )
     }
 

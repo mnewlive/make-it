@@ -84,6 +84,15 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pickDate" />
 
+    <CheckBox
+        android:id="@+id/checkBoxView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_24"
+        android:checked="false"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
     <Button
         android:id="@+id/addActionView"
         style="@style/Widget.AppCompat.Button.Colored"

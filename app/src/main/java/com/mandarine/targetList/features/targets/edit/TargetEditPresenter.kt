@@ -46,6 +46,7 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
                     val description = target?.description ?: ""
                     val deadline = target?.deadline ?: 0L
                     val priority = target?.priority ?: 0
+                    val isComplete = target?.isComplete ?: false
 
                     savedDeadline = deadline
 
@@ -57,7 +58,8 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
                         name = name,
                         description = description,
                         deadline = format.format(date),
-                        priorityPosition = priority
+                        priorityPosition = priority,
+                        isComplete = isComplete
                     )
                 }
             }
@@ -69,7 +71,7 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
         query?.addListenerForSingleValueEvent(valueEventListener)
     }
 
-    fun addTarget(name: String, description: String, date: Long, priority: Int) {
+    fun addTarget(name: String, description: String, date: Long, priority: Int, isComplete: Boolean) {
         when {
             name.isEmpty() -> contract.showWarningDialog()
             date == 0L -> contract.showWarningDialog()
@@ -80,7 +82,8 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
                     name = name,
                     description = description,
                     deadline = date,
-                    priority = priority
+                    priority = priority,
+                    isComplete = isComplete
                 )
                 targetsRef?.push()?.setValue(target)
                 contract.closeView()
@@ -88,7 +91,7 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
         }
     }
 
-    fun updateTarget(name: String, description: String, date: Long, priority: Int) {
+    fun updateTarget(name: String, description: String, date: Long, priority: Int, isComplete: Boolean) {
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (targetSnapshot in dataSnapshot.children) {
@@ -96,6 +99,7 @@ class TargetEditPresenter(private val contract: TargetEditContract) {
                     targetSnapshot.child("description").ref.setValue(description)
                     targetSnapshot.child("deadline").ref.setValue(date)
                     targetSnapshot.child("priority").ref.setValue(priority)
+                    targetSnapshot.child("complete").ref.setValue(isComplete)
                     contract.closeView()
                 }
             }

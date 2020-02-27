@@ -5,5 +5,6 @@ data class Goal(
     val name: String = "",
     val description: String = "",
     val deadline: Long = 0L,
-    var priority: Int = 0
+    var priority: Int = 0,
+    var isComplete: Boolean = false
 )

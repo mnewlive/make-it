@@ -25,59 +25,35 @@ class TargetsPresenter(private val contract: SelectTargetViewContract) {
     }
 
     fun getTargetsFromDb() {
-        val valueEventListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                targetList.clear()
-                dataSnapshot.children
-                    .mapNotNull { it.getValue(Goal::class.java) }
-                    .toCollection(targetList)
-                contract.updateViewContent()
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.d("some", "Error trying to get targets for ${databaseError.message}")
-            }
-        }
-        targetsRef?.addListenerForSingleValueEvent(valueEventListener)
+        targetsRef?.addListenerForSingleValueEvent(MyValueEventListener<String>())
     }
 
     fun getTargetsByPriority() {
-        val valueEventListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                targetList.clear()
-                dataSnapshot.children
-                    .mapNotNull { it.getValue(Goal::class.java) }
-                    .sortedBy { it.priority }
-                    .toCollection(targetList)
-                contract.updateViewContent()
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.d("some", "Error trying to get targets for ${databaseError.message}")
-            }
-        }
-        targetsRef?.addListenerForSingleValueEvent(valueEventListener)
+        targetsRef?.addListenerForSingleValueEvent(MyValueEventListener(Goal::priority))
     }
 
     fun getTargetsByDeadline() {
-        val valueEventListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                targetList.clear()
-                dataSnapshot.children
-                    .mapNotNull { it.getValue(Goal::class.java) }
-                    .sortedBy { it.deadline }
-                    .toCollection(targetList)
-                contract.updateViewContent()
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.d("some", "Error trying to get targets for ${databaseError.message}")
-            }
-        }
-        targetsRef?.addListenerForSingleValueEvent(valueEventListener)
+        targetsRef?.addListenerForSingleValueEvent(MyValueEventListener(Goal::deadline))
     }
 
     fun collectCompletedGoals() = targetList.filter { it.isComplete }
 
     fun collectCurrentGoals() = targetList.filter { !it.isComplete }
+
+    private inner class MyValueEventListener<R: Comparable<R>>(
+        private val sortCriteria: (Goal) -> R? = { null }
+    ): ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            targetList.clear()
+            dataSnapshot.children
+                .mapNotNull { it.getValue(Goal::class.java) }
+                .sortedBy(sortCriteria)
+                .toCollection(targetList)
+            contract.updateViewContent()
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            Log.d("some", "Error trying to get targets for ${databaseError.message}")
+        }
+    }
 }
